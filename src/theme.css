@@ -1,0 +1,62 @@
+:root {
+  /* ===== LIGHT theme (default) ===== */
+  --bg-dark:  oklch(0.92 0 264);
+  --bg:       oklch(0.96 0 264);
+  --bg-light: oklch(1.00 0 264);
+
+  --text:       oklch(0.18 0 264);
+  --text-muted: oklch(0.45 0 264);
+  --primary:    oklch(0.65 0.15 264);
+
+  --shadow-s:
+    inset 0 1px 2px oklch(1 0 0 / 0.90),
+    0 1px 2px oklch(0 0 0 / 0.12),
+    0 2px 4px oklch(0 0 0 / 0.08);
+  --shadow-m:
+    inset 0 1px 2px oklch(1 0 0 / 0.90),
+    0 2px 4px oklch(0 0 0 / 0.14),
+    0 4px 8px oklch(0 0 0 / 0.08);
+  --shadow-l:
+    inset 0 1px 2px oklch(1 0 0 / 0.95),
+    0 4px 6px oklch(0 0 0 / 0.16),
+    0 6px 10px oklch(0 0 0 / 0.10);
+  --shadow-inset:
+    inset 0 2px 4px oklch(0 0 0 / 0.14),
+    inset 0 -1px 0 oklch(1 0 0 / 0.90);
+
+  --radius-panel: 20px;
+  --radius-pill: 999px;
+}
+
+body.dark {
+      /* ===== DARK theme  ===== */
+  --bg-dark:  oklch(0.16 0 264);  /* page: darkest layer   */
+  --bg:       oklch(0.22 0 264);  /* panels / cards        */
+  --bg-light: oklch(0.30 0 264);  /* raised: pills, buttons */
+
+  --text:       oklch(0.96 0 264);
+  --text-muted: oklch(0.72 0 264);
+  --primary:    oklch(0.90 0.17 100); /* placeholder accent */
+
+  /* depth = [top highlight] + [contact shadow] + [ambient shadow] */
+  --shadow-s:
+    inset 0 1px 2px oklch(1 0 0 / 0.18),
+    0 1px 2px oklch(0 0 0 / 0.30),
+    0 2px 4px oklch(0 0 0 / 0.15);
+  --shadow-m:
+    inset 0 1px 2px oklch(1 0 0 / 0.30),
+    0 2px 4px oklch(0 0 0 / 0.30),
+    0 4px 8px oklch(0 0 0 / 0.15);
+  --shadow-l:
+    inset 0 1px 2px oklch(1 0 0 / 0.45),
+    0 4px 6px oklch(0 0 0 / 0.30),
+    0 6px 10px oklch(0 0 0 / 0.15);
+
+  /* pressed / recessed — for selected pills & inset elements (stats bars) */
+  --shadow-inset:
+    inset 0 2px 4px oklch(0 0 0 / 0.35),
+    inset 0 -1px 0 oklch(1 0 0 / 0.10);
+
+  --radius-panel: 20px;
+  --radius-pill: 999px;
+}
