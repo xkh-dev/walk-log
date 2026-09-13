@@ -119,11 +119,19 @@ body {
 
 .walk-list { display: flex; flex-direction: column; gap: 12px; }
 .walk-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: var(--text);
+  border: none;
+  cursor: pointer;
   background: var(--bg-light);
   border-radius: 16px;
   box-shadow: var(--shadow-s);
   padding: 16px;
 }
+.walk-card:active { transform: translateY(1px); box-shadow: var(--shadow-inset); }
 .walk-card-top {
   display: flex; justify-content: space-between;
   font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em;
@@ -220,6 +228,55 @@ body {
   background: none; border: none; color: var(--text-muted);
   font: inherit; cursor: pointer; padding: 0; margin-bottom: 8px;
 }
+
+.delete-walk-button {
+  display: block;
+  margin: 32px auto 8px;
+  padding: 10px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 11px;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: color-mix(in oklch, var(--text) 35%, transparent);
+  z-index: 2;
+}
+.confirm-modal {
+  width: 100%;
+  max-width: 320px;
+  padding: 24px;
+  text-align: center;
+  color: var(--text);
+  background: var(--bg);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-l);
+}
+.confirm-modal h2 { margin: 0 0 8px; font-size: 20px; }
+.confirm-modal p { margin: 0 0 22px; color: var(--text-muted); }
+.confirm-actions { display: flex; justify-content: center; gap: 10px; }
+.modal-button {
+  min-width: 96px;
+  padding: 11px 16px;
+  border: none;
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  background: var(--bg-light);
+  box-shadow: var(--shadow-s);
+  font: inherit;
+  cursor: pointer;
+}
+.modal-button.destructive { color: var(--bg); background: var(--text); }
 
 
 

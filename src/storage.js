@@ -12,3 +12,17 @@ export function saveWalk(walk) {
   walks.push(walk);             // 2. add the new one
   localStorage.setItem(STORAGE_KEY, JSON.stringify(walks)); // 3. write it all back
 }
+
+export function updateWalk(id, changes) {
+  const walks = getWalks();
+  const updatedWalks = walks.map((walk) => (
+    walk.id === id ? { ...walk, ...changes } : walk
+  ));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedWalks));
+}
+
+export function deleteWalk(id) {
+  const walks = getWalks();
+  const remainingWalks = walks.filter((walk) => walk.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(remainingWalks));
+}

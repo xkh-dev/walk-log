@@ -17,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Walk />} />
           <Route path="/log" element={<LogForm />} />
+          <Route path="/log/:id" element={<LogForm />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/walks" element={<AllWalks />} />
         </Routes>
