@@ -1,16 +1,48 @@
-# React + Vite
+# Walk, Log 🌳
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> A quiet place to remember your walks. No streaks, no goals — just the practice.
 
-Currently, two official plugins are available:
+**Status:** 🚧 In active development · Phase 1 (MVP)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<!-- Add a screenshot here once the UI is further along — it matters a lot: -->
+<!-- ![Walk, Log — the log form](docs/screenshot.png) -->
 
-## React Compiler
+## Why
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+People who walk to think and process life have nowhere made for it. Notes apps bury walks among to-do lists, journals feel bloated for walks alone, and fitness apps judge and motivate — the opposite of what a contemplative walker wants.
 
-## Expanding the Oxlint configuration
+Walk, Log is a dedicated, non-judgmental space that captures *just enough* to reveal patterns, without any pressure to perform. The walk comes first; the app second.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+→ Full reasoning in [`docs/product-brief.md`](docs/product-brief.md).
+
+## What it does
+
+**Now**
+- Log a walk in seconds: where (place + type), when (date + time of day), how long, and who with.
+
+**Planned**
+- A stats view that reflects your habits back gently — where you go, when you walk, your seasonal rhythm — never a scoreboard.
+- Local-first storage with CSV import/export.
+- Quote of the week, walk history, photos, and a dark theme.
+
+→ Full plan in [`docs/roadmap.md`](docs/roadmap.md) and [`docs/stats-plan.md`](docs/stats-plan.md).
+
+## Design
+
+A depth-based interface built on a token-driven design system: all color, elevation, and shape come from CSS custom properties (OKLCH), so the whole app re-skins from one place. Light theme by default, dark as an option — both from a single set of variables.
+
+→ Details in [`docs/design-system.md`](docs/design-system.md).
+
+## Tech
+
+- **React + Vite** (JavaScript)
+- **CSS custom properties** for the design system
+- **Browser local storage** — no backend in Phase 1
+
+## Run locally
+
+```bash
+git clone https://github.com/xkh-dev/walk-log.git
+cd walk-log
+npm install
+npm run dev

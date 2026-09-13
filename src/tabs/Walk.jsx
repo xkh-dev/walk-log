@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { getWalks } from '../storage';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
@@ -32,7 +33,9 @@ function display(list, value) {
   return item ? `${item.icon} ${item.label}` : '—';
 }
 
-function Walk({ onSeeAll }) {
+function Walk() {
+  const navigate = useNavigate();
+  
   const walks = getWalks();
 
   const totalWalks = walks.length;
@@ -61,7 +64,7 @@ function Walk({ onSeeAll }) {
         : <p className="empty">No walks yet. Log your first one.</p>}
 
       {/* totals card — tap to open All Walks */}
-      <button className="total-card" onClick={onSeeAll}>
+      <button className="total-card" onClick={() => navigate('/walks')}>
         <span className="total-number">{totalWalks}</span>
         <span className="total-label">walks total</span>
         <span className="see-all">All Walks ›</span>

@@ -1,21 +1,24 @@
+import { NavLink } from 'react-router-dom';
+
 const TABS = [
-  { id: 'walk', icon: '🚶', label: 'Walk' },
-  { id: 'log',  icon: '➕', label: 'Log' },
-  { id: 'stats', icon: '📈', label: 'Stats' },
+  { to: '/',      icon: '🚶', label: 'Walk' },
+  { to: '/log',   icon: '➕', label: 'Log' },
+  { to: '/stats', icon: '📈', label: 'Stats' },
 ];
 
-function TabBar({ active, onChange }) {
+function TabBar() {
   return (
     <nav className="tab-bar">
       {TABS.map((tab) => (
-        <button
-          key={tab.id}
-          className={active === tab.id ? 'tab active' : 'tab'}
-          onClick={() => onChange(tab.id)}
+        <NavLink
+          key={tab.to}
+          to={tab.to}
+          end
+          className={({ isActive }) => (isActive ? 'tab active' : 'tab')}
         >
           <span className="tab-icon">{tab.icon}</span>
           <span className="tab-label">{tab.label}</span>
-        </button>
+        </NavLink>
       ))}
     </nav>
   );
