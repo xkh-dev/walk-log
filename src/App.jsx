@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Walk from './tabs/Walk';
 import LogForm from './tabs/LogForm';
 import Stats from './tabs/Stats';
@@ -8,6 +8,9 @@ import './theme.css';
 import './App.css';
 
 function App() {
+  const location = useLocation();
+  const showTabBar = ['/', '/stats'].includes(location.pathname);
+
   return (
     <div className="app">
       <main className="page">
@@ -18,7 +21,7 @@ function App() {
           <Route path="/walks" element={<AllWalks />} />
         </Routes>
       </main>
-      <TabBar />
+      {showTabBar && <TabBar />}
     </div>
   );
 }

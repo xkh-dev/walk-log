@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { saveWalk } from '../storage.js';
 
 function LogForm() {
+  const navigate = useNavigate();
+
   const [duration, setDuration] = useState(30);
   const [whereType, setWhereType] = useState(null);
   const [whenType, setWhenType] = useState(null);
@@ -38,34 +41,40 @@ function handleSave() {
 
   return (
     <div className="log-form">
-      <h1>New Walk</h1>
+      <div className="sheet-grabber" />
 
-      <section>
-        <label>WHERE?</label>
-        <PillGroup options={WHERE_TYPES} selected={whereType} onSelect={setWhereType} />
-      </section>
+      <header className="sheet-header">
+        <button className="icon-btn" onClick={() => navigate(-1)} aria-label="Cancel">✕</button>
+        <h1 className="sheet-title">New Walk</h1>
+        <button className="icon-btn primary" onClick={handleSave} aria-label="Save">✓</button>
+      </header>
 
-      <section>
-        <label>WHEN?</label>
-        <PillGroup options={WHEN_TYPES} selected={whenType} onSelect={setWhenType} />
-      </section>
+      <div className="sheet-content">
+        <section>
+          <label>WHERE?</label>
+          <PillGroup options={WHERE_TYPES} selected={whereType} onSelect={setWhereType} />
+        </section>
 
-      <section>
-        <label>HOW LONG?</label>
-        <div className="stepper">
-          <button onClick={() => setDuration(Math.max(15, duration - 15))}>−</button>
-          <span>{duration} min</span>
-          <button onClick={() => setDuration(duration + 15)}>+</button>
-        </div>
-      </section>
+        <section>
+          <label>WHEN?</label>
+          <PillGroup options={WHEN_TYPES} selected={whenType} onSelect={setWhenType} />
+        </section>
 
-      <section>
-        <label>WHO?</label>
-        <PillGroup options={WHO_TYPES} selected={whoType} onSelect={setWhoType} />
-      </section>
+        <section>
+          <label>HOW LONG?</label>
+          <div className="stepper">
+            <button onClick={() => setDuration(Math.max(15, duration - 15))}>−</button>
+            <span>{duration} min</span>
+            <button onClick={() => setDuration(duration + 15)}>+</button>
+          </div>
+        </section>
 
-      <button className="save-button" onClick={handleSave}>SAVE</button>
+        <section>
+          <label>WHO?</label>
+          <PillGroup options={WHO_TYPES} selected={whoType} onSelect={setWhoType} />
+        </section>
 
+      </div>
     </div>
   );
 }

@@ -4,18 +4,52 @@ body {
   font-family: system-ui, sans-serif;
 }
 
+/* ===== Log bottom sheet ===== */
 .log-form {
-  width: calc(100% - 32px);
-  max-width: 420px;
-  margin: 16px auto;
-  padding: 24px 16px;
-  background: var(--bg);          /* a raised panel */
-  border-radius: var(--radius-panel);
-  box-shadow: var(--shadow-m);
-  text-align: left;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;          /* only a cap — scrolls if content is taller */
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  border-radius: 24px 24px 0 0;
+  box-shadow: var(--shadow-l);
 }
-.log-form h1 { font-size: 24px; margin: 0 0 24px; }
-.log-form section { margin-bottom: 28px; }
+
+.sheet-grabber {
+  flex: none;
+  align-self: center;
+  width: 40px; height: 5px;
+  margin: 10px 0 4px;
+  border-radius: 999px;
+  background: var(--text-muted);
+  opacity: 0.4;
+}
+
+.sheet-header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 20px 12px;
+}
+.sheet-title { font-size: 18px; margin: 0; }
+
+.sheet-content {
+  overflow-y: auto;          /* NO flex:1 — content keeps its natural height */
+  padding: 0 20px 20px;
+}
+
+/* spacing inside — same as your old card */
+.log-form section { margin-bottom: 24px; }
+.log-form section:last-child { margin-bottom: 0; }
 .log-form label {
   display: block;
   font-size: 12px;
@@ -23,6 +57,21 @@ body {
   color: var(--text-muted);
   margin-bottom: 10px;
 }
+
+.icon-btn {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 999px;
+  background: var(--bg-light);
+  color: var(--text);
+  box-shadow: var(--shadow-s);
+  font-size: 16px; cursor: pointer;
+}
+.icon-btn.primary {           /* the ✓ = filled, primary action */
+  background: var(--text);
+  color: var(--bg);
+}
+.icon-btn:active { transform: translateY(1px); box-shadow: var(--shadow-inset); }
 
 /* ===== pill component ===== */
 .pills { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -59,22 +108,6 @@ body {
 }
 .stepper button:active { transform: translateY(1px); box-shadow: var(--shadow-inset); }
 .stepper span { min-width: 70px; text-align: center; }
-
-.save-button {
-  width: 100%;
-  padding: 14px;
-  margin-top: 8px;
-  border: none;
-  border-radius: 14px;
-  background: var(--text);      /* dark, high-contrast primary action */
-  color: var(--bg);
-  font-size: 15px;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  box-shadow: var(--shadow-m);
-  transition: box-shadow .15s ease, transform .05s ease;
-}
-.save-button:active { transform: translateY(1px); box-shadow: var(--shadow-inset); }
 
 .app { min-height: 100vh; }
 .page { padding-bottom: 96px; }   /* clear space for the fixed tab bar */
