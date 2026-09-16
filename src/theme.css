@@ -7,6 +7,7 @@
   --text:       oklch(0.18 0 264);
   --text-muted: oklch(0.45 0 264);
   --primary:    oklch(0.65 0.15 264);
+  --day-untyped: oklch(0.88 0.02 264);
 
   --shadow-s:
     inset 0 1px 2px oklch(1 0 0 / 0.90),
@@ -37,6 +38,7 @@ body.dark {
   --text:       oklch(0.96 0 264);
   --text-muted: oklch(0.72 0 264);
   --primary:    oklch(0.90 0.17 100); /* placeholder accent */
+  --day-untyped: oklch(0.34 0.02 264);
 
   /* depth = [top highlight] + [contact shadow] + [ambient shadow] */
   --shadow-s:
@@ -60,3 +62,9 @@ body.dark {
   --radius-panel: 20px;
   --radius-pill: 999px;
 }
+
+.day--untyped {
+  background: var(--day-untyped);
+  color: var(--text);
+}
+
