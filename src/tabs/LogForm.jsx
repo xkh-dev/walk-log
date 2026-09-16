@@ -4,6 +4,13 @@ import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { deleteWalk, getWalks, saveWalk, updateWalk } from '../storage.js';
 
+function getLocalDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
 function LogForm() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -28,7 +35,7 @@ function LogForm() {
     const walk = {
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
-      date: new Date().toISOString().slice(0, 10),
+      date: getLocalDateKey(),
       ...changes,
       city: '',
       place: '',

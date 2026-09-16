@@ -24,7 +24,13 @@ function getWalkColor(walk) {
 }
 
 function getDayKey(date) {
-  return new Date(date).toISOString().slice(0, 10);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;
+
+  const localDate = new Date(date);
+  const y = localDate.getFullYear();
+  const m = String(localDate.getMonth() + 1).padStart(2, '0');
+  const d = String(localDate.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 function AllWalks() {
@@ -83,8 +89,10 @@ function AllWalks() {
 
               {Array.from({ length: daysInMonth }, (_, index) => {
                 const dayNumber = index + 1;
-                const date = new Date(monthStart.getFullYear(), monthStart.getMonth(), dayNumber);
-                const dateKey = date.toISOString().slice(0, 10);
+                const y = monthStart.getFullYear();
+                const m = String(monthStart.getMonth() + 1).padStart(2, '0');
+                const d = String(dayNumber).padStart(2, '0');
+                const dateKey = `${y}-${m}-${d}`;
                 const dayWalks = dateLookup[dateKey] || [];
                 const latestWalk = dayWalks.length
                   ? [...dayWalks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0]

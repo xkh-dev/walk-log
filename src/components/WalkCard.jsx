@@ -8,7 +8,7 @@ function display(list, value) {
 }
 
 function formatDate(iso) {
-  return new Date(iso).toLocaleDateString('en-US', {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', {
     weekday: 'short', month: 'short', day: 'numeric',
   });
 }
