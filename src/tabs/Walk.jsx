@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getWalks } from '../storage';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
@@ -36,8 +37,19 @@ function display(list, value) {
 
 function Walk() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const notice = location.state?.notice || '';
   
   const walks = getWalks();
+
+  useEffect(() => {
+    if (!notice) return undefined;
+
+    const timeoutId = window.setTimeout(() => {
+      navigate(location.pathname, { replace: true, state: null });
+    }, 3000);
+    return () => window.clearTimeout(timeoutId);
+  }, [location.pathname, navigate, notice]);
 
   const totalWalks = walks.length;
   const totalMinutes = walks.reduce((sum, w) => sum + w.duration, 0);
@@ -48,6 +60,7 @@ function Walk() {
   return (
     <div className="walk-home">
       <h1>Walk, Log</h1>
+      {notice && <div className="import-message" role="status">✓&nbsp; {notice}</div>}
 
       {/* weekly quote */}
       <div className="quote-card">

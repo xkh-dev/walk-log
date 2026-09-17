@@ -54,7 +54,7 @@ function LogForm() {
 
     if (isEditing) {
       updateWalk(id, changes);
-      navigate(-1);
+      navigate('/', { state: { notice: 'Walk updated' } });
       return;
     }
 
@@ -66,6 +66,7 @@ function LogForm() {
     };
 
     saveWalk(walk);
+    navigate('/', { state: { notice: 'Walk logged' } });
     setDate(todayLocal());
     setWhereType(null);
     setWhenType(null);
@@ -79,7 +80,7 @@ function LogForm() {
 
   function handleDelete() {
     deleteWalk(id);
-    navigate(-1);
+    navigate('/');
   }
 
 
