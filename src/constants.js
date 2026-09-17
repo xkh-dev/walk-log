@@ -21,4 +21,6 @@ const WHO_TYPES = [
 	{ value: 'with-someone', icon: '🤝', label: 'with someone' },
 ];
 
+export const CITIES = ['Москва', 'Санкт-Петербург', 'Казань', 'Самара', 'Нижний Новгород'];
+
 export { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION };

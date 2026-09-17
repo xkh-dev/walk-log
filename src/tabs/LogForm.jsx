@@ -1,8 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION } from '../constants.js';
+import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CITIES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { deleteWalk, getWalks, saveWalk, updateWalk } from '../storage.js';
+import { getPlaceTypeMap, getRecentPlaces } from '../helpers.js';
 
 function getLocalDateKey(date = new Date()) {
   const y = date.getFullYear();
@@ -14,17 +15,36 @@ function getLocalDateKey(date = new Date()) {
 function LogForm() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const existingWalk = id ? getWalks().find((walk) => walk.id === id) : null;
+  const walks = getWalks();
+  const existingWalk = id ? walks.find((walk) => walk.id === id) : null;
   const isEditing = Boolean(existingWalk);
+  const recentPlaces = getRecentPlaces(walks);
+  const placeTypeMap = getPlaceTypeMap(walks);
 
   const [duration, setDuration] = useState(existingWalk?.duration ?? 30);
   const [whereType, setWhereType] = useState(existingWalk?.whereType ?? null);
   const [whenType, setWhenType] = useState(existingWalk?.whenType ?? null);
   const [whoType, setWhoType] = useState(existingWalk?.whoType ?? null);
+  const [city, setCity] = useState(existingWalk?.city || CITIES[0]);
+  const [place, setPlace] = useState(existingWalk?.place ?? '');
+  const [whereTypeChosen, setWhereTypeChosen] = useState(Boolean(existingWalk?.whereType));
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
+  function handleWhereTypeSelect(value) {
+    setWhereType(value);
+    setWhereTypeChosen(true);
+  }
+
+  function handlePlaceChange(value) {
+    setPlace(value);
+    if (!whereTypeChosen) {
+      const rememberedType = placeTypeMap.get(value.trim());
+      if (rememberedType) setWhereType(rememberedType);
+    }
+  }
+
   function handleSave() {
-    const changes = { whereType, whenType, duration, whoType };
+    const changes = { whereType, whenType, duration, whoType, city, place: place.trim() };
 
     if (isEditing) {
       updateWalk(id, changes);
@@ -38,8 +58,6 @@ function LogForm() {
       createdAt: new Date().toISOString(),
       date: getLocalDateKey(),
       ...changes,
-      city: '',
-      place: '',
       companion: '',
     };
 
@@ -48,6 +66,9 @@ function LogForm() {
     setWhenType(null);
     setDuration(30);
     setWhoType(null);
+    setCity(CITIES[0]);
+    setPlace('');
+    setWhereTypeChosen(false);
   }
 
   function handleDelete() {
@@ -69,7 +90,35 @@ function LogForm() {
       <div className="sheet-content">
         <section>
           <label>WHERE?</label>
-          <PillGroup options={WHERE_TYPES} selected={whereType} onSelect={setWhereType} />
+          <PillGroup options={WHERE_TYPES} selected={whereType} onSelect={handleWhereTypeSelect} />
+          <div className="where-details">
+            <div className="select-wrap">
+              <select id="city" value={city} onChange={(event) => setCity(event.target.value)}>
+                {CITIES.map((option) => <option key={option} value={option}>{option}</option>)}
+              </select>
+            </div>
+            <input
+              id="place"
+              type="text"
+              value={place}
+              placeholder="PLACE NAME"
+              onChange={(event) => handlePlaceChange(event.target.value)}
+            />
+          </div>
+          {recentPlaces.length > 0 && (
+            <div className="pills recent-places" aria-label="Recent places">
+              {recentPlaces.map((recentPlace) => (
+                <button
+                  key={recentPlace}
+                  type="button"
+                  className="pill"
+                  onClick={() => handlePlaceChange(recentPlace)}
+                >
+                  {recentPlace}
+                </button>
+              ))}
+            </div>
+          )}
         </section>
 
         <section>

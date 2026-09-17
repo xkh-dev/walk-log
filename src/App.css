@@ -57,6 +57,42 @@ body {
   color: var(--text-muted);
   margin-bottom: 10px;
 }
+.log-form select,
+.log-form input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--bg-light);
+  color: var(--text);
+  box-shadow: var(--shadow-inset);
+  font: inherit;
+}
+.where-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+.select-wrap { position: relative; }
+.select-wrap select {
+  appearance: none;
+  padding-right: 48px;
+}
+.select-wrap::after {
+  content: '⌄';
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1;
+  pointer-events: none;
+  transform: translateY(-58%);
+}
+.recent-places { margin-top: 12px; }
 
 .icon-btn {
   width: 36px; height: 36px;
