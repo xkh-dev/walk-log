@@ -1,5 +1,6 @@
+import { SCHEMA_VERSION } from './constants';
+
 const STORAGE_KEY = 'walks';
-const CSV_SCHEMA_VERSION = '1';
 
 // read every saved walk (or an empty list if there are none yet)
 export function getWalks() {
@@ -35,7 +36,8 @@ export function importWalks(importedWalks) {
   let skipped = 0;
 
   importedWalks.forEach((walk) => {
-    const isValidId = typeof walk.id === 'string' && walk.id.trim() !== '';
+    const isValidId = typeof walk.id === 'string'
+      && /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(walk.id);
     const dateParts = typeof walk.date === 'string' ? walk.date.split('-').map(Number) : [];
     const parsedDate = dateParts.length === 3
       ? new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]))
@@ -46,9 +48,15 @@ export function importWalks(importedWalks) {
       && parsedDate.getUTCFullYear() === dateParts[0]
       && parsedDate.getUTCMonth() === dateParts[1] - 1
       && parsedDate.getUTCDate() === dateParts[2];
-    const isSupportedSchema = !walk.schemaVersion || walk.schemaVersion === CSV_SCHEMA_VERSION;
+    const isValidCreatedAt = typeof walk.createdAt === 'string'
+      && !Number.isNaN(Date.parse(walk.createdAt));
+    const isValidDuration = typeof walk.duration === 'number'
+      && Number.isFinite(walk.duration)
+      && walk.duration >= 0;
+    const isSupportedSchema = walk.schemaVersion === SCHEMA_VERSION;
 
-    if (!isValidId || !isValidDate || !isSupportedSchema || ids.has(walk.id)) {
+    if (!isValidId || !isValidDate || !isValidCreatedAt || !isValidDuration
+      || !isSupportedSchema || ids.has(walk.id)) {
       skipped += 1;
       return;
     }

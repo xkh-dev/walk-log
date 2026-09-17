@@ -1,7 +1,6 @@
-export const CSV_SCHEMA_VERSION = '1';
+import { SCHEMA_VERSION } from './constants';
 
 const CSV_FIELDS = [
-  'schemaVersion',
   'id',
   'userId',
   'date',
@@ -13,6 +12,7 @@ const CSV_FIELDS = [
   'city',
   'place',
   'companion',
+  'schemaVersion',
 ];
 
 function escapeCell(value) {
@@ -24,7 +24,7 @@ export function walksToCsv(walks) {
   return [
     CSV_FIELDS.join(','),
     ...walks.map((walk) => CSV_FIELDS.map((field) => {
-      if (field === 'schemaVersion') return CSV_SCHEMA_VERSION;
+      if (field === 'schemaVersion') return SCHEMA_VERSION;
       if (field === 'userId') return escapeCell(walk[field] || '');
       return escapeCell(walk[field]);
     }).join(',')),
@@ -78,6 +78,7 @@ export function csvToWalks(csv) {
 
     return {
       ...walk,
+      schemaVersion: walk.schemaVersion === '' ? '' : Number(walk.schemaVersion),
       duration: walk.duration === '' ? '' : Number(walk.duration),
     };
   });

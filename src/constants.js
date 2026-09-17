@@ -14,10 +14,11 @@ const WHEN_TYPES = [
   { value: 'night',   icon: '🌚', label: 'night',   color: '#3c4a78' },
 ];
 
+const SCHEMA_VERSION = 1;
 
 const WHO_TYPES = [
 	{ value: 'by-yourself', icon: '🚶🏼', label: 'by yourself' },
 	{ value: 'with-someone', icon: '🤝', label: 'with someone' },
 ];
 
-export { WHERE_TYPES, WHEN_TYPES, WHO_TYPES };
+export { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION };

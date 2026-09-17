@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES } from '../constants.js';
+import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { deleteWalk, getWalks, saveWalk, updateWalk } from '../storage.js';
 
@@ -34,6 +34,7 @@ function LogForm() {
 
     const walk = {
       id: crypto.randomUUID(),
+      schemaVersion: SCHEMA_VERSION,
       createdAt: new Date().toISOString(),
       date: getLocalDateKey(),
       ...changes,
