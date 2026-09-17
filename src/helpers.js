@@ -33,6 +33,20 @@ export function getRecentPlaces(walks, limit = 6) {
     .slice(0, limit);
 }
 
+export function getRecentCompanions(walks, limit = 6) {
+  const seen = new Set();
+
+  return [...walks]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .map((walk) => (typeof walk.companion === 'string' ? walk.companion.trim() : ''))
+    .filter((companion) => {
+      if (!companion || seen.has(companion)) return false;
+      seen.add(companion);
+      return true;
+    })
+    .slice(0, limit);
+}
+
 export function getPlaceTypeMap(walks) {
   const placeTypes = new Map();
 

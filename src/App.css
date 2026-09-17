@@ -94,6 +94,8 @@ body {
   transform: translateY(-58%);
 }
 .recent-places { margin-top: 12px; }
+.companion-details { margin-top: 18px; }
+.recent-companions { margin-top: 12px; }
 
 .icon-btn {
   width: 36px; height: 36px;

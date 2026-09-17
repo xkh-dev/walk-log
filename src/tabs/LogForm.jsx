@@ -3,7 +3,13 @@ import { useState } from 'react';
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CITIES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { deleteWalk, getWalks, saveWalk, updateWalk } from '../storage.js';
-import { formatDuration, getPlaceTypeMap, getRecentPlaces, todayLocal } from '../helpers.js';
+import {
+  formatDuration,
+  getPlaceTypeMap,
+  getRecentCompanions,
+  getRecentPlaces,
+  todayLocal,
+} from '../helpers.js';
 
 function LogForm() {
   const navigate = useNavigate();
@@ -12,6 +18,7 @@ function LogForm() {
   const existingWalk = id ? walks.find((walk) => walk.id === id) : null;
   const isEditing = Boolean(existingWalk);
   const recentPlaces = getRecentPlaces(walks);
+  const recentCompanions = getRecentCompanions(walks);
   const placeTypeMap = getPlaceTypeMap(walks);
 
   const [duration, setDuration] = useState(existingWalk?.duration ?? 30);
@@ -19,6 +26,7 @@ function LogForm() {
   const [whereType, setWhereType] = useState(existingWalk?.whereType ?? null);
   const [whenType, setWhenType] = useState(existingWalk?.whenType ?? null);
   const [whoType, setWhoType] = useState(existingWalk?.whoType ?? null);
+  const [companion, setCompanion] = useState(existingWalk?.companion ?? '');
   const [city, setCity] = useState(existingWalk?.city || CITIES[0]);
   const [place, setPlace] = useState(existingWalk?.place ?? '');
   const [whereTypeChosen, setWhereTypeChosen] = useState(Boolean(existingWalk?.whereType));
@@ -38,7 +46,11 @@ function LogForm() {
   }
 
   function handleSave() {
-    const changes = { date, whereType, whenType, duration, whoType, city, place: place.trim() };
+    const changes = {
+      date, whereType, whenType, duration, whoType, city,
+      place: place.trim(),
+      companion: companion.trim(),
+    };
 
     if (isEditing) {
       updateWalk(id, changes);
@@ -51,7 +63,6 @@ function LogForm() {
       schemaVersion: SCHEMA_VERSION,
       createdAt: new Date().toISOString(),
       ...changes,
-      companion: '',
     };
 
     saveWalk(walk);
@@ -60,6 +71,7 @@ function LogForm() {
     setWhenType(null);
     setDuration(30);
     setWhoType(null);
+    setCompanion('');
     setCity(CITIES[0]);
     setPlace('');
     setWhereTypeChosen(false);
@@ -139,6 +151,31 @@ function LogForm() {
         <section>
           <label>WHO?</label>
           <PillGroup options={WHO_TYPES} selected={whoType} onSelect={setWhoType} />
+          {whoType === 'with-someone' && (
+            <div className="companion-details">
+              <input
+                id="companion"
+                type="text"
+                value={companion}
+                placeholder="COMPANION"
+                onChange={(event) => setCompanion(event.target.value)}
+              />
+              {recentCompanions.length > 0 && (
+                <div className="pills recent-companions" aria-label="Recent companions">
+                  {recentCompanions.map((recentCompanion) => (
+                    <button
+                      key={recentCompanion}
+                      type="button"
+                      className="pill"
+                      onClick={() => setCompanion(recentCompanion)}
+                    >
+                      {recentCompanion}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </section>
 
         {isEditing && (
