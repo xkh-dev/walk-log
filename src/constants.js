@@ -1,8 +1,8 @@
 const WHERE_TYPES = [
   { value: 'park',      icon: '🌳', label: 'park',      color: '#8ccf81' },
-  { value: 'city',      icon: '🏢', label: 'city',      color: '#6a5acd' },
+  { value: 'urban',     icon: '🏢', label: 'urban',     color: '#6a5acd' },
   { value: 'woods',     icon: '🌲', label: 'woods',     color: '#4a7c59' },
-  { value: 'mountains', icon: '🏔️', label: 'mountains', color: '#9cb1da' },
+  { value: 'heights',   icon: '🏔️', label: 'heights',   color: '#9cb1da' },
   { value: 'coast',     icon: '🌊', label: 'coast',     color: '#388eea' },
   { value: 'rural',     icon: '🌾', label: 'rural',     color: '#b8863b' },
 ];

@@ -13,7 +13,7 @@ the CSV format, or the storage layer.
 | `date`        | string `"YYYY-MM-DD"`     | yes      | The **local calendar day** the walk belongs to (a civil date). |
 | `createdAt`   | string (ISO 8601, UTC)   | yes      | The exact **instant** the record was saved. Used for ordering. |
 | `duration`    | number (minutes)         | yes      | Length of the walk. Defaults to 30. |
-| `whereType`   | string \| null           | no       | One of `WHERE_TYPES`: park, city, woods, mountains, coast, rural. |
+| `whereType`   | string \| null           | no       | One of `WHERE_TYPES`: park, urban, woods, heights, coast, rural. |
 | `whenType`    | string \| null           | no       | One of `WHEN_TYPES`: morning, noon, evening, night. |
 | `whoType`     | string \| null           | no       | One of `WHO_TYPES`: by-yourself, with-someone. |
 | `city`        | string                   | no       | City (from dropdown), e.g. "Москва". Default `""`. |
