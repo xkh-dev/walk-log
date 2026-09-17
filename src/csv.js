@@ -1,10 +1,14 @@
+export const CSV_SCHEMA_VERSION = '1';
+
 const CSV_FIELDS = [
+  'schemaVersion',
   'id',
-  'createdAt',
+  'userId',
   'date',
-  'duration',
+  'createdAt',
   'whereType',
   'whenType',
+  'duration',
   'whoType',
   'city',
   'place',
@@ -19,7 +23,11 @@ function escapeCell(value) {
 export function walksToCsv(walks) {
   return [
     CSV_FIELDS.join(','),
-    ...walks.map((walk) => CSV_FIELDS.map((field) => escapeCell(walk[field])).join(',')),
+    ...walks.map((walk) => CSV_FIELDS.map((field) => {
+      if (field === 'schemaVersion') return CSV_SCHEMA_VERSION;
+      if (field === 'userId') return escapeCell(walk[field] || '');
+      return escapeCell(walk[field]);
+    }).join(',')),
   ].join('\n');
 }
 
@@ -70,10 +78,7 @@ export function csvToWalks(csv) {
 
     return {
       ...walk,
-      id: walk.id || crypto.randomUUID(),
-      createdAt: walk.createdAt || new Date().toISOString(),
-      date: walk.date || new Date().toISOString().slice(0, 10),
-      duration: Number(walk.duration) || 0,
+      duration: walk.duration === '' ? '' : Number(walk.duration),
     };
   });
 }

@@ -84,8 +84,8 @@ function AllWalks() {
     if (!file) return;
 
     const importedWalks = csvToWalks(await file.text());
-    const importedCount = importWalks(importedWalks);
-    setImportMessage(`${importedCount} walk${importedCount === 1 ? '' : 's'} imported`);
+    const { added, skipped } = importWalks(importedWalks);
+    setImportMessage(`${added} added, ${skipped} skipped`);
     setShowMenu(false);
     refresh((value) => value + 1);
     event.target.value = '';

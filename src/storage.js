@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'walks';
+const CSV_SCHEMA_VERSION = '1';
 
 // read every saved walk (or an empty list if there are none yet)
 export function getWalks() {
@@ -30,13 +31,35 @@ export function deleteWalk(id) {
 export function importWalks(importedWalks) {
   const walks = getWalks();
   const ids = new Set(walks.map((walk) => walk.id));
-  const walksToAdd = importedWalks.map((walk) => {
-    const importedWalk = { ...walk };
-    if (ids.has(importedWalk.id)) importedWalk.id = crypto.randomUUID();
-    ids.add(importedWalk.id);
-    return importedWalk;
+  const walksToAdd = [];
+  let skipped = 0;
+
+  importedWalks.forEach((walk) => {
+    const isValidId = typeof walk.id === 'string' && walk.id.trim() !== '';
+    const dateParts = typeof walk.date === 'string' ? walk.date.split('-').map(Number) : [];
+    const parsedDate = dateParts.length === 3
+      ? new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]))
+      : null;
+    const isValidDate = typeof walk.date === 'string'
+      && /^\d{4}-\d{2}-\d{2}$/.test(walk.date)
+      && parsedDate
+      && parsedDate.getUTCFullYear() === dateParts[0]
+      && parsedDate.getUTCMonth() === dateParts[1] - 1
+      && parsedDate.getUTCDate() === dateParts[2];
+    const isSupportedSchema = !walk.schemaVersion || walk.schemaVersion === CSV_SCHEMA_VERSION;
+
+    if (!isValidId || !isValidDate || !isSupportedSchema || ids.has(walk.id)) {
+      skipped += 1;
+      return;
+    }
+
+    ids.add(walk.id);
+    walksToAdd.push({ ...walk, userId: walk.userId || '' });
   });
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify([...walks, ...walksToAdd]));
-  return walksToAdd.length;
+  if (walksToAdd.length > 0) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...walks, ...walksToAdd]));
+  }
+
+  return { added: walksToAdd.length, skipped };
 }
