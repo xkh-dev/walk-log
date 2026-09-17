@@ -1,6 +1,8 @@
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WHERE_TYPES } from '../constants';
-import { getWalks } from '../storage';
+import { getWalks, importWalks } from '../storage';
+import { csvToWalks, walksToCsv } from '../csv';
 import WalkCard from './WalkCard';
 
 function formatDayDate(dateStr) {
@@ -35,6 +37,10 @@ function getDayKey(date) {
 
 function AllWalks() {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  const [showMenu, setShowMenu] = useState(false);
+  const [importMessage, setImportMessage] = useState('');
+  const [, refresh] = useState(0);
   const walks = [...getWalks()].sort((a, b) => {
     const aDate = getDayKey(a.date || a.createdAt);
     const bDate = getDayKey(b.date || b.createdAt);
@@ -62,10 +68,55 @@ function AllWalks() {
     }
   };
 
+  function handleExport() {
+    const blob = new Blob([walksToCsv(walks)], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `walks-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setShowMenu(false);
+  }
+
+  async function handleImport(event) {
+    const [file] = event.target.files || [];
+    if (!file) return;
+
+    const importedWalks = csvToWalks(await file.text());
+    const importedCount = importWalks(importedWalks);
+    setImportMessage(`${importedCount} walk${importedCount === 1 ? '' : 's'} imported`);
+    setShowMenu(false);
+    refresh((value) => value + 1);
+    event.target.value = '';
+    window.setTimeout(() => setImportMessage(''), 3000);
+  }
+
   return (
     <div className="all-walks">
       <button className="back-button" onClick={() => navigate(-1)}>‹ Back</button>
-      <h1>All Walks</h1>
+      <header className="all-walks-header">
+        <h1>All Walks</h1>
+        <div className="walks-menu">
+          <button
+            className="icon-btn"
+            type="button"
+            aria-label="Import or export walks"
+            aria-expanded={showMenu}
+            onClick={() => setShowMenu((visible) => !visible)}
+          >
+            …
+          </button>
+          {showMenu && (
+            <div className="walks-menu-popover" role="menu">
+              <button type="button" role="menuitem" onClick={handleExport}>↥&nbsp; Export CSV</button>
+              <button type="button" role="menuitem" onClick={() => fileInputRef.current?.click()}>↧&nbsp; Import CSV</button>
+            </div>
+          )}
+          <input ref={fileInputRef} type="file" accept=".csv,text/csv" onChange={handleImport} hidden />
+        </div>
+      </header>
+      {importMessage && <div className="import-message" role="status">✓&nbsp; {importMessage}</div>}
 
       {walks.length === 0 ? (
         <p className="empty">Your first walk is waiting.</p>

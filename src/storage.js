@@ -26,3 +26,17 @@ export function deleteWalk(id) {
   const remainingWalks = walks.filter((walk) => walk.id !== id);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(remainingWalks));
 }
+
+export function importWalks(importedWalks) {
+  const walks = getWalks();
+  const ids = new Set(walks.map((walk) => walk.id));
+  const walksToAdd = importedWalks.map((walk) => {
+    const importedWalk = { ...walk };
+    if (ids.has(importedWalk.id)) importedWalk.id = crypto.randomUUID();
+    ids.add(importedWalk.id);
+    return importedWalk;
+  });
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...walks, ...walksToAdd]));
+  return walksToAdd.length;
+}
