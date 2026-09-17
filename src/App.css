@@ -70,6 +70,7 @@ body {
   box-shadow: var(--shadow-inset);
   font: inherit;
 }
+.date-input { margin-bottom: 14px; }
 .where-details {
   display: flex;
   flex-direction: column;

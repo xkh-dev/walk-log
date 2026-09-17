@@ -3,14 +3,7 @@ import { useState } from 'react';
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CITIES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { deleteWalk, getWalks, saveWalk, updateWalk } from '../storage.js';
-import { getPlaceTypeMap, getRecentPlaces } from '../helpers.js';
-
-function getLocalDateKey(date = new Date()) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, '0');
-  const d = String(date.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-}
+import { getPlaceTypeMap, getRecentPlaces, todayLocal } from '../helpers.js';
 
 function LogForm() {
   const navigate = useNavigate();
@@ -22,6 +15,7 @@ function LogForm() {
   const placeTypeMap = getPlaceTypeMap(walks);
 
   const [duration, setDuration] = useState(existingWalk?.duration ?? 30);
+  const [date, setDate] = useState(existingWalk?.date || todayLocal());
   const [whereType, setWhereType] = useState(existingWalk?.whereType ?? null);
   const [whenType, setWhenType] = useState(existingWalk?.whenType ?? null);
   const [whoType, setWhoType] = useState(existingWalk?.whoType ?? null);
@@ -44,7 +38,7 @@ function LogForm() {
   }
 
   function handleSave() {
-    const changes = { whereType, whenType, duration, whoType, city, place: place.trim() };
+    const changes = { date, whereType, whenType, duration, whoType, city, place: place.trim() };
 
     if (isEditing) {
       updateWalk(id, changes);
@@ -56,12 +50,12 @@ function LogForm() {
       id: crypto.randomUUID(),
       schemaVersion: SCHEMA_VERSION,
       createdAt: new Date().toISOString(),
-      date: getLocalDateKey(),
       ...changes,
       companion: '',
     };
 
     saveWalk(walk);
+    setDate(todayLocal());
     setWhereType(null);
     setWhenType(null);
     setDuration(30);
@@ -123,6 +117,13 @@ function LogForm() {
 
         <section>
           <label>WHEN?</label>
+          <input
+            id="date"
+            className="date-input"
+            type="date"
+            value={date}
+            onChange={(event) => setDate(event.target.value)}
+          />
           <PillGroup options={WHEN_TYPES} selected={whenType} onSelect={setWhenType} />
         </section>
 
