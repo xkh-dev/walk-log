@@ -1,5 +1,6 @@
 import { getWalks } from '../storage';
 import { WHERE_TYPES, WHEN_TYPES } from '../constants';
+import { formatDuration } from '../helpers';
 
 function countByType(walks, field) {
   const counts = {};
@@ -25,7 +26,6 @@ function Stats() {
   // --- totals ---
   const totalWalks = walks.length;
   const totalMinutes = walks.reduce((sum, w) => sum + w.duration, 0);
-  const totalHours = (totalMinutes / 60).toFixed(1);
   const km = ((totalMinutes / 60) * 4).toFixed(1); // ~4 km/h relaxed pace
 
   // --- distributions ---
@@ -75,7 +75,7 @@ function Stats() {
         <p className="stat-title">Totals</p>
         <div className="totals">
           <div><span className="big">{totalWalks}</span><span className="unit">walks</span></div>
-          <div><span className="big">{totalHours}</span><span className="unit">hours</span></div>
+          <div><span className="big">{formatDuration(totalMinutes)}</span><span className="unit">walking</span></div>
           <div><span className="big">~{km}</span><span className="unit">km</span></div>
         </div>
       </div>

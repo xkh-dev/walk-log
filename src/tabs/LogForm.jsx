@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CITIES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { deleteWalk, getWalks, saveWalk, updateWalk } from '../storage.js';
-import { getPlaceTypeMap, getRecentPlaces, todayLocal } from '../helpers.js';
+import { formatDuration, getPlaceTypeMap, getRecentPlaces, todayLocal } from '../helpers.js';
 
 function LogForm() {
   const navigate = useNavigate();
@@ -131,7 +131,7 @@ function LogForm() {
           <label>HOW LONG?</label>
           <div className="stepper">
             <button onClick={() => setDuration(Math.max(15, duration - 15))}>−</button>
-            <span>{duration} min</span>
+            <span>{formatDuration(duration)}</span>
             <button onClick={() => setDuration(duration + 15)}>+</button>
           </div>
         </section>

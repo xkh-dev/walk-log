@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { getWalks } from '../storage';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
+import { formatDuration } from '../helpers';
 
 // this week's quote — later this comes from a quotes archive (Phase 3)
 const QUOTE = {
@@ -40,7 +41,6 @@ function Walk() {
 
   const totalWalks = walks.length;
   const totalMinutes = walks.reduce((sum, w) => sum + w.duration, 0);
-  const totalHours = (totalMinutes / 60).toFixed(1);
   const mostWhere = topType(walks, 'whereType');
   const mostWho = topType(walks, 'whoType');
   const latest = walks[walks.length - 1]; // most recent walk
@@ -72,7 +72,7 @@ function Walk() {
 
       {/* quick summary */}
       <div className="summary">
-        <div className="summary-row"><span>Hours</span><b>{totalHours}</b></div>
+        <div className="summary-row"><span>Duration</span><b>{formatDuration(totalMinutes)}</b></div>
         <div className="summary-row"><span>Most</span><b>{display(WHERE_TYPES, mostWhere)}</b></div>
         <div className="summary-row"><span>Usually</span><b>{display(WHO_TYPES, mostWho)}</b></div>
       </div>

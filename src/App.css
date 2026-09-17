@@ -256,6 +256,12 @@ body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+.day-duration {
+  margin-left: 8px;
+  color: var(--text-muted);
+  letter-spacing: 0;
+  text-transform: none;
+}
 .walk-card {
   display: block;
   width: 100%;

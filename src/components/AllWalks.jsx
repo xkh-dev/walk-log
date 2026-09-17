@@ -4,6 +4,7 @@ import { WHERE_TYPES } from '../constants';
 import { getWalks, importWalks } from '../storage';
 import { csvToWalks, walksToCsv } from '../csv';
 import WalkCard from './WalkCard';
+import { formatDuration } from '../helpers';
 
 function formatDayDate(dateStr) {
   const date = new Date(`${dateStr}T12:00:00`);
@@ -145,6 +146,7 @@ function AllWalks() {
                 const d = String(dayNumber).padStart(2, '0');
                 const dateKey = `${y}-${m}-${d}`;
                 const dayWalks = dateLookup[dateKey] || [];
+                const dayDuration = dayWalks.reduce((sum, walk) => sum + walk.duration, 0);
                 const latestWalk = dayWalks.length
                   ? [...dayWalks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0]
                   : null;
@@ -158,7 +160,7 @@ function AllWalks() {
                     className={`calendar-day ${hasWalk ? 'has-walk' : ''} ${latestWalk && !latestWalk.whereType ? 'day--untyped' : ''}`.trim()}
                     style={color ? { background: color } : undefined}
                     onClick={() => scrollToDay(dateKey)}
-                    aria-label={hasWalk ? `Jump to ${formatDayDate(dateKey)}` : `No walks on ${formatDayDate(dateKey)}`}
+                    aria-label={hasWalk ? `Jump to ${formatDayDate(dateKey)} (${formatDuration(dayDuration)})` : `No walks on ${formatDayDate(dateKey)}`}
                   >
                     <span>{dayNumber}</span>
                   </button>
@@ -171,6 +173,7 @@ function AllWalks() {
             {dateEntries.map(([dateKey, dayWalks]) => {
               const latestWalk = [...dayWalks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
               const dayColor = getWalkColor(latestWalk);
+              const dayDuration = dayWalks.reduce((sum, walk) => sum + walk.duration, 0);
 
               return (
                 <section key={dateKey} id={`day-${dateKey}`} className="day-group">
@@ -183,7 +186,7 @@ function AllWalks() {
                       scrollToDay(dateKey);
                     }}
                   >
-                    {formatDayDate(dateKey)}
+                    {formatDayDate(dateKey)} <span className="day-duration">{formatDuration(dayDuration)}</span>
                   </a>
 
                   {dayWalks.map((walk) => (

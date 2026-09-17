@@ -5,6 +5,20 @@ export function todayLocal(date = new Date()) {
   return `${year}-${month}-${day}`;
 }
 
+export function formatDuration(minutes) {
+  if (minutes > 0 && minutes < 60 && minutes % 15 === 0) {
+    return `${minutes} minute${minutes === 1 ? '' : 's'}`;
+  }
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  if (remainingMinutes === 0 && hours > 0) {
+    return `${hours} hour${hours === 1 ? '' : 's'}`;
+  }
+  if (minutes < 60) return `${minutes}m`;
+  return `${hours}h ${remainingMinutes}m`;
+}
+
 export function getRecentPlaces(walks, limit = 6) {
   const seen = new Set();
 

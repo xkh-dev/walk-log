@@ -1,5 +1,6 @@
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES } from '../constants';
 import { useNavigate } from 'react-router-dom';
+import { formatDuration } from '../helpers';
 
 // turn a stored value like "park" back into "🌳 park" for display
 function display(list, value) {
@@ -20,7 +21,7 @@ function WalkCard({ walk }) {
     <button className="walk-card" onClick={() => navigate(`/log/${walk.id}`)} aria-label={`Edit walk from ${formatDate(walk.date)}`}>
       <div className="walk-card-top">
         <span>{formatDate(walk.date)} {display(WHEN_TYPES, walk.whenType)}</span>
-        <span>{walk.duration} min</span>
+        <span>{formatDuration(walk.duration)}</span>
       </div>
       <div className="walk-card-top">{display(WHO_TYPES, walk.whoType)}</div>
       <div className="walk-where">{display(WHERE_TYPES, walk.whereType)}</div>
