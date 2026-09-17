@@ -27,6 +27,12 @@ Walk, Log is a dedicated, non-judgmental space that captures *just enough* to re
 
 → Full plan in [`docs/roadmap.md`](docs/roadmap.md) and [`docs/stats-plan.md`](docs/stats-plan.md).
 
+## Data
+
+I'll right something about data here later. For now:
+
+→ Details in [`docs/data-model.md`](docs/data-model.md).
+
 ## Design
 
 A depth-based interface built on a token-driven design system: all color, elevation, and shape come from CSS custom properties (OKLCH), so the whole app re-skins from one place. Light theme by default, dark as an option — both from a single set of variables.
