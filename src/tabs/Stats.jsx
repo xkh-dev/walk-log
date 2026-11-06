@@ -1,6 +1,7 @@
 import { getWalks } from '../storage';
 import { WHERE_TYPES, WHEN_TYPES } from '../constants';
 import { formatDuration } from '../helpers';
+import { Link } from 'react-router-dom';
 
 function countByType(walks, field) {
   const counts = {};
@@ -17,6 +18,7 @@ function Stats() {
   if (walks.length === 0) {
     return (
       <div className="stats">
+        <Link to="/account">Account</Link>
         <h1>Stats</h1>
         <p className="empty">Log a few walks and your patterns will appear here.</p>
       </div>
@@ -36,8 +38,8 @@ function Stats() {
 
   return (
     <div className="stats">
+      <Link to="/account">Account</Link>
       <h1>Stats</h1>
-
       {/* 1 — Atmosphere & Light */}
       <div className="stat-card">
         <p className="stat-title">Notice when you walk</p>

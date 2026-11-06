@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Walk from './tabs/Walk';
 import LogForm from './tabs/LogForm';
 import Stats from './tabs/Stats';
+import Account from './tabs/Account';
 import TabBar from './tabs/TabBar';
 import AllWalks from './components/AllWalks';
 import './theme.css';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/log" element={<LogForm />} />
           <Route path="/log/:id" element={<LogForm />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/account" element={<Account />} />
           <Route path="/walks" element={<AllWalks />} />
         </Routes>
       </main>
@@ -26,6 +28,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
