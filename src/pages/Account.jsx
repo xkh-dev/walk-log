@@ -21,7 +21,7 @@ function Account() {
   if (session) {
     return (
       <section>
-        <Link to="/stats">Back</Link>
+        <Link to="/">Back</Link>
         <p>Signed in as {session.user.email}</p>
         <button onClick={() => supabase.auth.signOut()}>Sign out</button>
       </section>
@@ -39,7 +39,7 @@ function Account() {
 
   return (
     <section>
-      <Link to="/stats">Back</Link>
+      <Link to="/">Back</Link>
       <p>Sign in with your email. Walks are stored on this device for now; syncing isn't available yet.</p>
       <form onSubmit={handleSubmit}>
         <input

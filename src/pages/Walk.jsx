@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getWalks } from '../lib/storage';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
@@ -60,6 +60,7 @@ function Walk() {
   return (
     <div className="walk-home">
       <h1>Walk, Log</h1>
+      <Link className="see-all" to="/account">Account</Link>
       {notice && <div className="import-message" role="status">✓&nbsp; {notice}</div>}
 
       {/* weekly quote */}
