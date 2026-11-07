@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WHERE_TYPES } from '../constants';
-import { getWalks, importWalks } from '../storage';
-import { csvToWalks, walksToCsv } from '../csv';
-import WalkCard from './WalkCard';
+import { getWalks, importWalks } from '../lib/storage';
+import { csvToWalks, walksToCsv } from '../lib/csv';
+import WalkCard from '../components/WalkCard';
 import { formatDuration } from '../helpers';
 
 function formatDayDate(dateStr) {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getWalks } from '../storage';
+import { getWalks } from '../lib/storage';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
 import { formatDuration } from '../helpers';

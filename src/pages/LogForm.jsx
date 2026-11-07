@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CITIES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
-import { deleteWalk, getWalks, saveWalk, updateWalk } from '../storage.js';
+import { deleteWalk, getWalks, saveWalk, updateWalk } from '../lib/storage.js';
 import {
   formatDuration,
   getPlaceTypeMap,

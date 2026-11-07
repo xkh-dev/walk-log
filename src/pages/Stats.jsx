@@ -1,4 +1,4 @@
-import { getWalks } from '../storage';
+import { getWalks } from '../lib/storage';
 import { WHERE_TYPES, WHEN_TYPES } from '../constants';
 import { formatDuration } from '../helpers';
 import { Link } from 'react-router-dom';

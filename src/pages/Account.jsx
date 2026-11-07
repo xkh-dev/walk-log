@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../supabase';
-import { useSession } from '../useSession';
+import { supabase } from '../lib/supabase';
+import { useSession } from '../lib/useSession';
 
 function Account() {
   const session = useSession();

@@ -1,4 +1,4 @@
-import { SCHEMA_VERSION } from './constants';
+import { SCHEMA_VERSION } from '../constants';
 
 const CSV_FIELDS = [
   'id',

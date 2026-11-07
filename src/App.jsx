@@ -1,10 +1,10 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Walk from './tabs/Walk';
-import LogForm from './tabs/LogForm';
-import Stats from './tabs/Stats';
-import Account from './tabs/Account';
-import TabBar from './tabs/TabBar';
-import AllWalks from './components/AllWalks';
+import Walk from './pages/Walk';
+import LogForm from './pages/LogForm';
+import Stats from './pages/Stats';
+import Account from './pages/Account';
+import TabBar from './components/TabBar';
+import AllWalks from './pages/AllWalks';
 import './theme.css';
 import './App.css';
 
