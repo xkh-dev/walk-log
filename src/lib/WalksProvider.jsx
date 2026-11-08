@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as walksApi from './walks';
+import { moveLocalWalks } from './moveLocalWalks';
 import { useSession } from './useSession';
 
 const WalksContext = createContext(null);
@@ -33,6 +34,7 @@ export function WalksProvider({ children }) {
   const walksRef = useRef(walks);
   const sessionRef = useRef(session);
   const previousUserId = useRef(null);
+  const movedLocalWalksUserId = useRef(null);
   const requestId = useRef(0);
   const mutationVersion = useRef(0);
 
@@ -134,6 +136,25 @@ export function WalksProvider({ children }) {
 
     void refresh();
   }, [authReady, refresh, session, userId]);
+
+  useEffect(() => {
+    if (!authReady) return;
+    if (!userId) {
+      movedLocalWalksUserId.current = null;
+      return;
+    }
+    if (movedLocalWalksUserId.current === userId) return;
+    movedLocalWalksUserId.current = userId;
+
+    void (async () => {
+      try {
+        const result = await moveLocalWalks();
+        if (result.moved > 0) await refresh();
+      } catch {
+        // Keep failures out of the UI; the next app session will retry.
+      }
+    })();
+  }, [authReady, refresh, userId]);
 
   const assertSessionReady = () => {
     if (sessionRef.current === undefined) throw new Error('The session is not ready.');

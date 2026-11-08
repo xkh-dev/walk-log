@@ -17,7 +17,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - `npm run build` runs the Vite build; `npm run lint` runs Oxlint.
 - Supabase is used for magic-link auth. The Supabase client and session hook live in `src/lib/`.
 - `src/lib/walks.js` selects localStorage for signed-out walks and Supabase for signed-in walks. Signed-in walks are cached for display in a separate `walks-cache:<userId>` localStorage key; that cache is never a storage source and must never be uploaded.
-- Automatic upload of signed-out local walks on sign-in is not implemented.
+- On sign-in, walks from the `walks` localStorage key are uploaded to the account; only walks confirmed in the account are removed locally. Upload failures leave local walks intact. The signed-in cache is never uploaded.
 
 ## Structure
 
