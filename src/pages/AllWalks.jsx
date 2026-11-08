@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WHERE_TYPES } from '../constants';
-import { useWalks } from '../lib/WalksProvider';
+import { useWalks } from '../lib/useWalks';
 import { csvToWalks, walksToCsv } from '../lib/csv';
 import WalkCard from '../components/WalkCard';
 import {

@@ -63,14 +63,15 @@ product never forces a field. Display code must handle `null`/`""` gracefully
 ## Planned (not built yet)
 
 - `photos: string[]` — up to 2 per walk (Phase 6).
-- `updatedAt` (ISO, UTC) — for sync conflict resolution once cross-device exists.
+- `updatedAt` (ISO, UTC) — the database has a nullable `updated_at` column, but the
+  app does not set it yet; it is reserved for sync conflict resolution.
 - `userId` on fetched rows comes from Supabase; client writes omit it so the database assigns ownership.
 
-## Planned Supabase table (Phase 4 sketch)
+## Supabase table
 
     create table walks (
-      id            uuid primary key,
-      user_id       uuid references auth.users not null,
+      id            uuid primary key default gen_random_uuid(),
+      user_id       uuid not null default auth.uid() references auth.users (id),
       date          date not null,
       created_at    timestamptz not null,
       updated_at    timestamptz,
@@ -80,9 +81,12 @@ product never forces a field. Display code must handle `null`/`""` gracefully
       who_type      text,
       city          text default '',
       place         text default '',
-      companion     text default ''
+      companion     text default '',
+      schema_version int not null default 1
     );
-    -- Row-level security: a user can read/write only rows where user_id = auth.uid()
+
+The full table definition, RLS configuration, and ownership policies are in
+[supabase/schema.sql](../supabase/schema.sql).
 
 Note the naming shift: JS uses camelCase (`whereType`); Postgres conventionally uses
 snake_case (`where_type`). The client layer maps between them.
