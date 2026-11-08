@@ -7,6 +7,9 @@ function Account() {
   const session = useSession();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [passkeyStatus, setPasskeyStatus] = useState('idle');
+  const supportsPasskeys = typeof window !== 'undefined'
+    && typeof window.PublicKeyCredential !== 'undefined';
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,12 +21,45 @@ function Account() {
     setStatus(error ? 'error' : 'sent');
   }
 
+  async function handlePasskeySignIn() {
+    setPasskeyStatus('working');
+    try {
+      const { error } = await supabase.auth.signInWithPasskey();
+      setPasskeyStatus(error ? 'error' : 'idle');
+    } catch {
+      setPasskeyStatus('error');
+    }
+  }
+
+  async function handlePasskeyRegistration() {
+    setPasskeyStatus('working');
+    try {
+      const { error } = await supabase.auth.registerPasskey();
+      setPasskeyStatus(error ? 'error' : 'success');
+    } catch {
+      setPasskeyStatus('error');
+    }
+  }
+
   if (session) {
     return (
       <section>
         <Link to="/">Back</Link>
         <p>Signed in as {session.user.email}</p>
         <button onClick={() => supabase.auth.signOut()}>Sign out</button>
+        {supportsPasskeys && (
+          <div>
+            <button
+              className="pill"
+              onClick={handlePasskeyRegistration}
+              disabled={passkeyStatus === 'working'}
+            >
+              {passkeyStatus === 'working' ? 'Adding…' : 'Add a passkey'}
+            </button>
+            {passkeyStatus === 'success' && <p role="status">Passkey added.</p>}
+            {passkeyStatus === 'error' && <p role="alert">Couldn't add a passkey. Try again.</p>}
+          </div>
+        )}
       </section>
     );
   }
@@ -49,11 +85,26 @@ function Account() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? 'Sending…' : 'Send link'}
-        </button>
+        <div className="pills">
+          <button className="pill" type="submit" disabled={status === 'sending'}>
+            {status === 'sending' ? 'Sending…' : 'Send link'}
+          </button>
+          {supportsPasskeys && (
+            <button
+              className="pill"
+              type="button"
+              onClick={handlePasskeySignIn}
+              disabled={passkeyStatus === 'working'}
+            >
+              {passkeyStatus === 'working' ? 'Signing in…' : 'Sign in with passkey'}
+            </button>
+          )}
+        </div>
       </form>
       {status === 'error' && <p>Couldn't send the link. Try again in a few minutes.</p>}
+      {supportsPasskeys && passkeyStatus === 'error' && (
+        <p role="alert">Couldn't sign in with a passkey. Try again.</p>
+      )}
     </section>
   );
 }
