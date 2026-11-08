@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CITIES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
-import { useWalks } from '../lib/WalksProvider';
+import { useWalks } from '../lib/useWalks';
 import { LogFormPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
 import {
   formatDuration,

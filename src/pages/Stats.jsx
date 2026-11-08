@@ -1,4 +1,4 @@
-import { useWalks } from '../lib/WalksProvider';
+import { useWalks } from '../lib/useWalks';
 import { StatsPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
 import { WHERE_TYPES, WHEN_TYPES } from '../constants';
 import { formatDuration } from '../helpers';

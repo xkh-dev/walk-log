@@ -1,9 +1,9 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as walksApi from './walks';
 import { moveLocalWalks } from './moveLocalWalks';
 import { useSession } from './useSession';
+import { WalksContext } from './useWalks';
 
-const WalksContext = createContext(null);
 const CACHE_PREFIX = 'walks-cache:';
 
 function cacheKey(userId) {
@@ -226,12 +226,6 @@ export function WalksProvider({ children }) {
       {children}
     </WalksContext.Provider>
   );
-}
-
-export function useWalks() {
-  const context = useContext(WalksContext);
-  if (!context) throw new Error('useWalks must be used within a WalksProvider.');
-  return context;
 }
 
 export default WalksProvider;

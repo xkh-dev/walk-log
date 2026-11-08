@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useWalks } from '../lib/WalksProvider';
+import { useWalks } from '../lib/useWalks';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
 import { HomeWalksPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
