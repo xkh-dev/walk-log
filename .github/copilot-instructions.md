@@ -73,12 +73,24 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - Match existing patterns and naming (e.g. `whereType`, `whenType`, `whoType`). Use single quotes, semicolons, and `export default` at the bottom.
 - No new dependencies without asking.
 - State assumptions briefly; keep explanations short.
+- Work on a branch named after the issue (e.g. 43-move-local-walks). Never commit directly to main.
+- Open a pull request only when I ask. Put "Closes #N" or "Refs #N" in its description.
+
+## GitHub issues and project board
+
+- Use the GitHub CLI (`gh`) for issues and the `Steps` project in `xkh-dev/walk-log`.
+- Before any GitHub write command, show the exact command. Check `gh auth status` first. If the required scope is missing, run the `gh auth refresh` command GitHub recommends and wait for browser authorization to finish; never ask for or share tokens.
+- Create issues with the user's exact title and body, writing the body to a temporary file first:
+  `gh issue create --repo xkh-dev/walk-log --title "<title>" --body-file "<temp-file>" --project "Steps"`
+- Keep the requested project backlog status as `Back, Log`. Discover the project number and ID with `gh project list --owner xkh-dev --format json`; discover the Status field ID and `Back, Log` option ID with `gh project field-list <project-number> --owner xkh-dev --format json`.
+- Find the new issue's project item ID with `gh project item-list <project-number> --owner xkh-dev --limit 100 --format json`, then set only its Status using `gh project item-edit --id <item-id> --field-id <status-field-id> --project-id <project-id> --single-select-option-id <back-log-option-id>`.
+- Verify the created issue and its project Status. If issue creation reports a project error, check whether the issue was created before retrying without `--project`, to avoid duplicates. Don't modify other issues or project items. Remove temporary body files after use.
 
 ## Ask before
 
 - Deleting or migrating user data
 - Changing the database schema, RLS, or auth settings
-- Pushing to GitHub
+- Pushing anything to main
 
 ## Before committing
 
