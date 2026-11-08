@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { getWalks } from '../lib/storage';
+import { useWalks } from '../lib/WalksProvider';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
+import { HomeWalksPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
 import { formatDuration } from '../helpers';
 
 // this week's quote — later this comes from a quotes archive (Phase 3)
@@ -39,8 +40,7 @@ function Walk() {
   const navigate = useNavigate();
   const location = useLocation();
   const notice = location.state?.notice || '';
-  
-  const walks = getWalks();
+  const { walks, ready, loadError } = useWalks();
 
   useEffect(() => {
     if (!notice) return undefined;
@@ -62,6 +62,7 @@ function Walk() {
       <h1>Walk, Log</h1>
       <Link className="see-all" to="/account">Account</Link>
       {notice && <div className="import-message" role="status">✓&nbsp; {notice}</div>}
+      <WalksStatus message={loadError} />
 
       {/* weekly quote */}
       <div className="quote-card">
@@ -73,23 +74,31 @@ function Walk() {
       </div>
 
       {/* most recent walk (reuses your WalkCard) */}
-      {latest
-        ? <WalkCard walk={latest} />
-        : <p className="empty">No walks yet. Log your first one.</p>}
+      {ready ? (
+        <>
+          {latest
+            ? <WalkCard walk={latest} />
+            : loadError
+              ? null
+              : <p className="empty">No walks yet. Log your first one.</p>}
 
-      {/* totals card — tap to open All Walks */}
-      <button className="total-card" onClick={() => navigate('/walks')}>
-        <span className="total-number">{totalWalks}</span>
-        <span className="total-label">walks total</span>
-        <span className="see-all">All Walks ›</span>
-      </button>
+          <button className="total-card" onClick={() => navigate('/walks')}>
+            <span className="total-number">{totalWalks}</span>
+            <span className="total-label">walks total</span>
+            <span className="see-all">All Walks ›</span>
+          </button>
 
-      {/* quick summary */}
-      <div className="summary">
-        <div className="summary-row"><span>Duration</span><b>{formatDuration(totalMinutes)}</b></div>
-        <div className="summary-row"><span>Most</span><b>{display(WHERE_TYPES, mostWhere)}</b></div>
-        <div className="summary-row"><span>Usually</span><b>{display(WHO_TYPES, mostWho)}</b></div>
-      </div>
+          <div className="summary">
+            <div className="summary-row"><span>Duration</span><b>{formatDuration(totalMinutes)}</b></div>
+            <div className="summary-row"><span>Most</span><b>{display(WHERE_TYPES, mostWhere)}</b></div>
+            <div className="summary-row"><span>Usually</span><b>{display(WHO_TYPES, mostWho)}</b></div>
+          </div>
+        </>
+      ) : (
+        <div className="delayed-placeholder">
+          <HomeWalksPlaceholder />
+        </div>
+      )}
 
       {/* footer */}
       <footer className="walk-footer">

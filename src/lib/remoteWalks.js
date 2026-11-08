@@ -45,6 +45,11 @@ export async function saveWalk(walk) {
   if (error) throw error;
 }
 
+export async function importWalks(walks) {
+  const { error } = await supabase.from('walks').upsert(walks.map(toRow));
+  if (error) throw error;
+}
+
 export async function updateWalk(id, changes) {
   const { error } = await supabase.from('walks').update(toRow(changes)).eq('id', id);
   if (error) throw error;

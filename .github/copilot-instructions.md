@@ -16,8 +16,8 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - Vite + React, plain JavaScript (no TypeScript for now), React Router, and Oxlint.
 - `npm run build` runs the Vite build; `npm run lint` runs Oxlint.
 - Supabase is used for magic-link auth. The Supabase client and session hook live in `src/lib/`.
-- Walks are currently stored in browser `localStorage` through `src/lib/storage.js`. `src/lib/remoteWalks.js` contains a Supabase adapter, but walk screens do not use it yet; signed-in walk sync is not implemented.
-- Target sync behavior: signed-out walks use localStorage; signed-in walks use Supabase only. Treat this as planned behavior, not current behavior.
+- `src/lib/walks.js` selects localStorage for signed-out walks and Supabase for signed-in walks. Signed-in walks are cached for display in a separate `walks-cache:<userId>` localStorage key; that cache is never a storage source and must never be uploaded.
+- Automatic upload of signed-out local walks on sign-in is not implemented.
 
 ## Structure
 
@@ -36,7 +36,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 ## Data
 
-- Current walk screens use `src/lib/storage.js` directly. When adding or wiring sync, put the storage choice behind `src/lib/walks.js` (create it if needed); screens should use that shared interface, not call `storage.js` or `remoteWalks.js` directly.
+- Screens get walks only through `useWalks()` from `src/lib/WalksProvider.jsx`. The provider uses `src/lib/walks.js` as the storage choice layer; screens must not call `storage.js` or `remoteWalks.js` directly.
 - App fields are camelCase, DB columns snake_case. Keep the mapping in `src/lib/remoteWalks.js`.
 - Never include `userId` in Supabase write payloads. The database must derive `user_id` from the authenticated user (`auth.uid()`).
 - A walk's `id` is stable for its lifetime. Never give an existing walk a new `id`; remote writes use upserts by `id`.

@@ -9,7 +9,7 @@ the CSV format, or the storage layer.
 | Field         | Type                     | Required | Meaning |
 |---------------|--------------------------|----------|---------|
 | `id`          | string (UUID)            | yes      | Stable, globally-unique identity for this walk. Never reused, never reassigned. |
-| `userId`      | string \| null           | no       | Owner. Empty (`null`/`""`) today; filled once accounts exist. |
+| `userId`      | string \| null           | no       | Owner. Empty (`null`/`""`) for local walks; set from the authenticated Supabase row when signed in. |
 | `date`        | string `"YYYY-MM-DD"`     | yes      | The **local calendar day** the walk belongs to (a civil date). |
 | `createdAt`   | string (ISO 8601, UTC)   | yes      | The exact **instant** the record was saved. Used for ordering. |
 | `duration`    | number (minutes)         | yes      | Length of the walk. Defaults to 30. |
@@ -46,8 +46,9 @@ product never forces a field. Display code must handle `null`/`""` gracefully
 
 ## Storage
 
-- **Now:** browser `localStorage`, key `"walks"`, a JSON array of Walk objects.
-- **Later (Phase 4):** a Supabase `walks` table, one row per walk, owned by `userId`.
+- **Signed out:** browser `localStorage`, key `"walks"`, a JSON array of Walk objects.
+- **Signed in:** the Supabase `walks` table, one row per walk, owned by the authenticated user.
+- **Display cache:** `localStorage` key `"walks-cache:<userId>"`. It is only for immediate display while signed-in walks load; it is not read by `storage.js` and is never uploaded.
 
 ## Import / export (CSV)
 

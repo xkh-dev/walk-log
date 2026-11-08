@@ -1,9 +1,14 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { WHERE_TYPES } from '../constants';
-import { getWalks, importWalks } from '../lib/storage';
+import { useWalks } from '../lib/WalksProvider';
 import { csvToWalks, walksToCsv } from '../lib/csv';
 import WalkCard from '../components/WalkCard';
+import {
+  CalendarPlaceholder,
+  WalkListPlaceholder,
+  WalksStatus,
+} from '../components/WalksPlaceholder';
 import { formatDuration } from '../helpers';
 
 function formatDayDate(dateStr) {
@@ -41,8 +46,9 @@ function AllWalks() {
   const fileInputRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const [importMessage, setImportMessage] = useState('');
-  const [, refresh] = useState(0);
-  const walks = [...getWalks()].sort((a, b) => {
+  const [importError, setImportError] = useState(false);
+  const { walks: allWalks, ready, loadError, importWalks } = useWalks();
+  const walks = [...allWalks].sort((a, b) => {
     const aDate = getDayKey(a.date || a.createdAt);
     const bDate = getDayKey(b.date || b.createdAt);
     return bDate.localeCompare(aDate) || new Date(b.createdAt) - new Date(a.createdAt);
@@ -84,13 +90,19 @@ function AllWalks() {
     const [file] = event.target.files || [];
     if (!file) return;
 
-    const importedWalks = csvToWalks(await file.text());
-    const { added, skipped } = importWalks(importedWalks);
-    setImportMessage(`${added} added, ${skipped} skipped`);
-    setShowMenu(false);
-    refresh((value) => value + 1);
-    event.target.value = '';
-    window.setTimeout(() => setImportMessage(''), 3000);
+    try {
+      const importedWalks = csvToWalks(await file.text());
+      const { added, skipped } = await importWalks(importedWalks);
+      setImportError(false);
+      setImportMessage(`${added} added, ${skipped} skipped`);
+      setShowMenu(false);
+      window.setTimeout(() => setImportMessage(''), 3000);
+    } catch {
+      setImportError(true);
+      setImportMessage("Couldn't import walks. Try again in a few minutes.");
+    } finally {
+      event.target.value = '';
+    }
   }
 
   return (
@@ -104,6 +116,7 @@ function AllWalks() {
             type="button"
             aria-label="Import or export walks"
             aria-expanded={showMenu}
+            disabled={!ready}
             onClick={() => setShowMenu((visible) => !visible)}
           >
             …
@@ -117,10 +130,20 @@ function AllWalks() {
           <input ref={fileInputRef} type="file" accept=".csv,text/csv" onChange={handleImport} hidden />
         </div>
       </header>
-      {importMessage && <div className="import-message" role="status">✓&nbsp; {importMessage}</div>}
+      {importMessage && (
+        <div className="import-message" role={importError ? 'alert' : 'status'}>
+          {!importError && '✓\u00a0'}{importMessage}
+        </div>
+      )}
+      <WalksStatus message={loadError} />
 
-      {walks.length === 0 ? (
-        <p className="empty">Your first walk is waiting.</p>
+      {!ready ? (
+        <div className="delayed-placeholder">
+          <CalendarPlaceholder />
+          <WalkListPlaceholder />
+        </div>
+      ) : walks.length === 0 ? (
+        loadError ? null : <p className="empty">Your first walk is waiting.</p>
       ) : (
         <>
           <section className="calendar-panel" aria-label="Walk calendar">

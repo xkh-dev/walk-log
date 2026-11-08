@@ -2,15 +2,27 @@ import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 
 export function useSession() {
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => setSession(data.session));
-
+    let active = true;
+    let hasAuthEvent = false;
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      hasAuthEvent = true;
       setSession(session);
     });
-    return () => data.subscription.unsubscribe();
+    supabase.auth.getSession().then(({ data: sessionData, error }) => {
+      if (error) {
+        console.error('Could not read the current session.', error);
+        return;
+      }
+      if (active && !hasAuthEvent) setSession(sessionData.session);
+    });
+
+    return () => {
+      active = false;
+      data.subscription.unsubscribe();
+    };
   }, []);
 
   return session;

@@ -1,4 +1,5 @@
-import { getWalks } from '../lib/storage';
+import { useWalks } from '../lib/WalksProvider';
+import { StatsPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
 import { WHERE_TYPES, WHEN_TYPES } from '../constants';
 import { formatDuration } from '../helpers';
 
@@ -12,13 +13,26 @@ function countByType(walks, field) {
 }
 
 function Stats() {
-  const walks = getWalks();
+  const { walks, ready, loadError } = useWalks();
+
+  if (!ready) {
+    return (
+      <div className="stats">
+        <h1>Stats</h1>
+        <WalksStatus message={loadError} />
+        <div className="delayed-placeholder">
+          <StatsPlaceholder />
+        </div>
+      </div>
+    );
+  }
 
   if (walks.length === 0) {
     return (
       <div className="stats">
         <h1>Stats</h1>
-        <p className="empty">Log a few walks and your patterns will appear here.</p>
+        <WalksStatus message={loadError} />
+        {!loadError && <p className="empty">Log a few walks and your patterns will appear here.</p>}
       </div>
     );
   }
@@ -37,6 +51,7 @@ function Stats() {
   return (
     <div className="stats">
       <h1>Stats</h1>
+      <WalksStatus message={loadError} />
       {/* 1 — Atmosphere & Light */}
       <div className="stat-card">
         <p className="stat-title">Notice when you walk</p>
