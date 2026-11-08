@@ -46,8 +46,17 @@ export async function saveWalk(walk) {
 }
 
 export async function importWalks(walks) {
-  const { error } = await supabase.from('walks').upsert(walks.map(toRow));
+  const { error } = await supabase.from('walks').upsert(walks.map(toRow), {
+    onConflict: 'id',
+    ignoreDuplicates: true,
+  });
   if (error) throw error;
+}
+
+export async function getWalkIds(ids) {
+  const { data, error } = await supabase.from('walks').select('id').in('id', ids);
+  if (error) throw error;
+  return data.map(({ id }) => id);
 }
 
 export async function updateWalk(id, changes) {

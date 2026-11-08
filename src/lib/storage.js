@@ -29,6 +29,15 @@ export function deleteWalk(id) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(remainingWalks));
 }
 
+export function removeWalks(ids) {
+  if (ids.length === 0) return;
+
+  const idsToRemove = new Set(ids);
+  const walks = getWalks();
+  const remainingWalks = walks.filter((walk) => !idsToRemove.has(walk.id));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(remainingWalks));
+}
+
 export function importWalks(importedWalks) {
   const walks = getWalks();
   const result = getWalksToImport(importedWalks, walks);

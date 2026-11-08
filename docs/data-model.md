@@ -49,6 +49,7 @@ product never forces a field. Display code must handle `null`/`""` gracefully
 - **Signed out:** browser `localStorage`, key `"walks"`, a JSON array of Walk objects.
 - **Signed in:** the Supabase `walks` table, one row per walk, owned by the authenticated user.
 - **Display cache:** `localStorage` key `"walks-cache:<userId>"`. It is only for immediate display while signed-in walks load; it is not read by `storage.js` and is never uploaded.
+- **On sign-in:** walks from the `"walks"` key are uploaded by their existing IDs. Only IDs confirmed in the account are removed locally; if an upload or confirmation fails, the local data is kept. The display cache is never migrated.
 
 ## Import / export (CSV)
 
@@ -63,7 +64,7 @@ product never forces a field. Display code must handle `null`/`""` gracefully
 
 - `photos: string[]` — up to 2 per walk (Phase 6).
 - `updatedAt` (ISO, UTC) — for sync conflict resolution once cross-device exists.
-- `userId` populated on sign-in; existing local walks get the user's id on first sync.
+- `userId` on fetched rows comes from Supabase; client writes omit it so the database assigns ownership.
 
 ## Planned Supabase table (Phase 4 sketch)
 
