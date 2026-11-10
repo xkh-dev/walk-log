@@ -1,10 +1,10 @@
 # Walk, Log — Copilot instructions
 
-Use these instructions when changing Walk, Log. They describe the product, code, data, and privacy rules for contributors and coding agents.
+When you change Walk, Log, follow these instructions to preserve the product, code, data, and privacy boundaries.
 
 Walk, Log is a contemplative walk journal. People log walks (where, when, how long, with whom) to build a personal record and notice gentle patterns — never to compete, score, or be nudged.
 
-## Product principles (do not violate)
+## Product principles
 
 - No streaks, points, badges, goals, or motivational/competitive language. Ever.
 - Logging must feel effortless: optional fields, fast, no guilt. Never block saving because a field is empty.
@@ -71,17 +71,19 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 ## Working style
 
-- Read the relevant file and any relevant `/docs` file before editing. Docs may describe planned work; check the current code before treating it as implemented.
+- Read the relevant file and any relevant file in `docs/` before editing. Docs may describe planned work; check the current code before treating it as implemented.
 - Make the smallest focused change. No large unsolicited refactors.
 - Match existing patterns and naming (e.g. `whereType`, `whenType`, `whoType`). Use single quotes, semicolons, and `export default` at the bottom.
 - No new dependencies without asking.
 - State assumptions briefly; keep explanations short.
 - Work on a branch named after the issue (e.g. 43-move-local-walks). Never commit directly to main.
-- Open a pull request only when I ask. Put "Closes #N" or "Refs #N" in its description.
+- Open a pull request when I ask. Every PR description includes `Closes #N` when it finishes the issue or `Refs #N` when it's part of the issue. GitHub only closes issues with `Closes`, `Fixes`, or `Resolves`.
+- PR titles follow the [commit title rules](commit-instructions.md#title), never the branch name.
 
 ## GitHub issues and project board
 
 - Use the GitHub CLI (`gh`) for issues and the `Steps` project in `xkh-dev/walk-log`.
+- Issues follow `.github/ISSUE_TEMPLATE/task.md`. Don't paste chat replies or status updates into issue bodies; use comments.
 - Before any GitHub write command, show the exact command. Check `gh auth status` first. If the required scope is missing, run the `gh auth refresh` command GitHub recommends and wait for browser authorization to finish; never ask for or share tokens.
 - Create issues with the user's exact title and body, writing the body to a temporary file first:
   `gh issue create --repo xkh-dev/walk-log --title "<title>" --body-file "<temp-file>" --project "Steps"`
@@ -97,24 +99,29 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 ## Before committing
 
-- Run `npm run build` and `npm run lint`; fix what breaks.
+- Run Markdown linting, `npm run build`, `npm run lint`, and `npm test`; fix what breaks.
 - Commit messages follow `.github/commit-instructions.md`.
 - List what to test by hand in your summary.
 - Follow the [docs map](../docs/README.md) when updating documentation.
 
 ## Docs
 
-Docs live in `docs/` on main. When editing Markdown, follow `.github/instructions/docs.instructions.md`.
+Docs live in `docs/`. When editing Markdown, follow `.github/instructions/docs.instructions.md`.
 Update docs in the same PR as the change, using this map:
 
-- Feature added or changed → README (Features), `docs/roadmap.md`
-- Walk fields, DB columns, RLS → `docs/data-model.md`, `supabase/schema.sql`
-- Data flow, sync, auth, caching → `docs/architecture.md`
-- Tokens or components → `docs/design-system.md`
-- Setup, tools, environment variables → `docs/tooling.md`, `.env.example`
-- Choice between real options → new ADR in `docs/decisions/`
-- New concept used in the PR → entry in `docs/learning-log.md`
-- New doc file → `docs/README.md` index
+- Product behavior and boundaries → `README.md`, `docs/product-brief.md`, `docs/case-study.md`
+- Shipped behavior and planned work → `docs/roadmap.md`
+- Walk fields, CSV, database columns, or RLS → `docs/data-model.md`, `supabase/schema.sql`
+- Data flow, sessions, sync, auth, migration, or caching → `docs/architecture.md`
+- Tokens, themes, or shared components → `docs/design-system.md`
+- Stats calculations → `docs/stats-plan.md`
+- Setup, environment variables, or local tooling → `docs/tooling.md`, `.env.example`
+- Browser verification steps → `docs/testing.md`
+- A choice between real options → a new ADR in `docs/decisions/`, using `docs/decisions/template.md`
+- A concept introduced or used → `docs/learning-log.md`
+- Branching, commits, issues, pull requests, or review workflow → `CONTRIBUTING.md`, `.github/copilot-instructions.md`, `.github/instructions/docs.instructions.md`, `.github/commit-instructions.md`, `.github/pull_request_template.md`, `.github/ISSUE_TEMPLATE/task.md`, and the relevant `.github/prompts/` file
+- Any new project documentation → add it to `docs/README.md`
+- Update `docs/README.md` whenever you add or move a document it indexes. Its index covers `README.md`, `CONTRIBUTING.md`, every file in `docs/`, and the Markdown guidance and templates under `.github/`.
 - If nothing applies, say "Docs: not needed" in the PR.
 
 ## Related

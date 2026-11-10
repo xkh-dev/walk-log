@@ -1,6 +1,6 @@
 # Documentation index
 
-Use this index to find project documentation, implementation guidance, and repository rules. The vendored files under `.agents/` are excluded.
+Browse this index to find project documentation, implementation guidance, and repository rules. It excludes vendored files under `.agents/`.
 
 ## Overview
 
@@ -16,7 +16,7 @@ Use this index to find project documentation, implementation guidance, and repos
 - [Supabase for auth and storage](decisions/001-supabase-for-auth-and-storage.md) — why signed-in walks use a managed backend.
 - [Optional sign-in and storage by session](decisions/002-optional-sign-in-and-storage.md) — why storage changes with sign-in state.
 - [Magic links and passkeys](decisions/003-magic-link-and-passkeys.md) — why email links and passkeys are both available.
-- [Display-only cache](decisions/004-display-only-cache.md) — why the signed-in cache is not a storage source.
+- [Display-only cache](decisions/004-display-only-cache.md) — why the signed-in cache isn't a storage source.
 - [Source folders by responsibility](decisions/005-folders-by-code-responsibility.md) — why screens, shared UI, and non-UI code are separated.
 
 ## Reference
@@ -42,6 +42,10 @@ Use this index to find project documentation, implementation guidance, and repos
 - [Markdown writing rules](../.github/instructions/docs.instructions.md) — style and structure for project Markdown.
 - [Commit message instructions](../.github/commit-instructions.md) — commit title and body conventions.
 - [Pull request template](../.github/pull_request_template.md) — pull request summary and checklist.
+- [Task issue template](../.github/ISSUE_TEMPLATE/task.md) — planning format for issue scope, completion, notes, and exclusions.
+- [Start-task command](../.github/prompts/start-task.prompt.md) — implement an issue through checks, squash merge, and cleanup.
+- [New-issue command](../.github/prompts/new-issue.prompt.md) — create a task issue and add it to the Steps project.
+- [Write-ADR command](../.github/prompts/write-adr.prompt.md) — draft the next numbered architecture decision record.
 
 ## Related
 

@@ -1,6 +1,6 @@
 # Pull request
 
-Use this template to explain the change and the checks you ran.
+Summarize what changed, why it matters, and which checks you ran.
 
 ## What changed
 

@@ -1,6 +1,6 @@
 # Design system
 
-This reference describes the shared visual tokens and UI conventions. Use it when changing styles or building a component so the light and dark token sets remain consistent.
+Shared tokens keep the light and dark themes consistent. If you're styling the app or building a component, this reference explains the conventions to follow.
 
 ## Tokens
 
@@ -17,13 +17,13 @@ The colors use OKLCH so the lightness steps remain perceptually consistent.
 ## Depth
 
 - Light comes from above.
-- Layered backgrounds and shadows define surfaces; the interface does not use borders for panel edges.
+- Layered backgrounds and shadows define surfaces; the interface doesn't use borders for panel edges.
 - Interactive elements use raised shadows. Pressed and selected states use inset shadows.
 - Cards use deeper shadows than controls; stats bars and inputs read as recessed.
 
 ## Themes
 
-The default token set is light. `src/theme.css` also defines a dark token set under `body.dark`. Components should use the variables so either set can be applied. The app does not currently expose a theme switch in its screens.
+The default token set is light. `src/theme.css` also defines a dark token set under `body.dark`. Components should use the variables so either set can be applied. The app doesn't expose a theme switch in its screens.
 
 ## Component conventions
 

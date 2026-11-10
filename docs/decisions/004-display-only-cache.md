@@ -1,6 +1,6 @@
 # 004: A display-only cache for signed-in walks
 
-This record explains why the app keeps a per-user cache for display but not as a signed-in storage source. It is for contributors changing loading or caching behavior.
+If you change loading or caching behavior, use this ADR to understand why the per-user cache is for display only.
 
 ## Status
 
@@ -29,7 +29,7 @@ Use a separate localStorage key for each signed-in user's display cache. Supabas
 - The provider can display the last known walks while it refreshes from Supabase.
 - Successful refreshes and walk changes update provider state and the cache.
 - The cache is never used as a storage source or uploaded, and it is removed on sign-out.
-- The cache does not make signed-in operations available offline.
+- The cache doesn't make signed-in operations available offline.
 
 ## Related
 

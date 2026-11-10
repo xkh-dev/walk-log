@@ -1,12 +1,12 @@
 # Roadmap
 
-This roadmap separates behavior already present in the web app from work that is still planned. Use it to understand scope without treating future ideas as shipped features or commitments.
+Check this roadmap to distinguish shipped web behavior from work that's still planned; future ideas aren't commitments or current features.
 
 ## Current web app
 
 The current web app lets people create, edit, and delete walks; browse a calendar and list; review totals and time-of-day and place-type summaries; and import or export CSV.
 
-The app works without an account using browser storage. People can optionally sign in with an email link or passkey. Signed-in walks use Supabase, and local walks are transferred on sign-in after the account confirms their IDs.
+The app works without an account using browser storage. You can sign in with an email link or passkey if you choose. Signed-in walks use Supabase, and local walks are transferred after the account confirms their IDs.
 
 ## Planned work
 

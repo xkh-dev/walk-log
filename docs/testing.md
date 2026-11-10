@@ -1,6 +1,6 @@
 # Manual testing
 
-These checklists help you verify signed-out, signed-in, migration, and passkey behavior in a browser. Use separate browser profiles so each session has independent cookies and local storage.
+Check each walk flow in a browser using these steps. Separate profiles keep signed-out and signed-in data independent.
 
 ## Set up isolated sessions
 
@@ -8,7 +8,7 @@ These checklists help you verify signed-out, signed-in, migration, and passkey b
 2. Sign in to the account in one profile.
 3. Keep the second profile signed out. A private window can work, but close it when you finish to clear its temporary site data.
 
-Use the same hostname in both profiles. `localhost` and `127.0.0.1` are different origins and do not share browser storage.
+Use the same hostname in both profiles. `localhost` and `127.0.0.1` are different origins and don't share browser storage.
 
 ## Signed out
 
@@ -19,7 +19,7 @@ Use the same hostname in both profiles. `localhost` and `127.0.0.1` are differen
 - [ ] Delete the walk and confirm it is gone.
 - [ ] Export a CSV, remove the test walk, import the file, and confirm it returns.
 - [ ] Export a walk with formula-like text in a text field and confirm a spreadsheet displays it as text without changing the saved walk.
-- [ ] Confirm the signed-out walk does not appear in the signed-in profile.
+- [ ] Confirm the signed-out walk doesn't appear in the signed-in profile.
 
 ## Signed in
 
@@ -38,7 +38,7 @@ Use the same hostname in both profiles. `localhost` and `127.0.0.1` are differen
 - [ ] If you inspect local storage, confirm the transferred ID is no longer in the `walks` key. The `walks-cache:<userId>` key is only a display cache.
 - [ ] Close the private window or clear the separate profile's site data when finished.
 
-Only IDs confirmed in the account should be removed from local storage. Do not manually delete database records as part of routine checks.
+Only IDs confirmed in the account should be removed from local storage. Don't manually delete database records as part of routine checks.
 
 ## Passkeys
 
