@@ -1,5 +1,7 @@
 # Walk, Log — Copilot instructions
 
+Use these instructions when changing Walk, Log. They describe the product, code, data, and privacy rules for contributors and coding agents.
+
 Walk, Log is a contemplative walk journal. People log walks (where, when, how long, with whom) to build a personal record and notice gentle patterns — never to compete, score, or be nudged.
 
 ## Product principles (do not violate)
@@ -15,7 +17,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 - Vite + React, plain JavaScript (no TypeScript for now), React Router, and Oxlint.
 - `npm run build` runs the Vite build; `npm run lint` runs Oxlint.
-- Supabase is used for magic-link auth. The Supabase client and session hook live in `src/lib/`.
+- Supabase is used for email-link and passkey auth. The Supabase client and session hook live in `src/lib/`.
 - `src/lib/walks.js` selects localStorage for signed-out walks and Supabase for signed-in walks. Signed-in walks are cached for display in a separate `walks-cache:<userId>` localStorage key; that cache is never a storage source and must never be uploaded.
 - On sign-in, walks from the `walks` localStorage key are uploaded to the account; only walks confirmed in the account are removed locally. Upload failures leave local walks intact. The signed-in cache is never uploaded.
 
@@ -114,4 +116,8 @@ Update docs in the same PR as the change, using this map:
 - New doc file → `docs/README.md` index
 - If nothing applies, say "Docs: not needed" in the PR.
 
-See the [documentation index](../docs/README.md) for the product brief, roadmap, stats plan, data model, and design system.
+## Related
+
+- [Documentation index](../docs/README.md)
+- [Markdown writing rules](instructions/docs.instructions.md)
+- [Contributing](../CONTRIBUTING.md)

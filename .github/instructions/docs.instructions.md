@@ -4,6 +4,8 @@ applyTo: "**/*.md"
 
 # Writing docs for Walk, Log
 
+Use these rules when you write or edit repository documentation. They help contributors, future readers, and coding agents understand the code and decisions without relying on conversation history.
+
 ## Who reads these docs
 
 - The author, weeks later, learning how the code works and why
@@ -74,9 +76,9 @@ New doc types need a clear reader and a place in this list.
 Every PR that introduces or relies on a concept adds an entry, newest first:
 
 ```markdown
-## YYYY-MM-DD · PR title (#N)
+## 2026-11-08 · Move local walks into the account on sign-in (#51)
 
-- **Concept**: One plain sentence on what it is and why it's used here. Where: `path/to/file.js`. Read more: [official documentation](https://example.com).
+- **Concept**: An idempotent upsert plus a read-back check lets sign-in transfer existing walks without changing their IDs. Where: `src/lib/moveLocalWalks.js`. Read more: [Supabase JavaScript upsert](https://supabase.com/docs/reference/javascript/upsert).
 ```
 
 Concepts are things worth studying (upsert, RLS, React context, stale-while-revalidate), not every line changed.

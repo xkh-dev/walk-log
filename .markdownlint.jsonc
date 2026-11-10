@@ -1,0 +1,6 @@
+{
+  "MD013": false,
+  "MD033": false,
+  // Keep the existing data-model table's intentional column widths.
+  "MD060": false
+}

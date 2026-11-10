@@ -1,23 +1,32 @@
-# Product Brief — Walk, Log
+# Product brief
 
-## What it is
-A dedicated, non-judgmental place to log contemplative walks and, over time, notice patterns in when, where, and how you walk.
+This brief explains the product purpose and boundaries for contributors making user-facing changes. Use it to keep the walk record useful without turning it into a performance tool.
 
-## Problem
-People who walk to think and process life have nowhere made for it. Notes apps bury walks among to-do lists; journal apps feel bloated for walks alone; fitness apps judge and motivate — the opposite of what a contemplative walker wants. So they either don't log, or scatter it across Notes, spreadsheets, and messages to themselves, and lose the thread of something meaningful.
+## What the app does
 
-## Who it's for
-Persona — Sasha, 28, designer in Moscow. Walks 1–2× per week, alone or with someone, in parks or the city. "Walking makes my day feel like it makes sense." Currently logs in a private Telegram channel (no form, awkward to edit). Wants a simple, dedicated home for walks.
+Walk, Log lets people record a walk and review their history. A walk can include its date, duration, place, time of day, and companion; optional details stay optional.
 
-## Value proposition
-For people who walk to contemplate — unlike fitness apps and generic journals — Walk, Log is a dedicated, non-judgmental space that captures just enough to reveal patterns without obligation.
+People can use the app without an account. Signing in is optional and stores signed-in walks in Supabase.
 
-## Jobs to be done
-- Capture a walk quickly, to build a personal record without feeling obligated or judged.
-- See patterns in when/where/how I walk, to understand my relationship with solitude and movement.
-- Feel a small moment of calm when I open the app — part of the ritual, not just data entry.
-- Remember who I walked with, to see who I share this practice with over time.
-- Bring in walks I already recorded elsewhere, so I don't start from zero.
+## The problem
 
-## Competitive gap
-Against Notes, Strava, and Day One, Walk, Log is the only one that is all of: dedicated to walks, free of judgment/goals, pattern-detecting (contemplation metrics), private by default, and fast to log.
+Walks can be meaningful without being exercise goals. General-purpose notes and journals do not always make walk entries easy to find, while fitness products often emphasize targets or performance. Walk, Log provides a focused record without requiring those frames.
+
+## Intended audience
+
+The app is for people who walk to think, spend time outdoors, or share time with someone and want a personal record. It does not assume that a person wants to optimize distance, pace, or frequency.
+
+## Product boundaries
+
+- Do not add streaks, scores, badges, or goals.
+- Keep walk details optional and allow people to log after the walk.
+- Do not add geolocation.
+- Preserve the words a person enters.
+- Keep the app useful without an account; signing in remains optional.
+
+## Related
+
+- [Repository overview](../README.md)
+- [Roadmap](roadmap.md)
+- [Data model](data-model.md)
+- [Documentation index](README.md)

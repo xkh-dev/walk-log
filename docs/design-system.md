@@ -1,28 +1,41 @@
-# Design System — Walk, Log
+# Design system
+
+This reference describes the shared visual tokens and UI conventions. Use it when changing styles or building a component so the light and dark token sets remain consistent.
 
 ## Tokens
-All visual values live as CSS variables in `src/theme.css`. Components consume tokens; they never hardcode colors, shadows, or radii. Re-skinning = changing tokens.
 
-- Background layers (stepped lightness, same hue): `--bg-dark` (page), `--bg` (panels/cards), `--bg-light` (raised interactive).
-- Text: `--text`, `--text-muted`. Accent: `--primary`.
-- Elevation shadows (each = top highlight + contact shadow + ambient shadow): `--shadow-s`, `--shadow-m`, `--shadow-l`.
-- Recessed / pressed: `--shadow-inset`.
-- Shape: `--radius-pill`.
-- Colors use OKLCH so lightness steps are perceptually even and themes are easy to derive.
+Visual values live in [`src/theme.css`](../src/theme.css). Use CSS variables instead of hardcoding shared colors, shadows, or radii.
 
-## Depth language
+- Background layers use `--bg-dark`, `--bg`, and `--bg-light`.
+- Text uses `--text` and `--text-muted`; the accent uses `--primary`.
+- `--day-untyped` provides the neutral walk color.
+- `--shadow-s`, `--shadow-m`, and `--shadow-l` create raised surfaces; `--shadow-inset` marks recessed or selected surfaces.
+- `--radius-panel` and `--radius-pill` define shared shapes.
+
+The colors use OKLCH so the lightness steps remain perceptually consistent.
+
+## Depth
+
 - Light comes from above.
-- No borders — contrast between layers plus shadow defines edges.
-- Interactive elements are raised (`--shadow-s`); their pressed and selected states are recessed (`--shadow-inset`).
-- Cards use `--shadow-m`/`-l`; stats visuals and inputs read as recessed.
+- Layered backgrounds and shadows define surfaces; the interface does not use borders for panel edges.
+- Interactive elements use raised shadows. Pressed and selected states use inset shadows.
+- Cards use deeper shadows than controls; stats bars and inputs read as recessed.
 
 ## Themes
-- Light is the default (`:root`); dark is an optional alternate set of the same variables (a Phase 3 setting).
-- Everything must work in both themes by using tokens, never fixed colors.
 
-## React conventions
-- A component is a function that returns JSX; local state via `useState`.
-- Lists of options live in arrays, rendered with `.map()` and a unique `key`.
-- Keep naming consistent: `whereType`, `whenType`, `whoType`.
-- A component's shared identity (color, shadow, radius) comes from tokens; size/padding stay per-use, not baked into the shared style.
-- JavaScript only for now (no TypeScript).
+The default token set is light. `src/theme.css` also defines a dark token set under `body.dark`. Components should use the variables so either set can be applied. The app does not currently expose a theme switch in its screens.
+
+## Component conventions
+
+- Keep option values in shared constants and render repeated options with stable keys.
+- Use the existing shared components before adding another implementation.
+- Keep shared color, elevation, and shape in theme tokens; keep component-specific spacing near the component styles.
+- Keep app code in JavaScript, consistent with the current project.
+
+See [`src/constants.js`](../src/constants.js), [`src/components/`](../src/components/), and [`src/pages/`](../src/pages/) for examples.
+
+## Related
+
+- [Product brief](product-brief.md)
+- [Copilot instructions](../.github/copilot-instructions.md)
+- [Documentation index](README.md)
