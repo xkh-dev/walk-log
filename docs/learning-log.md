@@ -2,6 +2,10 @@
 
 Browse the concepts introduced or used by merged pull requests; each entry points you to relevant code and further reading.
 
+## 2026-11-11 · Add reusable repository prompts (#58)
+
+- **Reusable prompt files**: Markdown files in `.github/prompts/` make repeatable workflows available as VS Code chat commands you can invoke by name. Read more: [Prompt files in VS Code](https://code.visualstudio.com/docs/copilot/customization/prompt-files).
+
 ## 2026-11-11 · Spreadsheet-safe CSV round trips (#57)
 
 - **Spreadsheet-safe CSV text**: Text that spreadsheet software might parse as a formula can be marked on export and restored on import only when the marker is followed by a formula character. Where: `src/lib/csv.js`. Read more: [OWASP CSV Injection](https://owasp.org/www-community/attacks/CSV_Injection).
