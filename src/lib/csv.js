@@ -68,6 +68,10 @@ function parseRows(csv) {
   return rows;
 }
 
+function restoreCell(value) {
+  return value.replace(/^'(?=[=+\-@])/, '');
+}
+
 export function csvToWalks(csv) {
   const rows = parseRows(csv);
   if (rows.length < 2) return [];
@@ -75,7 +79,7 @@ export function csvToWalks(csv) {
   const headers = rows[0].map((header) => header.trim());
   return rows.slice(1).map((values) => {
     const walk = headers.reduce((result, header, index) => {
-      if (CSV_FIELDS.includes(header)) result[header] = values[index] || '';
+      if (CSV_FIELDS.includes(header)) result[header] = restoreCell(values[index] || '');
       return result;
     }, {});
 
