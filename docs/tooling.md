@@ -22,9 +22,10 @@ Run the production build and JavaScript linter before opening a pull request. Th
 npm ci
 npm run build
 npm run lint
+npm test
 ```
 
-GitHub Actions runs these commands for every pull request.
+GitHub Actions also runs the CSV export regression test for every pull request.
 
 ## GitHub CLI
 

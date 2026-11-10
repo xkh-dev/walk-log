@@ -42,6 +42,8 @@ The CSV columns, in order, are `id`, `userId`, `date`, `createdAt`, `whereType`,
 
 Import validation checks the UUID, date, timestamp, duration, and supported schema version. Rows with invalid values or IDs that already exist are skipped. Re-importing the same walk does not create another record.
 
+When exporting, the app prefixes text that could be interpreted as a spreadsheet formula with an apostrophe. This protects the exported file without changing the saved walk or its Supabase record.
+
 ## Supabase mapping
 
 App fields use camelCase. The database uses snake_case; [`src/lib/remoteWalks.js`](../src/lib/remoteWalks.js) maps between them. The canonical table definition and row-level security policies are in [`supabase/schema.sql`](../supabase/schema.sql). Do not duplicate the SQL schema here.

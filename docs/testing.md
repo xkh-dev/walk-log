@@ -18,6 +18,7 @@ Use the same hostname in both profiles. `localhost` and `127.0.0.1` are differen
 - [ ] Edit the walk, reload, and confirm the change remains.
 - [ ] Delete the walk and confirm it is gone.
 - [ ] Export a CSV, remove the test walk, import the file, and confirm it returns.
+- [ ] Export a walk with formula-like text in a text field and confirm a spreadsheet displays it as text without changing the saved walk.
 - [ ] Confirm the signed-out walk does not appear in the signed-in profile.
 
 ## Signed in

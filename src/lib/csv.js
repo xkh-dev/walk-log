@@ -1,4 +1,4 @@
-import { SCHEMA_VERSION } from '../constants';
+import { SCHEMA_VERSION } from '../constants.js';
 
 const CSV_FIELDS = [
   'id',
@@ -17,7 +17,10 @@ const CSV_FIELDS = [
 
 function escapeCell(value) {
   const cell = value == null ? '' : String(value);
-  return /[",\n\r]/.test(cell) ? `"${cell.replaceAll('"', '""')}"` : cell;
+  const safeCell = typeof value === 'string' && /^\s*[=+\-@]/.test(cell)
+    ? `'${cell}`
+    : cell;
+  return /[",\n\r]/.test(safeCell) ? `"${safeCell.replaceAll('"', '""')}"` : safeCell;
 }
 
 export function walksToCsv(walks) {
