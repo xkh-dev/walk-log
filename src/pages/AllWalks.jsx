@@ -127,7 +127,14 @@ function AllWalks() {
               <button type="button" role="menuitem" onClick={() => fileInputRef.current?.click()}>↧&nbsp; Import CSV</button>
             </div>
           )}
-          <input ref={fileInputRef} type="file" accept=".csv,text/csv" onChange={handleImport} hidden />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".csv,text/csv"
+            onChange={handleImport}
+            aria-label="Import walks from CSV"
+            hidden
+          />
         </div>
       </header>
       {importMessage && (
