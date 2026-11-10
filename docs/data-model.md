@@ -1,92 +1,56 @@
-# Walk, Log — Data Model
+# Walk, Log data model
 
-The single source of truth for what a "walk" is, how it's identified, and how it's
-stored — now (local) and later (Supabase). Read this before changing the schema,
-the CSV format, or the storage layer.
+This reference defines the walk record and how the app stores and transfers it. Use it when changing walk fields, CSV handling, or the database schema.
 
-## The Walk
+## Walk fields
 
-| Field         | Type                     | Required | Meaning |
-|---------------|--------------------------|----------|---------|
-| `id`          | string (UUID)            | yes      | Stable, globally-unique identity for this walk. Never reused, never reassigned. |
-| `userId`      | string \| null           | no       | Owner. Empty (`null`/`""`) for local walks; set from the authenticated Supabase row when signed in. |
-| `date`        | string `"YYYY-MM-DD"`     | yes      | The **local calendar day** the walk belongs to (a civil date). |
-| `createdAt`   | string (ISO 8601, UTC)   | yes      | The exact **instant** the record was saved. Used for ordering. |
-| `duration`    | number (minutes)         | yes      | Length of the walk. Defaults to 30. |
-| `whereType`   | string \| null           | no       | One of `WHERE_TYPES`: park, urban, woods, heights, coast, rural. |
-| `whenType`    | string \| null           | no       | One of `WHEN_TYPES`: morning, noon, evening, night. |
-| `whoType`     | string \| null           | no       | One of `WHO_TYPES`: by-yourself, with-someone. |
-| `city`        | string                   | no       | City (from dropdown), e.g. "Москва". Default `""`. |
-| `place`       | string                   | no       | Free-text place name, e.g. "Ботанический сад". Default `""`. |
-| `companion`   | string                   | no       | Who they walked with. Default `""`. |
-| `schemaVersion` | number                 | yes      | Format version, for safe import/migration. Starts at `1`. |
+| Field | Type | Required | Meaning |
+|---|---|---|---|
+| `id` | string (UUID) | yes | Stable identity for this walk. Keep it when editing or transferring a record. |
+| `userId` | string or null | no | Supabase owner when returned from the account; local records may omit it or use an empty value. Writes do not send it. |
+| `date` | string (`YYYY-MM-DD`) | yes | Local calendar day of the walk. |
+| `createdAt` | string (ISO 8601 UTC) | yes | Instant the record was saved; used to order walks. |
+| `duration` | number (minutes) | yes | Walk duration. New walks default to 30 minutes. |
+| `whereType` | string or null | no | Place category from `WHERE_TYPES`. |
+| `whenType` | string or null | no | Time-of-day category from `WHEN_TYPES`. |
+| `whoType` | string or null | no | Companion category from `WHO_TYPES`. |
+| `city` | string | no | City value; defaults to an empty string. |
+| `place` | string | no | Free-text place; defaults to an empty string. |
+| `companion` | string | no | Free-text companion; defaults to an empty string. |
+| `schemaVersion` | number | yes | Import format version. The current version is `1`. |
 
-## Identity conventions
+Only `id`, `date`, `createdAt`, `duration`, and `schemaVersion` are required for an imported walk. The app keeps the other details optional.
 
-- An entity's **own** primary key is `id`. A walk has `id`; `/log/:id` uses it.
-- When referencing a walk **from elsewhere**, use `walkId` (e.g. a future `photos`
-  row). When referencing a user, use `userId`.
-- `id` is a UUID (`crypto.randomUUID()`), so it's already unique across all devices
-  and users without any coordination — the foundation for multi-user later.
+## Dates and identity
 
-## Dates: `date` vs `createdAt`
+Build `date` from local date parts so a walk stays on its local calendar day. Do not create it with `toISOString()`, which converts the time to UTC. `createdAt` represents an instant and is stored as a UTC timestamp.
 
-These answer different questions and must not be merged:
-- `date` — *which calendar day* (local). Built from local parts, never `toISOString()`.
-  Used for grouping and the calendar.
-- `createdAt` — *the exact moment saved* (UTC). Built with `toISOString()`.
-  Used to order multiple walks within the same day.
+Keep a walk's UUID stable for its lifetime. CSV imports and sign-in migration use that ID to identify a record and avoid duplicates.
 
-## Optional by design
+## Storage by session
 
-Only `id`, `date`, `createdAt`, `duration`, and `schemaVersion` are required.
-Everything the user *chooses* (where/when/who/place/companion) is optional — the
-product never forces a field. Display code must handle `null`/`""` gracefully
-(e.g. `colorForWalk` returns `null` → use the neutral color).
+- Signed out, the app reads and writes the `walks` array in browser `localStorage`.
+- Signed in, the Supabase `public.walks` table is the source of truth.
+- The `walks-cache:<userId>` localStorage key is a display-only cache for signed-in walks. It is not read as a storage source and is never uploaded.
+- On sign-in, the app uploads local walks using their existing IDs and removes only IDs confirmed in the account. If an upload or confirmation fails, the local data remains.
 
-## Storage
+See [architecture and data flow](architecture.md) for how the provider coordinates these paths.
 
-- **Signed out:** browser `localStorage`, key `"walks"`, a JSON array of Walk objects.
-- **Signed in:** the Supabase `walks` table, one row per walk, owned by the authenticated user.
-- **Display cache:** `localStorage` key `"walks-cache:<userId>"`. It is only for immediate display while signed-in walks load; it is not read by `storage.js` and is never uploaded.
-- **On sign-in:** walks from the `"walks"` key are uploaded by their existing IDs. Only IDs confirmed in the account are removed locally; if an upload or confirmation fails, the local data is kept. The display cache is never migrated.
+## CSV import and export
 
-## Import / export (CSV)
+The CSV columns, in order, are `id`, `userId`, `date`, `createdAt`, `whereType`, `whenType`, `duration`, `whoType`, `city`, `place`, `companion`, and `schemaVersion`.
 
-- Columns, stable order: `id, userId, date, createdAt, whereType, whenType,
-  duration, whoType, city, place, companion, schemaVersion`.
-- Import is **idempotent**: dedupe by `id` — skip any walk whose `id` already
-  exists. Never reassign UUIDs. Re-importing your own export changes nothing.
-- Never dedupe by content — two real walks can share every field but the `id`.
-- Validate rows on import; skip malformed rows without corrupting storage.
+Import validation checks the UUID, date, timestamp, duration, and supported schema version. Rows with invalid values or IDs that already exist are skipped. Re-importing the same walk does not create another record.
 
-## Planned (not built yet)
+## Supabase mapping
 
-- `photos: string[]` — up to 2 per walk (Phase 6).
-- `updatedAt` (ISO, UTC) — the database has a nullable `updated_at` column, but the
-  app does not set it yet; it is reserved for sync conflict resolution.
-- `userId` on fetched rows comes from Supabase; client writes omit it so the database assigns ownership.
+App fields use camelCase. The database uses snake_case; [`src/lib/remoteWalks.js`](../src/lib/remoteWalks.js) maps between them. The canonical table definition and row-level security policies are in [`supabase/schema.sql`](../supabase/schema.sql). Do not duplicate the SQL schema here.
 
-## Supabase table
+The database has a nullable `updated_at` column reserved for future sync work; the current app does not set it. See the [roadmap](roadmap.md) for planned work.
 
-    create table walks (
-      id            uuid primary key default gen_random_uuid(),
-      user_id       uuid not null default auth.uid() references auth.users (id),
-      date          date not null,
-      created_at    timestamptz not null,
-      updated_at    timestamptz,
-      duration      int not null default 30,
-      where_type    text,
-      when_type     text,
-      who_type      text,
-      city          text default '',
-      place         text default '',
-      companion     text default '',
-      schema_version int not null default 1
-    );
+## Related
 
-The full table definition, RLS configuration, and ownership policies are in
-[supabase/schema.sql](../supabase/schema.sql).
-
-Note the naming shift: JS uses camelCase (`whereType`); Postgres conventionally uses
-snake_case (`where_type`). The client layer maps between them.
+- [Architecture and data flow](architecture.md)
+- [Manual testing](testing.md)
+- [Supabase schema](../supabase/schema.sql)
+- [Documentation index](README.md)

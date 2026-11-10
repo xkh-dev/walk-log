@@ -1,5 +1,7 @@
 # Walk, Log — Copilot instructions
 
+Use these instructions when changing Walk, Log. They describe the product, code, data, and privacy rules for contributors and coding agents.
+
 Walk, Log is a contemplative walk journal. People log walks (where, when, how long, with whom) to build a personal record and notice gentle patterns — never to compete, score, or be nudged.
 
 ## Product principles (do not violate)
@@ -15,7 +17,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 - Vite + React, plain JavaScript (no TypeScript for now), React Router, and Oxlint.
 - `npm run build` runs the Vite build; `npm run lint` runs Oxlint.
-- Supabase is used for magic-link auth. The Supabase client and session hook live in `src/lib/`.
+- Supabase is used for email-link and passkey auth. The Supabase client and session hook live in `src/lib/`.
 - `src/lib/walks.js` selects localStorage for signed-out walks and Supabase for signed-in walks. Signed-in walks are cached for display in a separate `walks-cache:<userId>` localStorage key; that cache is never a storage source and must never be uploaded.
 - On sign-in, walks from the `walks` localStorage key are uploaded to the account; only walks confirmed in the account are removed locally. Upload failures leave local walks intact. The signed-in cache is never uploaded.
 
@@ -45,7 +47,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 ## Database
 
-- There is currently no `supabase/` schema or migration directory. `docs/data-model.md` describes the walk model and includes a planned Supabase schema sketch.
+- The database schema and row-level security policies are defined in `supabase/schema.sql`. Keep `docs/data-model.md` aligned with that schema.
 - Before adding schema changes, ask first. Keep schema changes reproducible in the repo and update `docs/data-model.md`.
 - Enable RLS on every table exposed through the Data API, with policies matching its access model. For user-owned walks, restrict access to the authenticated user's rows using `auth.uid()`; update policies need both `USING` and `WITH CHECK`.
 
@@ -97,5 +99,25 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - Run `npm run build` and `npm run lint`; fix what breaks.
 - Commit messages follow `.github/commit-instructions.md`.
 - List what to test by hand in your summary.
+- Follow the [docs map](../docs/README.md) when updating documentation.
 
-See `/docs` for the product brief, roadmap, stats plan, data model, and design system.
+## Docs
+
+Docs live in `docs/` on main. When editing Markdown, follow `.github/instructions/docs.instructions.md`.
+Update docs in the same PR as the change, using this map:
+
+- Feature added or changed → README (Features), `docs/roadmap.md`
+- Walk fields, DB columns, RLS → `docs/data-model.md`, `supabase/schema.sql`
+- Data flow, sync, auth, caching → `docs/architecture.md`
+- Tokens or components → `docs/design-system.md`
+- Setup, tools, environment variables → `docs/tooling.md`, `.env.example`
+- Choice between real options → new ADR in `docs/decisions/`
+- New concept used in the PR → entry in `docs/learning-log.md`
+- New doc file → `docs/README.md` index
+- If nothing applies, say "Docs: not needed" in the PR.
+
+## Related
+
+- [Documentation index](../docs/README.md)
+- [Markdown writing rules](instructions/docs.instructions.md)
+- [Contributing](../CONTRIBUTING.md)

@@ -1,54 +1,48 @@
-# Walk, Log 🌳
+# Walk, Log
 
-> A quiet place to remember your walks. No streaks, no goals — just the practice.
+Walk, Log is a journal for people who want to remember walks without scoring or goals. This page summarizes the web app and shows you how to run it locally.
 
-**Status:** 🚧 In active development · Phase 1 (MVP)
+## Features
 
-<!-- Add a screenshot here once the UI is further along — it matters a lot: -->
-<!-- ![Walk, Log — the log form](docs/screenshot.png) -->
+- Log, edit, and delete walks. Place, time of day, and companion details are optional.
+- Browse walk history in a calendar and list.
+- Review walk totals and patterns in time of day and place type.
+- Import and export walks as CSV.
+- Use the app without an account; signed-out walks stay in this browser.
+- Optionally sign in with an email link or passkey. Signed-in walks are stored in Supabase and are available across sessions.
+- Move local walks into the account after sign-in without changing their IDs.
 
-## Why
+## Data and privacy
 
-People who walk to think and process life have nowhere made for it. Notes apps bury walks among to-do lists, journals feel bloated for walks alone, and fitness apps judge and motivate — the opposite of what a contemplative walker wants.
-
-Walk, Log is a dedicated, non-judgmental space that captures *just enough* to reveal patterns, without any pressure to perform. The walk comes first; the app second.
-
-→ Full reasoning in [`docs/product-brief.md`](docs/product-brief.md).
-
-## What it does
-
-**Now**
-- Log a walk in seconds: where (place + type), when (date + time of day), how long, and who with.
-
-**Planned**
-- A stats view that reflects your habits back gently — where you go, when you walk, your seasonal rhythm — never a scoreboard.
-- Local-first storage with CSV import/export.
-- Quote of the week, walk history, photos, and a dark theme.
-
-→ Full plan in [`docs/roadmap.md`](docs/roadmap.md) and [`docs/stats-plan.md`](docs/stats-plan.md).
-
-## Data
-
-I'll right something about data here later. For now:
-
-→ Details in [`docs/data-model.md`](docs/data-model.md).
-
-## Design
-
-A depth-based interface built on a token-driven design system: all color, elevation, and shape come from CSS custom properties (OKLCH), so the whole app re-skins from one place. Light theme by default, dark as an option — both from a single set of variables.
-
-→ Details in [`docs/design-system.md`](docs/design-system.md).
+The app does not use geolocation. Signed-out walks are stored in browser `localStorage`. When you sign in, Supabase is the source of truth for your walks. A separate local cache can display the last known account walks while the app loads current data; the cache is not uploaded.
 
 ## Tech
 
-- **React + Vite** (JavaScript)
-- **CSS custom properties** for the design system
-- **Browser local storage** — no backend in Phase 1
+- React, Vite, JavaScript, and React Router
+- Supabase Auth and Postgres for optional sign-in and signed-in walk storage
+- Browser `localStorage` for signed-out walks and the display-only cache
+- CSS custom properties for the design system
 
 ## Run locally
 
+Install Node.js and npm. Copy `.env.example` to `.env.local`, then set the Supabase project URL and publishable key in `.env.local`. Use only the publishable key in this browser app; never put a service-role or secret key in a `VITE_` variable.
+
 ```bash
-git clone https://github.com/xkh-dev/walk-log.git
-cd walk-log
+cp .env.example .env.local
 npm install
 npm run dev
+```
+
+The development server prints the local URL. To check a change, run:
+
+```bash
+npm run build
+npm run lint
+```
+
+## Related
+
+- [Documentation index](docs/README.md)
+- [Product brief](docs/product-brief.md)
+- [Data model](docs/data-model.md)
+- [Architecture and data flow](docs/architecture.md)

@@ -1,31 +1,36 @@
 # Commit messages
 
-Write like a person keeping a short log, not like a release note.
+Use these conventions to write a short, useful record of each change.
 
 ## Title
-- Imperative, sentence case: "Add CSV export", "Fix local walk dates".
-- No prefix (no feat:, chore:), no period at the end.
-- Under 60 characters.
-- Name the feature as the user sees it (Log form, All Walks, sign-in), not file names.
-- Use "+" to join two small related changes: "Make CSV imports idempotent + add userId".
+
+- Use the imperative and sentence case: "Add CSV export", "Fix local walk dates".
+- Do not add a prefix (`feat:`, `chore:`) or a period at the end.
+- Keep the title under 60 characters.
+- Name the feature as a user sees it, not a file name.
+- Use "+" to join two small related changes.
 
 ## Body
-- Only when the title isn't enough. One or two plain sentences: what changed and why.
-- No bullet lists, headings, bold or emoji.
-- Don't list every file or restate the diff.
-- Avoid filler words: enhance, improve, streamline, robust, seamless, comprehensive, leverage, ensure.
+
+- Add a body only when the title does not explain the change.
+- Use one or two plain sentences describing what changed and why.
+- Do not use bullets, headings, bold text, or emoji.
+- Do not list every file or restate the diff.
+- Avoid filler words such as "enhance", "improve", "streamline", "robust", "seamless", "comprehensive", "leverage", and "ensure".
 
 ## Issue references
-- Last lines, one per line.
-- "Closes #N" when the commit finishes the issue.
-- "Refs #N" when it's only part of it.
+
+Put references at the end, one per line. Use `Closes #N` when the commit completes the issue and `Refs #N` when it is only related.
 
 ## Examples
+
+```text
 Connect app to Supabase
 Fix local walk dates and avoid UTC day shifts
 Add magic link sign-in
+```
 
-Account screen with email sign-in and sign-out. useSession keeps the signed-in state up to date across the app.
+## Related
 
-Closes #42
-Refs #26
+- [Contributing](../CONTRIBUTING.md)
+- [Pull request template](pull_request_template.md)

@@ -1,0 +1,30 @@
+name: Documentation checks
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  markdown:
+    name: Markdown and link checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v25
+        with:
+          config: .markdownlint.jsonc
+          globs: |
+            README.md
+            CONTRIBUTING.md
+            .github/**/*.md
+            docs/**/*.md
+
+      - name: Check Markdown links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --root-dir "$(pwd)" --verbose --no-progress './README.md' './CONTRIBUTING.md' './.github/**/*.md' './docs/**/*.md'
