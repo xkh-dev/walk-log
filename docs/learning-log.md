@@ -2,6 +2,10 @@
 
 This log records concepts introduced or used by merged pull requests. It is for contributors who want to understand the reasoning behind the implementation.
 
+## 2026-11-11 · Spreadsheet-safe CSV round trips (#56)
+
+- **Concept**: CSV text that spreadsheet software might parse as a formula can be marked on export and restored on import only when the marker is followed by a formula character. Where: `src/lib/csv.js`. Read more: [OWASP CSV Injection](https://owasp.org/www-community/attacks/CSV_Injection).
+
 ## 2026-11-10 · Pull request checks
 
 - **Concept**: A GitHub Actions workflow can run the same dependency installation, production build, and lint commands for every pull request. Where: `.github/workflows/ci.yml`. Read more: [Building and testing Node.js](https://docs.github.com/actions/automating-builds-and-tests/building-and-testing-nodejs).
