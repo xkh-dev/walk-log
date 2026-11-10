@@ -45,7 +45,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 ## Database
 
-- There is currently no `supabase/` schema or migration directory. `docs/data-model.md` describes the walk model and includes a planned Supabase schema sketch.
+- The database schema and row-level security policies are defined in `supabase/schema.sql`. Keep `docs/data-model.md` aligned with that schema.
 - Before adding schema changes, ask first. Keep schema changes reproducible in the repo and update `docs/data-model.md`.
 - Enable RLS on every table exposed through the Data API, with policies matching its access model. For user-owned walks, restrict access to the authenticated user's rows using `auth.uid()`; update policies need both `USING` and `WITH CHECK`.
 
@@ -97,5 +97,21 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - Run `npm run build` and `npm run lint`; fix what breaks.
 - Commit messages follow `.github/commit-instructions.md`.
 - List what to test by hand in your summary.
+- Follow the [docs map](../docs/README.md) when updating documentation.
 
-See `/docs` for the product brief, roadmap, stats plan, data model, and design system.
+## Docs
+
+Docs live in `docs/` on main. When editing Markdown, follow `.github/instructions/docs.instructions.md`.
+Update docs in the same PR as the change, using this map:
+
+- Feature added or changed → README (Features), `docs/roadmap.md`
+- Walk fields, DB columns, RLS → `docs/data-model.md`, `supabase/schema.sql`
+- Data flow, sync, auth, caching → `docs/architecture.md`
+- Tokens or components → `docs/design-system.md`
+- Setup, tools, environment variables → `docs/tooling.md`, `.env.example`
+- Choice between real options → new ADR in `docs/decisions/`
+- New concept used in the PR → entry in `docs/learning-log.md`
+- New doc file → `docs/README.md` index
+- If nothing applies, say "Docs: not needed" in the PR.
+
+See the [documentation index](../docs/README.md) for the product brief, roadmap, stats plan, data model, and design system.
