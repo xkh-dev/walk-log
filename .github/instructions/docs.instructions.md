@@ -4,13 +4,13 @@ applyTo: "**/*.md"
 
 # Writing docs for Walk, Log
 
-Use these rules when you write or edit repository documentation. They help contributors, future readers, and coding agents understand the code and decisions without relying on conversation history.
+Clear project docs help you and future readers understand the code and decisions without relying on conversation history. Follow these rules when you write or edit them.
 
 ## Who reads these docs
 
-- The author, weeks later, learning how the code works and why
-- A future employer reviewing the project
-- Coding agents building the next feature
+- You, weeks later, learning how the code works and why
+- Someone reviewing your project
+- A coding agent building the next feature
 
 Write for someone who is smart but hasn't seen the code or the conversation that produced it.
 
@@ -31,6 +31,9 @@ Write for someone who is smart but hasn't seen the code or the conversation that
 Follow the Google developer documentation style guide:
 
 - Second person ("you"), active voice, present tense.
+- Use contractions such as "it's" and "doesn't" when they sound natural.
+- Address the reader as "you"; avoid generic audience labels.
+- Vary each document's opening sentence. Explain what it covers and who it's for without repeating one formula.
 - Sentence-case headings. One H1 per file.
 - Short sentences, one idea each. Lead with what the reader needs.
 - Numbered lists for steps, bullets for unordered points, tables only to compare.
@@ -78,10 +81,10 @@ Every PR that introduces or relies on a concept adds an entry, newest first:
 ```markdown
 ## 2026-11-08 · Move local walks into the account on sign-in (#51)
 
-- **Concept**: An idempotent upsert plus a read-back check lets sign-in transfer existing walks without changing their IDs. Where: `src/lib/moveLocalWalks.js`. Read more: [Supabase JavaScript upsert](https://supabase.com/docs/reference/javascript/upsert).
+- **Idempotent upsert**: A read-back check lets sign-in transfer existing walks without changing their IDs. Where: `src/lib/moveLocalWalks.js`. Read more: [Supabase JavaScript upsert](https://supabase.com/docs/reference/javascript/upsert).
 ```
 
-Concepts are things worth studying (upsert, RLS, React context, stale-while-revalidate), not every line changed.
+Use the concept's name as the bold label, not a generic label such as "Concept." End every entry heading with the PR number. Concepts are worth studying (upsert, RLS, React context, stale-while-revalidate), not every line changed.
 
 ## Don't
 

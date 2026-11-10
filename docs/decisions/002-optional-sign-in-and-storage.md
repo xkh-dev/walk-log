@@ -1,6 +1,6 @@
 # 002: Optional sign-in and storage by session
 
-This record explains why storage changes with sign-in state and how local walks move to an account. It is for contributors changing sign-in, sync, or storage behavior.
+If you're changing sign-in, sync, or storage, use this ADR to understand how session state determines where walks live and how they move to an account.
 
 ## Status
 
@@ -27,9 +27,9 @@ Keep sign-in optional. Signed-out walks stay in browser storage. On sign-in, tra
 ## Consequences
 
 - People can use the app without an account.
-- Signed-in operations depend on a working connection; the web app does not queue signed-in changes offline.
-- Signing out does not copy account walks into the signed-out `walks` key.
-- Local-first sync remains a separate possibility for a native client; it is not current web behavior.
+- Signed-in operations depend on a working connection; the web app doesn't queue signed-in changes offline.
+- Signing out doesn't copy account walks into the signed-out `walks` key.
+- Local-first sync remains a separate possibility for a native client; it isn't current web behavior.
 
 ## Related
 

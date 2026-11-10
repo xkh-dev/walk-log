@@ -1,6 +1,6 @@
 # 003: Email links and passkeys
 
-This record explains why the app supports both email sign-in links and passkeys. It is for contributors changing the account sign-in experience.
+Email links and passkeys offer two optional sign-in methods. Consult this ADR before changing the account sign-in experience.
 
 ## Status
 
@@ -26,7 +26,7 @@ Keep email links and offer passkey sign-in when the browser exposes the WebAuthn
 
 ## Consequences
 
-- A passkey is not required to use an account.
+- A passkey isn't required to use an account.
 - Email remains an alternative if a passkey is unavailable or removed.
 - A passkey is bound to the site origin where it is registered; localhost and a production domain require separate registration.
 - The client uses Supabase Auth's passkey integration. Check its current browser and domain requirements before changing it.

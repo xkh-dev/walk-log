@@ -1,6 +1,6 @@
 # Developer tooling
 
-This guide shows you how to configure and run the web app and its repository tools. Use it when setting up a development environment or checking a change.
+Set up the web app or run repository checks with this guide; it covers environment variables, Supabase, and GitHub CLI.
 
 ## Run the app
 
@@ -27,6 +27,12 @@ npm test
 
 GitHub Actions also runs the CSV export regression test for every pull request.
 
+The documentation workflow runs markdownlint and checks Markdown links. You can run the same Markdown lint locally:
+
+```bash
+npx --yes markdownlint-cli2 --config .markdownlint.jsonc 'README.md' 'CONTRIBUTING.md' '.github/**/*.md' 'docs/**/*.md'
+```
+
 ## GitHub CLI
 
 Install GitHub CLI and sign in through its browser flow:
@@ -40,7 +46,7 @@ Use `gh` for repository issues, pull requests, and project-board work. Check `gh
 
 ## Database and Supabase
 
-The app uses a Supabase project for authentication and signed-in walk storage. The database schema and row-level security policies are in [`supabase/schema.sql`](../supabase/schema.sql). The browser client uses the project URL and publishable key; it does not use a secret key.
+The app uses a Supabase project for authentication and signed-in walk storage. The database schema and row-level security policies are in [`supabase/schema.sql`](../supabase/schema.sql). The browser client uses the project URL and publishable key; it doesn't use a secret key.
 
 Ask before changing the database schema, row-level security, or authentication settings. Keep approved schema changes reproducible in the repository and update the [data model](data-model.md).
 

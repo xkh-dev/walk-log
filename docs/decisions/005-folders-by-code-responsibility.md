@@ -1,6 +1,6 @@
 # 005: Organize source folders by code responsibility
 
-This record explains why source files are grouped by their role rather than by the route that uses them. It is for contributors adding screens, shared UI, or data behavior.
+Source files are grouped by responsibility, not by their first route. Use this ADR when you're adding screens, shared UI, or data behavior.
 
 ## Status
 

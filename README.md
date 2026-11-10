@@ -1,6 +1,6 @@
 # Walk, Log
 
-Walk, Log is a journal for people who want to remember walks without scoring or goals. This page summarizes the web app and shows you how to run it locally.
+If you want a quick picture of Walk, Log or need to run it locally, this overview covers the app, its privacy boundaries, and setup.
 
 ## Features
 
@@ -14,7 +14,7 @@ Walk, Log is a journal for people who want to remember walks without scoring or 
 
 ## Data and privacy
 
-The app does not use geolocation. Signed-out walks are stored in browser `localStorage`. When you sign in, Supabase is the source of truth for your walks. A separate local cache can display the last known account walks while the app loads current data; the cache is not uploaded.
+The app doesn't use geolocation. Signed-out walks are stored in browser `localStorage`. When you sign in, Supabase is the source of truth for your walks. A separate local cache can display the last known account walks while the app loads current data; the cache isn't uploaded.
 
 ## Tech
 

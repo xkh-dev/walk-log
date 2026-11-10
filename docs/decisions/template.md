@@ -1,6 +1,6 @@
 # ADR template
 
-Use this structure when you need to record a choice between real options. Keep the record focused on the context, decision, and consequences that future contributors need.
+Record a technical choice by filling in this ADR structure with the context, decision, and consequences future readers need.
 
 ## Status
 

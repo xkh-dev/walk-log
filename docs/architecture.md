@@ -1,6 +1,6 @@
 # Architecture and data flow
 
-This guide explains how the app loads and saves walks so you can trace a screen action to its storage source. It is for contributors changing authentication, storage, migration, or caching.
+Trace a screen action through this guide to see how Walk, Log loads and saves walks, including authentication, storage, migration, and caching.
 
 ## Big picture
 
@@ -31,7 +31,7 @@ flowchart TD
 
 ## Session and authentication
 
-`useSession()` listens for Supabase auth state changes and reads the initial session. The Account screen sends email sign-in links and, in browsers with the WebAuthn API, offers passkey sign-in and management. Email remains an available sign-in method.
+`useSession()` listens for Supabase auth state changes and reads the initial session. The Account screen sends email sign-in links and, in browsers with the WebAuthn API, offers passkey sign-in and management. Email's always an available sign-in method.
 
 The browser client is configured in [`src/lib/supabase.js`](../src/lib/supabase.js). Session state lives in [`src/lib/useSession.js`](../src/lib/useSession.js), and the account flows live in [`src/pages/Account.jsx`](../src/pages/Account.jsx). See [ADR 003](decisions/003-magic-link-and-passkeys.md) for the sign-in choice.
 
@@ -43,7 +43,7 @@ Screens consume the shared context through `useWalks()`. The provider loads data
 
 ## Signed-in cache and local-walk transfer
 
-When signed in, the provider can display a per-user cache while it requests current walks from Supabase. A successful response replaces displayed data and refreshes the cache. Sign-out removes that user's cache. The cache is never used as a write source or uploaded.
+When you're signed in, the provider can display a per-user cache while it requests current walks from Supabase. A successful response replaces displayed data and refreshes the cache. Signing out removes that user's cache. The cache is never used as a write source or uploaded.
 
 After sign-in, [`src/lib/moveLocalWalks.js`](../src/lib/moveLocalWalks.js) uploads the signed-out `walks` records using their existing IDs, asks Supabase which IDs are present, and removes only those confirmed IDs from browser storage. The cache and transfer boundaries are recorded in [ADR 004](decisions/004-display-only-cache.md) and [ADR 002](decisions/002-optional-sign-in-and-storage.md).
 

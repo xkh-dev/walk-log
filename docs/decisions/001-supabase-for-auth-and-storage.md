@@ -1,6 +1,6 @@
 # 001: Supabase for authentication and walk storage
 
-This record explains why the web app uses Supabase for signed-in walks. It is for contributors changing authentication or account storage.
+This ADR records why signed-in walks use Supabase. If you change authentication or account storage, check this tradeoff first.
 
 ## Status
 
@@ -28,7 +28,7 @@ Use Supabase Auth and Postgres for accounts and signed-in walk storage. Signed-o
 
 - The web app depends on Supabase for signed-in sessions and walk storage.
 - Row-level security scopes each account's database access to its authenticated user.
-- The browser uses a publishable key; it does not contain a service-role key.
+- The browser uses a publishable key; it doesn't contain a service-role key.
 - The schema is maintained in [`supabase/schema.sql`](../../supabase/schema.sql), and field mapping lives in [`src/lib/remoteWalks.js`](../../src/lib/remoteWalks.js).
 
 ## Related
