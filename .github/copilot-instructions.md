@@ -60,8 +60,9 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 
 ## Errors
 
-- Await every save, edit, and delete before navigating or closing a sheet.
-- On failure, show a short calm message and keep what the user entered. Never fail silently.
+- Await every user-initiated save, edit, and delete before navigating or closing a sheet.
+- For user-initiated failures, show a short calm message and keep what the user entered.
+- If the automatic sign-in transfer fails, keep unconfirmed local walks and retry on the next app session without blocking sign-in.
 
 ## Accessibility
 

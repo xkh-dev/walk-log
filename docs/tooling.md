@@ -16,12 +16,15 @@ Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` in `.env.local`. Vit
 
 ## Check changes
 
-Run the production build and JavaScript linter before opening a pull request:
+Run the production build and JavaScript linter before opening a pull request. The pull request CI workflow installs locked dependencies, builds the app, and runs the linter:
 
 ```bash
+npm ci
 npm run build
 npm run lint
 ```
+
+GitHub Actions runs these commands for every pull request.
 
 ## GitHub CLI
 

@@ -195,9 +195,11 @@ function Account() {
   return (
     <section>
       <Link to="/">Back</Link>
-      <p>Sign in with your email. Walks are stored on this device for now; syncing isn't available yet.</p>
+      <p>Sign in with your email. When you're signed in, walks are saved to your account.</p>
       <form onSubmit={handleSubmit}>
+        <label htmlFor="account-email">Email</label>
         <input
+          id="account-email"
           type="email"
           required
           placeholder="you@example.com"
