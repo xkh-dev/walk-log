@@ -20,6 +20,6 @@ Given an issue number:
 
 ## Related
 
-- [Copilot instructions](../copilot-instructions.md)
-- [Contributing](../../CONTRIBUTING.md)
-- [Pull request template](../pull_request_template.md)
+- [Copilot instructions](../../copilot-instructions.md)
+- [Contributing](../../../CONTRIBUTING.md)
+- [Pull request template](../../pull_request_template.md)

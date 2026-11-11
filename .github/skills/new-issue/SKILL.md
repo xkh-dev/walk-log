@@ -11,5 +11,5 @@ Before any GitHub write command, check `gh auth status` and show the exact comma
 
 ## Related
 
-- [Task issue template](../ISSUE_TEMPLATE/task.md)
-- [Copilot instructions](../copilot-instructions.md)
+- [Task issue template](../../ISSUE_TEMPLATE/task.md)
+- [Copilot instructions](../../copilot-instructions.md)

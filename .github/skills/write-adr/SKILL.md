@@ -9,5 +9,5 @@ Read `docs/decisions/template.md` and the existing files in `docs/decisions/`. D
 
 ## Related
 
-- [ADR template](../../docs/decisions/template.md)
-- [Documentation index](../../docs/README.md)
+- [ADR template](../../../docs/decisions/template.md)
+- [Documentation index](../../../docs/README.md)
