@@ -1,7 +1,8 @@
 ---
+name: start-task
 description: Implement an issue through a checked and merged pull request
+disable-model-invocation: true
 ---
-
 # Start a task from an issue
 
 Given an issue number:
@@ -19,6 +20,6 @@ Given an issue number:
 
 ## Related
 
-- [Copilot instructions](../copilot-instructions.md)
-- [Contributing](../../CONTRIBUTING.md)
-- [Pull request template](../pull_request_template.md)
+- [Copilot instructions](../../copilot-instructions.md)
+- [Contributing](../../../CONTRIBUTING.md)
+- [Pull request template](../../pull_request_template.md)
