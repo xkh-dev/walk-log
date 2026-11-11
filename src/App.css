@@ -19,7 +19,7 @@ body {
   margin: 0;
   padding: 0;
   background: var(--bg);
-  border-radius: 24px 24px 0 0;
+  border-radius: var(--radius-panel) var(--radius-panel) 0 0;
   box-shadow: var(--shadow-l);
 }
 
@@ -28,7 +28,7 @@ body {
   align-self: center;
   width: 40px; height: 5px;
   margin: 10px 0 4px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--text-muted);
   opacity: 0.4;
 }
@@ -102,7 +102,7 @@ body {
 .icon-btn {
   width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
-  border: none; border-radius: 999px;
+  border: none; border-radius: var(--radius-pill);
   background: var(--bg-light);
   color: var(--text);
   box-shadow: var(--shadow-s);
@@ -132,14 +132,18 @@ body {
   font-size: 14px;
 }
 .pill:active { transform: translateY(1px); box-shadow: var(--shadow-inset); }
-.pill.selected { box-shadow: var(--shadow-inset); color: var(--text-muted); }
+.pill.selected {
+  box-shadow: var(--shadow-inset);
+  color: var(--text-muted);
+  font-weight: 600;
+}
 
 /* ===== stepper — same depth tokens ===== */
 .stepper { display: flex; align-items: center; gap: 16px; }
 .stepper button {
   width: 44px; height: 44px;
   border: none;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--bg-light);
   color: var(--text);
   box-shadow: var(--shadow-s);
@@ -165,7 +169,7 @@ body {
   right: 0;
   min-width: 160px;
   padding: 6px;
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   background: var(--bg-light);
   box-shadow: var(--shadow-l);
 }
@@ -232,7 +236,7 @@ body {
 .walk-list { display: flex; flex-direction: column; gap: 12px; }
 .calendar-panel {
   background: var(--bg-light);
-  border-radius: 20px;
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow-s);
   padding: 16px;
   margin-bottom: 20px;
@@ -269,12 +273,18 @@ body {
   align-items: center;
   justify-content: center;
   font: inherit;
-  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--text) 12%, transparent);
+  box-shadow: var(--shadow-inset);
   cursor: pointer;
 }
 .calendar-day.has-walk {
-  color: var(--bg);
+  color: var(--text);
   box-shadow: var(--shadow-s);
+}
+.calendar-day.has-walk:not(.day--untyped) {
+  background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-light));
+}
+body.dark .calendar-day.has-walk:not(.day--untyped) {
+  background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-dark));
 }
 .calendar-day.empty-day {
   cursor: default;
@@ -300,6 +310,12 @@ body {
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
+.day-header:not(.day--untyped) {
+  background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-light));
+}
+body.dark .day-header:not(.day--untyped) {
+  background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-dark));
+}
 .day-duration {
   margin-left: 8px;
   color: var(--text-muted);
@@ -315,7 +331,7 @@ body {
   border: none;
   cursor: pointer;
   background: var(--bg-light);
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow-s);
   padding: 16px;
 }
@@ -333,18 +349,23 @@ body {
   display: flex; gap: 6px;
   background: var(--bg);
   padding: 6px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   box-shadow: var(--shadow-m);
 }
 .tab {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   border: none; background: transparent; color: var(--text);
-  padding: 8px 18px; border-radius: 999px; cursor: pointer; font: inherit;
+  padding: 8px 18px; border-radius: var(--radius-pill); cursor: pointer; font: inherit;
   text-decoration: none;
 }
 .tab-icon { font-size: 18px; }
 .tab-label { font-size: 11px; letter-spacing: 0.04em; }
-.tab.active { background: var(--text); color: var(--bg); } /* dark pill = active */
+.tab.active {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: var(--shadow-inset);
+  font-weight: 600;
+}
 
 
 .stats { max-width: 420px; margin: 40px auto; padding: 0 20px; }
@@ -352,7 +373,7 @@ body {
 
 .stat-card {
   background: var(--bg-light);
-  border-radius: 16px;
+  border-radius: var(--radius-panel);
   box-shadow: var(--shadow-s);
   padding: 18px 16px;
   margin-bottom: 14px;
@@ -363,9 +384,24 @@ body {
 }
 
 .atmos-bar { display: flex; height: 40px; border-radius: 10px; overflow: hidden; }
-.atmos-bar span { display: block; }
+.atmos-bar span { display: block; background: var(--walk-color); }
 
 .where-words { display: flex; flex-direction: column; gap: 4px; line-height: 1.2; }
+.where-words > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-weight: 600;
+}
+.where-words > div::before {
+  content: '';
+  width: 0.65em;
+  height: 0.65em;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--walk-color);
+}
 .where-words .count { font-size: 12px; color: var(--text-muted); font-weight: 400; }
 
 .totals { display: flex; justify-content: space-between; text-align: center; }
@@ -376,7 +412,7 @@ body {
 .walk-home h1 { font-size: 24px; margin: 0 0 20px; }
 
 .quote-card {
-  background: var(--bg-light); border-radius: 16px;
+  background: var(--bg-light); border-radius: var(--radius-panel);
   box-shadow: var(--shadow-s); padding: 18px 16px; margin-bottom: 14px;
 }
 .quote-label { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 6px; }
@@ -387,7 +423,7 @@ body {
 .total-card {
   display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
   width: 100%; text-align: left; font: inherit; color: var(--text);
-  background: var(--bg-light); border: none; border-radius: 16px;
+  background: var(--bg-light); border: none; border-radius: var(--radius-panel);
   box-shadow: var(--shadow-s); padding: 18px 16px; margin: 14px 0; cursor: pointer;
   transition: box-shadow .15s ease, transform .05s ease;
 }
@@ -397,7 +433,7 @@ body {
 .see-all { margin-top: 8px; font-size: 13px; color: var(--text-muted); }
 
 .summary {
-  background: var(--bg-light); border-radius: 16px; box-shadow: var(--shadow-s);
+  background: var(--bg-light); border-radius: var(--radius-panel); box-shadow: var(--shadow-s);
   padding: 6px 16px; margin-bottom: 20px;
 }
 .summary-row {

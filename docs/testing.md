@@ -1,6 +1,16 @@
 # Manual testing
 
-Check each walk flow in a browser using these steps. Separate profiles keep signed-out and signed-in data independent.
+Check the system appearance and each walk flow in a browser using these steps. Separate profiles keep signed-out and signed-in data independent.
+
+## System appearance
+
+- [ ] Set the device or browser to light appearance, open the app, and confirm the light theme is active.
+- [ ] Set it to dark appearance, open the app, and confirm the dark theme is active.
+- [ ] With the app still open, change the system appearance and confirm the app updates without a reload.
+- [ ] In both themes, check the log form's native date control and page scrollbars for matching colors.
+- [ ] In both themes, check calendar category colors, stats labels, selected pills, and the active tab for readable text and a visible selected state.
+- [ ] In Account, choose Light and Dark and confirm each applies immediately and remains after reload.
+- [ ] Choose System and confirm the app follows system appearance changes while open and after reload.
 
 ## Set up isolated sessions
 
