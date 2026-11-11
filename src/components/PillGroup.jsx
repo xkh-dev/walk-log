@@ -5,6 +5,7 @@ function PillGroup({ options, selected, onSelect }) {
         <button
           key={option.value}
           className={selected === option.value ? 'pill selected' : 'pill'}
+          aria-pressed={selected === option.value}
           onClick={() => onSelect(selected === option.value ? null : option.value)}
         >
           {option.icon} {option.label}

@@ -2,6 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useSession } from '../lib/useSession';
+import { getAppearancePreference, setAppearancePreference } from '../lib/appearance';
+
+const APPEARANCE_OPTIONS = [
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+  { value: 'system', label: 'System' },
+];
 
 function formatPasskeyDate(isoDate) {
   return new Date(isoDate).toLocaleDateString('en-US', {
@@ -9,6 +16,41 @@ function formatPasskeyDate(isoDate) {
     month: 'short',
     day: 'numeric',
   });
+}
+
+function AppearanceSetting() {
+  const [preference, setPreference] = useState(getAppearancePreference);
+  const [message, setMessage] = useState('');
+
+  function handleChange(value) {
+    setPreference(value);
+    setMessage('');
+    try {
+      setAppearancePreference(value);
+    } catch {
+      setMessage("Couldn't save this preference. The selected appearance will last until you close the app.");
+    }
+  }
+
+  return (
+    <section className="account-passkeys account-appearance" aria-labelledby="appearance-heading">
+      <h2 id="appearance-heading">Appearance</h2>
+      <div className="pills" role="group" aria-labelledby="appearance-heading">
+        {APPEARANCE_OPTIONS.map((option) => (
+          <button
+            key={option.value}
+            className={preference === option.value ? 'pill selected' : 'pill'}
+            type="button"
+            aria-pressed={preference === option.value}
+            onClick={() => handleChange(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
+      {message && <p className="walks-status" role="status">{message}</p>}
+    </section>
+  );
 }
 
 async function fetchPasskeys() {
@@ -179,6 +221,7 @@ function Account() {
             {passkeyMessage && <p className="walks-status" role="status">{passkeyMessage}</p>}
           </section>
         )}
+        <AppearanceSetting />
       </section>
     );
   }
@@ -188,6 +231,7 @@ function Account() {
       <section>
         <p>Check your email for a sign-in link.</p>
         <button onClick={() => setStatus('idle')}>Use a different email</button>
+        <AppearanceSetting />
       </section>
     );
   }
@@ -226,6 +270,7 @@ function Account() {
       {supportsPasskeys && passkeyStatus === 'error' && (
         <p role="alert">Couldn't sign in with a passkey. Try again.</p>
       )}
+      <AppearanceSetting />
     </section>
   );
 }

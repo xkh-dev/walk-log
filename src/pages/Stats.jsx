@@ -60,7 +60,7 @@ function Stats() {
             const count = whenCounts[t.value] || 0;
             if (!count) return null;
             const pct = (count / whenTotal) * 100;
-            return <span key={t.value} style={{ width: pct + '%', background: t.color }} />;
+            return <span key={t.value} style={{ width: pct + '%', '--walk-color': t.color }} />;
           })}
         </div>
       </div>
@@ -76,7 +76,7 @@ function Stats() {
               const count = whereCounts[t.value];
               const size = 14 + (count / maxWhere) * 22;                  // 14–36px by frequency
               return (
-                <div key={t.value} style={{ fontSize: size + 'px', color: t.color, fontWeight: 600 }}>
+                <div key={t.value} style={{ fontSize: size + 'px', '--walk-color': t.color }}>
                   {t.label} <span className="count">{count}</span>
                 </div>
               );

@@ -20,10 +20,13 @@ The colors use OKLCH so the lightness steps remain perceptually consistent.
 - Layered backgrounds and shadows define surfaces; the interface doesn't use borders for panel edges.
 - Interactive elements use raised shadows. Pressed and selected states use inset shadows.
 - Cards use deeper shadows than controls; stats bars and inputs read as recessed.
+- Keep selected controls distinguishable with more than color, such as an inset shadow and stronger text weight.
 
 ## Themes
 
-The default token set is light. `src/theme.css` also defines a dark token set under `body.dark`. Components should use the variables so either set can be applied. The app doesn't expose a theme switch in its screens.
+The app follows the device's appearance by default. In Account, you can choose Light, Dark, or System. The choice is saved in this browser's local storage; System follows live device appearance changes. The active theme also sets `color-scheme` for native controls and scrollbars.
+
+Use the theme variables for shared interface colors, shadows, and radii. Place and time category colors are semantic data colors rather than theme tokens; keep their labels readable against either theme.
 
 ## Component conventions
 

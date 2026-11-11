@@ -188,7 +188,7 @@ function AllWalks() {
                     key={dateKey}
                     type="button"
                     className={`calendar-day ${hasWalk ? 'has-walk' : ''} ${latestWalk && !latestWalk.whereType ? 'day--untyped' : ''}`.trim()}
-                    style={color ? { background: color } : undefined}
+                    style={color ? { '--walk-color': color } : undefined}
                     onClick={() => scrollToDay(dateKey)}
                     aria-label={hasWalk ? `Jump to ${formatDayDate(dateKey)} (${formatDuration(dayDuration)})` : `No walks on ${formatDayDate(dateKey)}`}
                   >
@@ -210,7 +210,7 @@ function AllWalks() {
                   <a
                     href={`#day-${dateKey}`}
                     className={`day-header ${latestWalk && !latestWalk.whereType ? 'day--untyped' : ''}`.trim()}
-                    style={dayColor ? { background: dayColor } : undefined}
+                    style={dayColor ? { '--walk-color': dayColor } : undefined}
                     onClick={(event) => {
                       event.preventDefault();
                       scrollToDay(dateKey);
