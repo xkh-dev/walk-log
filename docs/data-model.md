@@ -36,6 +36,37 @@ Keep a walk's UUID stable for its lifetime. CSV imports and sign-in migration us
 
 See [architecture and data flow](architecture.md) for how the provider coordinates these paths.
 
+## Database capacity and plan usage
+
+The Supabase Free plan includes 500 MB of database size, 1 GB of file storage, 5 GB of egress, and 50,000 monthly active users. Check the [current Supabase pricing](https://supabase.com/pricing) before making a capacity decision because plan limits can change.
+
+The dashboard usage report checked on 2026-11-12 showed:
+
+- Database size: 27 MB of 500 MB (about 5.4%).
+- Monthly active users: 1 of 50,000.
+- Egress: 0 GB of 5 GB.
+- File storage: 0 GB of 1 GB.
+- Log ingestion: 0.01 GB of 1 GB.
+- Log query: 0.27 GB of 100 GB.
+
+This is a dated snapshot, not a live quota reading. Recheck the dashboard before inviting users. Database size includes the database's fixed Postgres and Supabase overhead, such as system data, Auth and Storage metadata, and installed extensions. At the time of this estimate, the project had five walk rows, so most of the measured 27 MB was fixed overhead rather than walk data.
+
+A typical walk row contains a few hundred bytes of values. Allow about 1 KB per walk for a rough estimate that includes row and index overhead; free-text fields can make individual rows larger. With roughly 470 MB remaining, that estimate allows for hundreds of thousands of additional walks. At one walk per day, that is centuries for one person or more than a decade for 100 people logging daily. Treat this as an upper-bound estimate, not a target: other data and operational headroom also use space. A few empty tables add only a small amount; row and index sizes matter more than table count.
+
+### Planned data
+
+- **Co-walking (#41):** A connection row with two user IDs, a status, and a date is estimated at about 100–200 bytes. Thousands of connections should remain under 1 MB.
+- **Weather (#49):** Store weather fields on `walks`, since each walk has one weather record. Estimate about 50–100 bytes per walk.
+- **Quotes:** A shared list of 1,000 short quotes is estimated at about 0.5 MB. Quotes stored per walk grow with walk notes. Decide whether they need a separate table when the feature is defined.
+
+These are planning estimates, not measured database sizes. Revisit them when a feature's fields and typical text lengths are defined.
+
+### Capacity and availability risks
+
+Files such as photos and audio use Supabase Storage, which has a separate Free-plan limit. High-volume records such as analytics events or GPS points can grow the database quickly. Keep files out of Postgres and don't store location points.
+
+Supabase may pause Free projects with low activity over a seven-day period. A paused project can be restored from the dashboard, but its API is unavailable until it is restored. See Supabase's [production availability guidance](https://supabase.com/docs/guides/deployment/going-into-prod#free-plan). Revisit this availability risk before inviting users.
+
 ## CSV import and export
 
 The CSV columns, in order, are `id`, `userId`, `date`, `createdAt`, `whereType`, `whenType`, `duration`, `whoType`, `city`, `place`, `companion`, and `schemaVersion`.
