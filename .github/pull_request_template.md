@@ -20,5 +20,5 @@ List any content or implementation choices you made to resolve ambiguity, or wri
 
 ## Related
 
-- [Contributing](../CONTRIBUTING.md)
-- [Documentation index](../docs/README.md)
+- [Contributing](https://github.com/xkh-dev/walk-log/blob/main/CONTRIBUTING.md)
+- [Documentation index](https://github.com/xkh-dev/walk-log/blob/main/docs/README.md)
