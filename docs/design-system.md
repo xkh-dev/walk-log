@@ -24,7 +24,7 @@ The colors use OKLCH so the lightness steps remain perceptually consistent.
 
 ## Themes
 
-The app follows the device's appearance by default. In Account, you can choose Light, Dark, or System. The choice is saved in this browser's local storage; System follows live device appearance changes. The active theme also sets `color-scheme` for native controls and scrollbars.
+The app follows the device's appearance by default. In Settings, you can choose Light, Dark, or System. The choice is saved in this browser's local storage; System follows live device appearance changes. The active theme also sets `color-scheme` for native controls and scrollbars.
 
 Use the theme variables for shared interface colors, shadows, and radii. Place and time category colors are semantic data colors rather than theme tokens; keep their labels readable against either theme.
 

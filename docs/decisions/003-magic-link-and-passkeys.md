@@ -12,7 +12,7 @@ Accepted
 
 ## Context
 
-The app needed a browser sign-in method that did not make an account a prerequisite for logging. Email links were implemented first; passkey support was later added as an option in the Account screen.
+The app needed a browser sign-in method that did not make an account a prerequisite for logging. Email links were implemented first; passkey support was later added as an option in the Settings screen.
 
 ## Options
 
@@ -22,7 +22,7 @@ The app needed a browser sign-in method that did not make an account a prerequis
 
 ## Decision
 
-Keep email links and offer passkey sign-in when the browser exposes the WebAuthn API. Signed-in users can add or remove their passkeys from the Account screen.
+Keep email links and offer passkey sign-in when the browser exposes the WebAuthn API. Signed-in users can add or remove their passkeys from the Settings screen.
 
 ## Consequences
 
@@ -34,5 +34,5 @@ Keep email links and offer passkey sign-in when the browser exposes the WebAuthn
 ## Related
 
 - [Supabase for authentication and walk storage](001-supabase-for-auth-and-storage.md)
-- [Account screen](../../src/pages/Account.jsx)
+- [Settings screen](../../src/pages/Account.jsx)
 - [Manual testing](../testing.md)

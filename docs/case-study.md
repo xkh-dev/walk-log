@@ -26,7 +26,7 @@ See [ADR 004](decisions/004-display-only-cache.md) and [architecture and data fl
 
 ## Keep sign-in methods optional
 
-Email links remain available alongside passkey sign-in. Passkeys can be added or removed from the Account screen when the browser supports the required API. A passkey is bound to the site origin where it was registered, so localhost and a production domain require separate registration.
+Email links remain available alongside passkey sign-in. Passkeys can be added or removed from Settings when the browser supports the required API. A passkey is bound to the site origin where it was registered, so localhost and a production domain require separate registration.
 
 See [ADR 003](decisions/003-magic-link-and-passkeys.md).
 

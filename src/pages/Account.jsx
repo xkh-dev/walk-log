@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useSession } from '../lib/useSession';
 import { getAppearancePreference, setAppearancePreference } from '../lib/appearance';
@@ -61,10 +61,12 @@ async function fetchPasskeys() {
 }
 
 function Account() {
+  const navigate = useNavigate();
   const session = useSession();
   const userId = session?.user?.id;
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [signOutError, setSignOutError] = useState(false);
   const [passkeyStatus, setPasskeyStatus] = useState('idle');
   const [passkeyList, setPasskeyList] = useState({
     userId: null,
@@ -168,110 +170,119 @@ function Account() {
     }
   }
 
-  if (session) {
-    return (
-      <section>
-        <Link to="/">Back</Link>
-        <p>Signed in as {session.user.email}</p>
-        <button onClick={() => supabase.auth.signOut()}>Sign out</button>
-        {supportsPasskeys && (
-          <section className="account-passkeys">
-            <h2>Passkeys</h2>
-            {passkeysStatus === 'loading' && (
-              <p className="walks-status" role="status">Loading passkeys…</p>
-            )}
-            {passkeysStatus === 'error' && (
-              <div>
-                <p className="walks-status" role="status">Couldn't load passkeys. Try again.</p>
-                <button className="pill" onClick={handlePasskeyListRetry}>Try again</button>
-              </div>
-            )}
-            {passkeysStatus === 'loaded' && (
-              <>
-                {passkeys.length > 0 && (
-                  <ul className="account-passkey-list">
-                    {passkeys.map((passkey) => (
-                      <li className="account-passkey-row" key={passkey.id}>
-                        <div>
-                          <p className="account-passkey-name">{passkey.friendly_name || 'Passkey'}</p>
-                          <p className="account-passkey-date">{formatPasskeyDate(passkey.created_at)}</p>
-                        </div>
-                        <button
-                          className="pill"
-                          onClick={() => handlePasskeyRemoval(passkey.id)}
-                          disabled={removingPasskeyId !== null || passkeyStatus === 'working'}
-                        >
-                          {removingPasskeyId === passkey.id ? 'Removing…' : 'Remove'}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <button
-                  className="pill"
-                  onClick={handlePasskeyRegistration}
-                  disabled={passkeyStatus === 'working' || removingPasskeyId !== null}
-                >
-                  {passkeyStatus === 'working'
-                    ? 'Adding…'
-                    : passkeys.length > 0 ? 'Add another passkey' : 'Add a passkey'}
-                </button>
-              </>
-            )}
-            {passkeyMessage && <p className="walks-status" role="status">{passkeyMessage}</p>}
-          </section>
-        )}
-        <AppearanceSetting />
-      </section>
-    );
-  }
-
-  if (status === 'sent') {
-    return (
-      <section>
-        <p>Check your email for a sign-in link.</p>
-        <button onClick={() => setStatus('idle')}>Use a different email</button>
-        <AppearanceSetting />
-      </section>
-    );
+  async function handleSignOut() {
+    setSignOutError(false);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) setSignOutError(true);
+    } catch {
+      setSignOutError(true);
+    }
   }
 
   return (
-    <section>
-      <Link to="/">Back</Link>
-      <p>Sign in with your email. When you're signed in, walks are saved to your account.</p>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="account-email">Email</label>
-        <input
-          id="account-email"
-          type="email"
-          required
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <div className="pills">
-          <button className="pill" type="submit" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending…' : 'Send link'}
-          </button>
+    <main className="settings-page">
+      <button className="back-button" type="button" onClick={() => navigate(-1)}>‹ Back</button>
+      <header className="settings-header">
+        <h1>Settings</h1>
+      </header>
+      {session ? (
+        <section>
+          <p>Signed in as {session.user.email}</p>
+          <button className="pill" type="button" onClick={handleSignOut}>Sign out</button>
+          {signOutError && <p className="walks-status" role="alert">Couldn't sign out. Try again.</p>}
           {supportsPasskeys && (
-            <button
-              className="pill"
-              type="button"
-              onClick={handlePasskeySignIn}
-              disabled={passkeyStatus === 'working'}
-            >
-              {passkeyStatus === 'working' ? 'Signing in…' : 'Sign in with passkey'}
-            </button>
+            <section className="account-passkeys">
+              <h2>Passkeys</h2>
+              {passkeysStatus === 'loading' && (
+                <p className="walks-status" role="status">Loading passkeys…</p>
+              )}
+              {passkeysStatus === 'error' && (
+                <div>
+                  <p className="walks-status" role="status">Couldn't load passkeys. Try again.</p>
+                  <button className="pill" onClick={handlePasskeyListRetry}>Try again</button>
+                </div>
+              )}
+              {passkeysStatus === 'loaded' && (
+                <>
+                  {passkeys.length > 0 && (
+                    <ul className="account-passkey-list">
+                      {passkeys.map((passkey) => (
+                        <li className="account-passkey-row" key={passkey.id}>
+                          <div>
+                            <p className="account-passkey-name">{passkey.friendly_name || 'Passkey'}</p>
+                            <p className="account-passkey-date">{formatPasskeyDate(passkey.created_at)}</p>
+                          </div>
+                          <button
+                            className="pill"
+                            onClick={() => handlePasskeyRemoval(passkey.id)}
+                            disabled={removingPasskeyId !== null || passkeyStatus === 'working'}
+                          >
+                            {removingPasskeyId === passkey.id ? 'Removing…' : 'Remove'}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <button
+                    className="pill"
+                    onClick={handlePasskeyRegistration}
+                    disabled={passkeyStatus === 'working' || removingPasskeyId !== null}
+                  >
+                    {passkeyStatus === 'working'
+                      ? 'Adding…'
+                      : passkeys.length > 0 ? 'Add another passkey' : 'Add a passkey'}
+                  </button>
+                </>
+              )}
+              {passkeyMessage && <p className="walks-status" role="status">{passkeyMessage}</p>}
+            </section>
           )}
-        </div>
-      </form>
-      {status === 'error' && <p>Couldn't send the link. Try again in a few minutes.</p>}
-      {supportsPasskeys && passkeyStatus === 'error' && (
-        <p role="alert">Couldn't sign in with a passkey. Try again.</p>
+          <AppearanceSetting />
+        </section>
+      ) : status === 'sent' ? (
+        <section>
+          <p>Check your email for a sign-in link.</p>
+          <button className="pill" type="button" onClick={() => setStatus('idle')}>Use a different email</button>
+          <AppearanceSetting />
+        </section>
+      ) : (
+        <section>
+          <p>Sign in with your email. When you're signed in, walks are saved to your account.</p>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="account-email">Email</label>
+            <input
+              id="account-email"
+              type="email"
+              required
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <div className="pills">
+              <button className="pill" type="submit" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : 'Send link'}
+              </button>
+              {supportsPasskeys && (
+                <button
+                  className="pill"
+                  type="button"
+                  onClick={handlePasskeySignIn}
+                  disabled={passkeyStatus === 'working'}
+                >
+                  {passkeyStatus === 'working' ? 'Signing in…' : 'Sign in with passkey'}
+                </button>
+              )}
+            </div>
+          </form>
+          {status === 'error' && <p>Couldn't send the link. Try again in a few minutes.</p>}
+          {supportsPasskeys && passkeyStatus === 'error' && (
+            <p role="alert">Couldn't sign in with a passkey. Try again.</p>
+          )}
+          <AppearanceSetting />
+        </section>
       )}
-      <AppearanceSetting />
-    </section>
+    </main>
   );
 }
 

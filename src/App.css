@@ -107,6 +107,7 @@ body {
   color: var(--text);
   box-shadow: var(--shadow-s);
   font-size: 16px; cursor: pointer;
+  text-decoration: none;
 }
 .icon-btn.primary {           /* the ✓ = filled, primary action */
   background: var(--text);
@@ -409,7 +410,8 @@ body.dark .day-header:not(.day--untyped) {
 .totals .unit { font-size: 12px; color: var(--text-muted); }
 
 .walk-home { max-width: 420px; margin: 40px auto; padding: 0 20px; }
-.walk-home h1 { font-size: 24px; margin: 0 0 20px; }
+.walk-home-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.walk-home h1 { font-size: 24px; margin: 0; }
 
 .quote-card {
   background: var(--bg-light); border-radius: var(--radius-panel);
@@ -452,6 +454,10 @@ body.dark .day-header:not(.day--untyped) {
   background: none; border: none; color: var(--text-muted);
   font: inherit; cursor: pointer; padding: 0; margin-bottom: 8px;
 }
+
+.settings-page { max-width: 420px; margin: 40px auto; padding: 0 20px; }
+.settings-header { margin-bottom: 20px; }
+.settings-header h1 { font-size: 24px; margin: 0; }
 
 .delete-walk-button {
   display: block;
