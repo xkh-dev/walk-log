@@ -59,8 +59,10 @@ function Walk() {
 
   return (
     <div className="walk-home">
-      <h1>Walk, Log</h1>
-      <Link className="see-all" to="/account">Account</Link>
+      <header className="walk-home-header">
+        <h1>Walk, Log</h1>
+        <Link className="icon-btn" to="/account" aria-label="Settings">…</Link>
+      </header>
       {notice && <div className="import-message" role="status">✓&nbsp; {notice}</div>}
       <WalksStatus message={loadError} />
 

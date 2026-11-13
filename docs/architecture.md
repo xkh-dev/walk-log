@@ -31,7 +31,7 @@ flowchart TD
 
 ## Session and authentication
 
-`useSession()` listens for Supabase auth state changes and reads the initial session. The Account screen sends email sign-in links and, in browsers with the WebAuthn API, offers passkey sign-in and management. Email's always an available sign-in method.
+`useSession()` listens for Supabase auth state changes and reads the initial session. The Settings screen sends email sign-in links and, in browsers with the WebAuthn API, offers passkey sign-in and management. Email's always an available sign-in method.
 
 The browser client is configured in [`src/lib/supabase.js`](../src/lib/supabase.js). Session state lives in [`src/lib/useSession.js`](../src/lib/useSession.js), and the account flows live in [`src/pages/Account.jsx`](../src/pages/Account.jsx). See [ADR 003](decisions/003-magic-link-and-passkeys.md) for the sign-in choice.
 

@@ -9,7 +9,7 @@ Check the system appearance and each walk flow in a browser using these steps. S
 - [ ] With the app still open, change the system appearance and confirm the app updates without a reload.
 - [ ] In both themes, check the log form's native date control and page scrollbars for matching colors.
 - [ ] In both themes, check calendar category colors, stats labels, selected pills, and the active tab for readable text and a visible selected state.
-- [ ] In Account, choose Light and Dark and confirm each applies immediately and remains after reload.
+- [ ] In Settings, choose Light and Dark and confirm each applies immediately and remains after reload.
 - [ ] Choose System and confirm the app follows system appearance changes while open and after reload.
 
 ## Set up isolated sessions
@@ -54,7 +54,7 @@ Only IDs confirmed in the account should be removed from local storage. Don't ma
 
 Use a browser and device that support WebAuthn:
 
-- [ ] While signed in, add a passkey from the Account screen.
+- [ ] While signed in, add a passkey from Settings.
 - [ ] Confirm it appears in the list with a name and date.
 - [ ] Sign out and sign in with the passkey.
 - [ ] Confirm email sign-in remains available.
