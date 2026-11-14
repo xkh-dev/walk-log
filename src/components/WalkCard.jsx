@@ -1,30 +1,24 @@
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES } from '../constants';
 import { useNavigate } from 'react-router-dom';
-import { formatDuration } from '../helpers';
+import { formatDate, formatDuration } from '../helpers';
+import { t } from '../strings';
 
-// turn a stored value like "park" back into "🌳 park" for display
-function display(list, value) {
+function display(list, category, value) {
   const item = list.find((o) => o.value === value);
-  return item ? `${item.icon} ${item.label}` : '';
-}
-
-function formatDate(iso) {
-  return new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', {
-    weekday: 'short', month: 'short', day: 'numeric',
-  });
+  return item ? `${item.icon} ${t(`categories.${category}.${value}`)}` : '';
 }
 
 function WalkCard({ walk }) {
   const navigate = useNavigate();
 
   return (
-    <button className="walk-card" onClick={() => navigate(`/log/${walk.id}`)} aria-label={`Edit walk from ${formatDate(walk.date)}`}>
+    <button className="walk-card" onClick={() => navigate(`/log/${walk.id}`)} aria-label={t('walkCard.edit', { date: formatDate(new Date(`${walk.date}T12:00:00`)) })}>
       <div className="walk-card-top">
-        <span>{formatDate(walk.date)} {display(WHEN_TYPES, walk.whenType)}</span>
+        <span>{formatDate(new Date(`${walk.date}T12:00:00`))} {display(WHEN_TYPES, 'when', walk.whenType)}</span>
         <span>{formatDuration(walk.duration)}</span>
       </div>
-      <div className="walk-card-top">{display(WHO_TYPES, walk.whoType)}</div>
-      <div className="walk-where">{display(WHERE_TYPES, walk.whereType)}</div>
+      <div className="walk-card-top">{display(WHO_TYPES, 'who', walk.whoType)}</div>
+      <div className="walk-where">{display(WHERE_TYPES, 'where', walk.whereType)}</div>
     </button>
   );
 }

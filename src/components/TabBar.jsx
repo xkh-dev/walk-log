@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom';
+import { t } from '../strings';
 
 const TABS = [
-  { to: '/',      icon: '🚶', label: 'Walk' },
-  { to: '/log',   icon: '➕', label: 'Log' },
-  { to: '/stats', icon: '📈', label: 'Stats' },
+  { to: '/',      icon: '🚶', label: 'tabs.walk' },
+  { to: '/log',   icon: '➕', label: 'tabs.log' },
+  { to: '/stats', icon: '📈', label: 'tabs.stats' },
 ];
 
 function TabBar() {
@@ -17,7 +18,7 @@ function TabBar() {
           className={({ isActive }) => (isActive ? 'tab active' : 'tab')}
         >
           <span className="tab-icon">{tab.icon}</span>
-          <span className="tab-label">{tab.label}</span>
+          <span className="tab-label">{t(tab.label)}</span>
         </NavLink>
       ))}
     </nav>

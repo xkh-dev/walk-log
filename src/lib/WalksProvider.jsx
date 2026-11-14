@@ -3,6 +3,7 @@ import * as walksApi from './walks';
 import { moveLocalWalks } from './moveLocalWalks';
 import { useSession } from './useSession';
 import { WalksContext } from './useWalks';
+import { t } from '../strings';
 
 const CACHE_PREFIX = 'walks-cache:';
 
@@ -50,7 +51,7 @@ export function WalksProvider({ children }) {
     try {
       localStorage.setItem(cacheKey(ownerId), JSON.stringify(sortedWalks));
     } catch {
-      setLoadError("Couldn't update the walks cache on this device.");
+      setLoadError(t('errors.updateWalksCache'));
     }
   }, []);
 
@@ -70,7 +71,7 @@ export function WalksProvider({ children }) {
     } catch {
       if (thisRequest !== requestId.current || versionAtStart !== mutationVersion.current) return;
       setWalksOwner(currentUserId);
-      setLoadError("Couldn't load walks. Try again in a few minutes.");
+      setLoadError(t('errors.loadWalks'));
     }
   }, [commitWalks]);
 
@@ -87,7 +88,7 @@ export function WalksProvider({ children }) {
       try {
         localStorage.removeItem(cacheKey(priorUserId));
       } catch {
-        signOutError = "Couldn't clear the walks cache on this device.";
+        signOutError = t('errors.clearWalksCache');
       }
     }
     previousUserId.current = userId;
@@ -105,7 +106,7 @@ export function WalksProvider({ children }) {
         walksRef.current = [];
         setWalksOwner(null);
         setReady(false);
-        setLoadError("Couldn't read walks on this device.");
+        setLoadError(t('errors.readWalks'));
       }
       return;
     }
@@ -131,7 +132,7 @@ export function WalksProvider({ children }) {
       setWalks([]);
       setWalksOwner(userId);
       setReady(false);
-      setLoadError("Couldn't read the walks cache on this device.");
+      setLoadError(t('errors.readWalksCache'));
     }
 
     void refresh();

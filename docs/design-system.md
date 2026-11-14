@@ -37,6 +37,12 @@ Use the theme variables for shared interface colors, shadows, and radii. Place a
 
 See [`src/constants.js`](../src/constants.js), [`src/components/`](../src/components/), and [`src/pages/`](../src/pages/) for examples.
 
+## Interface text and locale
+
+English interface text lives in [`src/strings/en.js`](../src/strings/en.js), grouped by screen or shared use. Use `t('screen.key')` from [`src/strings/index.js`](../src/strings/index.js) to read a string; pass an object for placeholders, such as `t('account.signedInAs', { email })`. Add new copy to the relevant group rather than embedding it in a component.
+
+Use the shared formatters in [`src/helpers.js`](../src/helpers.js) for dates and durations. They use the app locale from the strings module. Keep category codes in [`src/constants.js`](../src/constants.js) and add their display labels under `categories` in the English strings file; labels must not replace the values saved with a walk.
+
 ## Related
 
 - [Product brief](product-brief.md)

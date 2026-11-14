@@ -9,20 +9,11 @@ import {
   WalkListPlaceholder,
   WalksStatus,
 } from '../components/WalksPlaceholder';
-import { formatDuration } from '../helpers';
+import { formatDate, formatDuration, formatMonthDate, formatWeekdayLabels } from '../helpers';
+import { t, tp } from '../strings';
 
 function formatDayDate(dateStr) {
-  const date = new Date(`${dateStr}T12:00:00`);
-  return date.toLocaleDateString('en-US', {
-    weekday: 'short', month: 'short', day: 'numeric',
-  });
-}
-
-function formatMonthDate(date) {
-  return date.toLocaleDateString('en-US', {
-    month: 'long',
-    year: 'numeric',
-  });
+  return formatDate(new Date(`${dateStr}T12:00:00`));
 }
 
 function getWalkColor(walk) {
@@ -66,7 +57,7 @@ function AllWalks() {
   const monthStart = new Date(anchorMonth.getFullYear(), anchorMonth.getMonth(), 1);
   const firstDayOfMonth = monthStart.getDay();
   const daysInMonth = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0).getDate();
-  const weekdayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekdayLabels = formatWeekdayLabels();
 
   const scrollToDay = (dateKey) => {
     const daySection = document.getElementById(`day-${dateKey}`);
@@ -94,12 +85,15 @@ function AllWalks() {
       const importedWalks = csvToWalks(await file.text());
       const { added, skipped } = await importWalks(importedWalks);
       setImportError(false);
-      setImportMessage(`${added} added, ${skipped} skipped`);
+      setImportMessage(t('allWalks.importSummary', {
+        added: tp('allWalks.added', added),
+        skipped: tp('allWalks.skipped', skipped),
+      }));
       setShowMenu(false);
       window.setTimeout(() => setImportMessage(''), 3000);
     } catch {
       setImportError(true);
-      setImportMessage("Couldn't import walks. Try again in a few minutes.");
+      setImportMessage(t('allWalks.importError'));
     } finally {
       event.target.value = '';
     }
@@ -107,14 +101,14 @@ function AllWalks() {
 
   return (
     <div className="all-walks">
-      <button className="back-button" onClick={() => navigate(-1)}>‹ Back</button>
+      <button className="back-button" onClick={() => navigate(-1)}>{t('allWalks.back')}</button>
       <header className="all-walks-header">
-        <h1>All Walks</h1>
+        <h1>{t('allWalks.title')}</h1>
         <div className="walks-menu">
           <button
             className="icon-btn"
             type="button"
-            aria-label="Import or export walks"
+            aria-label={t('allWalks.importExport')}
             aria-expanded={showMenu}
             disabled={!ready}
             onClick={() => setShowMenu((visible) => !visible)}
@@ -123,8 +117,8 @@ function AllWalks() {
           </button>
           {showMenu && (
             <div className="walks-menu-popover" role="menu">
-              <button type="button" role="menuitem" onClick={handleExport}>↥&nbsp; Export CSV</button>
-              <button type="button" role="menuitem" onClick={() => fileInputRef.current?.click()}>↧&nbsp; Import CSV</button>
+              <button type="button" role="menuitem" onClick={handleExport}>{t('allWalks.export')}</button>
+              <button type="button" role="menuitem" onClick={() => fileInputRef.current?.click()}>{t('allWalks.import')}</button>
             </div>
           )}
           <input
@@ -132,7 +126,7 @@ function AllWalks() {
             type="file"
             accept=".csv,text/csv"
             onChange={handleImport}
-            aria-label="Import walks from CSV"
+            aria-label={t('allWalks.importFromCsv')}
             hidden
           />
         </div>
@@ -150,10 +144,10 @@ function AllWalks() {
           <WalkListPlaceholder />
         </div>
       ) : walks.length === 0 ? (
-        loadError ? null : <p className="empty">Your first walk is waiting.</p>
+        loadError ? null : <p className="empty">{t('allWalks.empty')}</p>
       ) : (
         <>
-          <section className="calendar-panel" aria-label="Walk calendar">
+          <section className="calendar-panel" aria-label={t('allWalks.calendar')}>
             <div className="calendar-header">
               <h2>{formatMonthDate(monthStart)}</h2>
             </div>
@@ -190,7 +184,9 @@ function AllWalks() {
                     className={`calendar-day ${hasWalk ? 'has-walk' : ''} ${latestWalk && !latestWalk.whereType ? 'day--untyped' : ''}`.trim()}
                     style={color ? { '--walk-color': color } : undefined}
                     onClick={() => scrollToDay(dateKey)}
-                    aria-label={hasWalk ? `Jump to ${formatDayDate(dateKey)} (${formatDuration(dayDuration)})` : `No walks on ${formatDayDate(dateKey)}`}
+                    aria-label={hasWalk
+                      ? t('allWalks.jumpTo', { date: formatDayDate(dateKey), duration: formatDuration(dayDuration) })
+                      : t('allWalks.noWalksOn', { date: formatDayDate(dateKey) })}
                   >
                     <span>{dayNumber}</span>
                   </button>
