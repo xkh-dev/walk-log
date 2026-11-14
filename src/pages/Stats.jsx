@@ -2,6 +2,7 @@ import { useWalks } from '../lib/useWalks';
 import { StatsPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
 import { WHERE_TYPES, WHEN_TYPES } from '../constants';
 import { formatDuration } from '../helpers';
+import { t } from '../strings';
 
 function countByType(walks, field) {
   const counts = {};
@@ -18,7 +19,7 @@ function Stats() {
   if (!ready) {
     return (
       <div className="stats">
-        <h1>Stats</h1>
+        <h1>{t('stats.title')}</h1>
         <WalksStatus message={loadError} />
         <div className="delayed-placeholder">
           <StatsPlaceholder />
@@ -30,9 +31,9 @@ function Stats() {
   if (walks.length === 0) {
     return (
       <div className="stats">
-        <h1>Stats</h1>
+        <h1>{t('stats.title')}</h1>
         <WalksStatus message={loadError} />
-        {!loadError && <p className="empty">Log a few walks and your patterns will appear here.</p>}
+        {!loadError && <p className="empty">{t('stats.empty')}</p>}
       </div>
     );
   }
@@ -50,11 +51,11 @@ function Stats() {
 
   return (
     <div className="stats">
-      <h1>Stats</h1>
+      <h1>{t('stats.title')}</h1>
       <WalksStatus message={loadError} />
       {/* 1 — Atmosphere & Light */}
       <div className="stat-card">
-        <p className="stat-title">Notice when you walk</p>
+        <p className="stat-title">{t('stats.noticeWhen')}</p>
         <div className="atmos-bar">
           {WHEN_TYPES.map((t) => {
             const count = whenCounts[t.value] || 0;
@@ -67,17 +68,17 @@ function Stats() {
 
       {/* 2 — Environmental Landscape */}
       <div className="stat-card">
-        <p className="stat-title">See where you go</p>
+        <p className="stat-title">{t('stats.seeWhere')}</p>
         <div className="where-words">
           {WHERE_TYPES
             .filter((t) => whereCounts[t.value])                          // hide zero-walk types
             .sort((a, b) => whereCounts[b.value] - whereCounts[a.value])  // most frequent first
-            .map((t) => {
-              const count = whereCounts[t.value];
+            .map((category) => {
+              const count = whereCounts[category.value];
               const size = 14 + (count / maxWhere) * 22;                  // 14–36px by frequency
               return (
-                <div key={t.value} style={{ fontSize: size + 'px', '--walk-color': t.color }}>
-                  {t.label} <span className="count">{count}</span>
+                <div key={category.value} style={{ fontSize: size + 'px', '--walk-color': category.color }}>
+                  {t(`categories.where.${category.value}`)} <span className="count">{count}</span>
                 </div>
               );
             })}
@@ -86,11 +87,11 @@ function Stats() {
 
       {/* 3 — Totals */}
       <div className="stat-card">
-        <p className="stat-title">Totals</p>
+        <p className="stat-title">{t('stats.totals')}</p>
         <div className="totals">
-          <div><span className="big">{totalWalks}</span><span className="unit">walks</span></div>
-          <div><span className="big">{formatDuration(totalMinutes)}</span><span className="unit">walking</span></div>
-          <div><span className="big">~{km}</span><span className="unit">km</span></div>
+          <div><span className="big">{totalWalks}</span><span className="unit">{t('stats.walks')}</span></div>
+          <div><span className="big">{formatDuration(totalMinutes)}</span><span className="unit">{t('stats.walking')}</span></div>
+          <div><span className="big">~{km}</span><span className="unit">{t('stats.kilometers')}</span></div>
         </div>
       </div>
     </div>

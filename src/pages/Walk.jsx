@@ -5,13 +5,9 @@ import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
 import { HomeWalksPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
 import { formatDuration } from '../helpers';
+import { t } from '../strings';
 
 // this week's quote — later this comes from a quotes archive (Phase 3)
-const QUOTE = {
-  person: 'Carl Rogers',
-  text: "People are just as wonderful as sunsets if you let them be... I don't try to control a sunset. I watch with awe as it unfolds.",
-};
-
 function countByType(walks, field) {
   const counts = {};
   for (const walk of walks) {
@@ -31,9 +27,9 @@ function topType(walks, field) {
   return top;
 }
 
-function display(list, value) {
+function display(list, category, value) {
   const item = list.find((o) => o.value === value);
-  return item ? `${item.icon} ${item.label}` : '—';
+  return item ? `${item.icon} ${t(`categories.${category}.${value}`)}` : '—';
 }
 
 function Walk() {
@@ -60,19 +56,19 @@ function Walk() {
   return (
     <div className="walk-home">
       <header className="walk-home-header">
-        <h1>Walk, Log</h1>
-        <Link className="icon-btn" to="/account" aria-label="Settings">…</Link>
+        <h1>{t('home.title')}</h1>
+        <Link className="icon-btn" to="/account" aria-label={t('home.settings')}>…</Link>
       </header>
       {notice && <div className="import-message" role="status">✓&nbsp; {notice}</div>}
       <WalksStatus message={loadError} />
 
       {/* weekly quote */}
       <div className="quote-card">
-        <p className="quote-label">This week walking with</p>
+        <p className="quote-label">{t('home.quote.label')}</p>
         <p className="quote-person">
-          {QUOTE.person} <span className="info" title="About this person">ⓘ</span>
+          {t('home.quote.person')} <span className="info" title={t('home.aboutPerson')}>ⓘ</span>
         </p>
-        <blockquote className="quote-text">“{QUOTE.text}”</blockquote>
+        <blockquote className="quote-text">“{t('home.quote.text')}”</blockquote>
       </div>
 
       {/* most recent walk (reuses your WalkCard) */}
@@ -82,18 +78,18 @@ function Walk() {
             ? <WalkCard walk={latest} />
             : loadError
               ? null
-              : <p className="empty">No walks yet. Log your first one.</p>}
+              : <p className="empty">{t('home.empty')}</p>}
 
           <button className="total-card" onClick={() => navigate('/walks')}>
             <span className="total-number">{totalWalks}</span>
-            <span className="total-label">walks total</span>
-            <span className="see-all">All Walks ›</span>
+            <span className="total-label">{t('home.totalWalks')}</span>
+            <span className="see-all">{t('home.allWalks')}</span>
           </button>
 
           <div className="summary">
-            <div className="summary-row"><span>Duration</span><b>{formatDuration(totalMinutes)}</b></div>
-            <div className="summary-row"><span>Most</span><b>{display(WHERE_TYPES, mostWhere)}</b></div>
-            <div className="summary-row"><span>Usually</span><b>{display(WHO_TYPES, mostWho)}</b></div>
+            <div className="summary-row"><span>{t('home.duration')}</span><b>{formatDuration(totalMinutes)}</b></div>
+            <div className="summary-row"><span>{t('home.most')}</span><b>{display(WHERE_TYPES, 'where', mostWhere)}</b></div>
+            <div className="summary-row"><span>{t('home.usually')}</span><b>{display(WHO_TYPES, 'who', mostWho)}</b></div>
           </div>
         </>
       ) : (
@@ -104,8 +100,8 @@ function Walk() {
 
       {/* footer */}
       <footer className="walk-footer">
-        <span>Walk, Log v0.1.0</span>
-        <span>Made by САША</span>
+        <span>{t('home.version')}</span>
+        <span>{t('home.madeBy')}</span>
       </footer>
     </div>
   );

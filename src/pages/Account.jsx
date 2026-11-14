@@ -3,20 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useSession } from '../lib/useSession';
 import { getAppearancePreference, setAppearancePreference } from '../lib/appearance';
+import { formatDate } from '../helpers';
+import { t } from '../strings';
 
-const APPEARANCE_OPTIONS = [
-  { value: 'light', label: 'Light' },
-  { value: 'dark', label: 'Dark' },
-  { value: 'system', label: 'System' },
-];
-
-function formatPasskeyDate(isoDate) {
-  return new Date(isoDate).toLocaleDateString('en-US', {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-  });
-}
+const APPEARANCE_OPTIONS = ['light', 'dark', 'system'];
 
 function AppearanceSetting() {
   const [preference, setPreference] = useState(getAppearancePreference);
@@ -28,23 +18,23 @@ function AppearanceSetting() {
     try {
       setAppearancePreference(value);
     } catch {
-      setMessage("Couldn't save this preference. The selected appearance will last until you close the app.");
+      setMessage(t('account.appearance.saveError'));
     }
   }
 
   return (
     <section className="account-passkeys account-appearance" aria-labelledby="appearance-heading">
-      <h2 id="appearance-heading">Appearance</h2>
+      <h2 id="appearance-heading">{t('account.appearance.title')}</h2>
       <div className="pills" role="group" aria-labelledby="appearance-heading">
-        {APPEARANCE_OPTIONS.map((option) => (
+        {APPEARANCE_OPTIONS.map((value) => (
           <button
-            key={option.value}
-            className={preference === option.value ? 'pill selected' : 'pill'}
+            key={value}
+            className={preference === value ? 'pill selected' : 'pill'}
             type="button"
-            aria-pressed={preference === option.value}
-            onClick={() => handleChange(option.value)}
+            aria-pressed={preference === value}
+            onClick={() => handleChange(value)}
           >
-            {option.label}
+            {t(`account.appearance.${value}`)}
           </button>
         ))}
       </div>
@@ -126,17 +116,17 @@ function Account() {
       const { data, error } = await supabase.auth.registerPasskey();
       if (error || !data) {
         setPasskeyStatus('error');
-        setPasskeyMessage("Passkey wasn't added. You can try again any time.");
+        setPasskeyMessage(t('account.passkeys.addError'));
         return;
       }
       setPasskeyList((current) => current.userId === userId
         ? { ...current, items: [...current.items, data] }
         : current);
       setPasskeyStatus('idle');
-      setPasskeyMessage('Passkey added.');
+      setPasskeyMessage(t('account.passkeys.added'));
     } catch {
       setPasskeyStatus('idle');
-      setPasskeyMessage("Passkey wasn't added. You can try again any time.");
+      setPasskeyMessage(t('account.passkeys.addError'));
     }
   }
   async function handlePasskeyListRetry() {
@@ -149,22 +139,22 @@ function Account() {
   }
 
   async function handlePasskeyRemoval(passkeyId) {
-    if (!window.confirm('Remove this passkey? You can still sign in by email.')) return;
+    if (!window.confirm(t('account.passkeys.removeConfirm'))) return;
 
     setRemovingPasskeyId(passkeyId);
     setPasskeyMessage('');
     try {
       const { error } = await supabase.auth.passkey.delete({ passkeyId });
       if (error) {
-        setPasskeyMessage("Passkey couldn't be removed. Try again.");
+        setPasskeyMessage(t('account.passkeys.removeError'));
         return;
       }
       setPasskeyList((current) => current.userId === userId
         ? { ...current, items: current.items.filter((passkey) => passkey.id !== passkeyId) }
         : current);
-      setPasskeyMessage('Passkey removed.');
+      setPasskeyMessage(t('account.passkeys.removed'));
     } catch {
-      setPasskeyMessage("Passkey couldn't be removed. Try again.");
+      setPasskeyMessage(t('account.passkeys.removeError'));
     } finally {
       setRemovingPasskeyId(null);
     }
@@ -182,25 +172,25 @@ function Account() {
 
   return (
     <main className="settings-page">
-      <button className="back-button" type="button" onClick={() => navigate(-1)}>‹ Back</button>
+      <button className="back-button" type="button" onClick={() => navigate(-1)}>{t('account.back')}</button>
       <header className="settings-header">
-        <h1>Settings</h1>
+        <h1>{t('account.settings')}</h1>
       </header>
       {session ? (
         <section>
-          <p>Signed in as {session.user.email}</p>
-          <button className="pill" type="button" onClick={handleSignOut}>Sign out</button>
-          {signOutError && <p className="walks-status" role="alert">Couldn't sign out. Try again.</p>}
+          <p>{t('account.signedInAs', { email: session.user.email })}</p>
+          <button className="pill" type="button" onClick={handleSignOut}>{t('account.signOut')}</button>
+          {signOutError && <p className="walks-status" role="alert">{t('account.signOutError')}</p>}
           {supportsPasskeys && (
             <section className="account-passkeys">
-              <h2>Passkeys</h2>
+              <h2>{t('account.passkeys.title')}</h2>
               {passkeysStatus === 'loading' && (
-                <p className="walks-status" role="status">Loading passkeys…</p>
+                <p className="walks-status" role="status">{t('account.passkeys.loading')}</p>
               )}
               {passkeysStatus === 'error' && (
                 <div>
-                  <p className="walks-status" role="status">Couldn't load passkeys. Try again.</p>
-                  <button className="pill" onClick={handlePasskeyListRetry}>Try again</button>
+                  <p className="walks-status" role="status">{t('account.passkeys.loadError')}</p>
+                  <button className="pill" onClick={handlePasskeyListRetry}>{t('shared.tryAgain')}</button>
                 </div>
               )}
               {passkeysStatus === 'loaded' && (
@@ -210,15 +200,15 @@ function Account() {
                       {passkeys.map((passkey) => (
                         <li className="account-passkey-row" key={passkey.id}>
                           <div>
-                            <p className="account-passkey-name">{passkey.friendly_name || 'Passkey'}</p>
-                            <p className="account-passkey-date">{formatPasskeyDate(passkey.created_at)}</p>
+                            <p className="account-passkey-name">{passkey.friendly_name || t('account.passkeys.defaultName')}</p>
+                            <p className="account-passkey-date">{formatDate(new Date(passkey.created_at))}</p>
                           </div>
                           <button
                             className="pill"
                             onClick={() => handlePasskeyRemoval(passkey.id)}
                             disabled={removingPasskeyId !== null || passkeyStatus === 'working'}
                           >
-                            {removingPasskeyId === passkey.id ? 'Removing…' : 'Remove'}
+                            {removingPasskeyId === passkey.id ? t('account.passkeys.removing') : t('account.passkeys.remove')}
                           </button>
                         </li>
                       ))}
@@ -230,8 +220,10 @@ function Account() {
                     disabled={passkeyStatus === 'working' || removingPasskeyId !== null}
                   >
                     {passkeyStatus === 'working'
-                      ? 'Adding…'
-                      : passkeys.length > 0 ? 'Add another passkey' : 'Add a passkey'}
+                      ? t('account.passkeys.adding')
+                      : passkeys.length > 0
+                        ? t('account.passkeys.addAnother')
+                        : t('account.passkeys.add')}
                   </button>
                 </>
               )}
@@ -242,26 +234,26 @@ function Account() {
         </section>
       ) : status === 'sent' ? (
         <section>
-          <p>Check your email for a sign-in link.</p>
-          <button className="pill" type="button" onClick={() => setStatus('idle')}>Use a different email</button>
+          <p>{t('account.email.sent')}</p>
+          <button className="pill" type="button" onClick={() => setStatus('idle')}>{t('account.email.changeEmail')}</button>
           <AppearanceSetting />
         </section>
       ) : (
         <section>
-          <p>Sign in with your email. When you're signed in, walks are saved to your account.</p>
+          <p>{t('account.email.intro')}</p>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="account-email">Email</label>
+            <label htmlFor="account-email">{t('account.email.label')}</label>
             <input
               id="account-email"
               type="email"
               required
-              placeholder="you@example.com"
+              placeholder={t('account.email.placeholder')}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <div className="pills">
               <button className="pill" type="submit" disabled={status === 'sending'}>
-                {status === 'sending' ? 'Sending…' : 'Send link'}
+                {status === 'sending' ? t('account.email.sending') : t('account.email.sendLink')}
               </button>
               {supportsPasskeys && (
                 <button
@@ -270,14 +262,16 @@ function Account() {
                   onClick={handlePasskeySignIn}
                   disabled={passkeyStatus === 'working'}
                 >
-                  {passkeyStatus === 'working' ? 'Signing in…' : 'Sign in with passkey'}
+                  {passkeyStatus === 'working'
+                    ? t('account.passkeys.signingIn')
+                    : t('account.passkeys.signIn')}
                 </button>
               )}
             </div>
           </form>
-          {status === 'error' && <p>Couldn't send the link. Try again in a few minutes.</p>}
+          {status === 'error' && <p>{t('account.email.sendError')}</p>}
           {supportsPasskeys && passkeyStatus === 'error' && (
-            <p role="alert">Couldn't sign in with a passkey. Try again.</p>
+            <p role="alert">{t('account.passkeys.signInError')}</p>
           )}
           <AppearanceSetting />
         </section>
