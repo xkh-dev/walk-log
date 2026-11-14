@@ -241,10 +241,11 @@ function Account() {
       ) : (
         <section>
           <p>{t('account.email.intro')}</p>
-          <form onSubmit={handleSubmit}>
+          <form className="settings-email-form" onSubmit={handleSubmit}>
             <label htmlFor="account-email">{t('account.email.label')}</label>
             <input
               id="account-email"
+              className="settings-email-input"
               type="email"
               required
               placeholder={t('account.email.placeholder')}
