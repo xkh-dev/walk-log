@@ -49,6 +49,13 @@ test('exporting then importing formula-like walk text returns the original value
   assert.deepEqual(csvToWalks(walksToCsv([walk])), [walk]);
 });
 
+test('CSV round trips keep preset city values unchanged', () => {
+  const walk = { id: 'walk-id', city: 'Москва' };
+
+  const [importedWalk] = csvToWalks(walksToCsv([walk]));
+  assert.equal(importedWalk.city, walk.city);
+});
+
 test('import removes an export marker only before formula characters', () => {
   const csv = [
     'id,city,place,companion,whoType',

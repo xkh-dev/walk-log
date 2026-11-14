@@ -2,6 +2,10 @@
 
 Browse the concepts introduced or used by merged pull requests; each entry points you to relevant code and further reading.
 
+## 2026-11-14 · Move UI text into English strings (#66)
+
+- **Keyed UI strings**: Keeping interface copy in a locale file lets components refer to stable keys while formatting dynamic values, dates, and plurals with `Intl`. Where: `src/strings/index.js` and `src/helpers.js`. Read more: [MDN `Intl.PluralRules`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules).
+
 ## 2026-11-11 · Add reusable repository prompts (#58)
 
 - **Reusable prompt files**: Markdown files in `.github/prompts/` make repeatable workflows available as VS Code chat commands you can invoke by name. Read more: [Prompt files in VS Code](https://code.visualstudio.com/docs/copilot/customization/prompt-files).

@@ -74,6 +74,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - Read the relevant file and any relevant file in `docs/` before editing. Docs may describe planned work; check the current code before treating it as implemented.
 - Make the smallest focused change. No large unsolicited refactors.
 - Match existing patterns and naming (e.g. `whereType`, `whenType`, `whoType`). Use single quotes, semicolons, and `export default` at the bottom.
+- Keep user-facing UI text in `src/strings/en.js` and use `t()` from `src/strings/index.js` in components and screens. Pass dynamic values as placeholders instead of building translated phrases inline.
 - No new dependencies without asking.
 - State assumptions briefly; keep explanations short.
 - Work on a branch named after the issue (e.g. 43-move-local-walks). Never commit directly to main.

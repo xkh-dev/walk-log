@@ -21,6 +21,8 @@ When you change walk fields, CSV handling, or the database schema, use this refe
 
 Only `id`, `date`, `createdAt`, `duration`, and `schemaVersion` are required for an imported walk. The app keeps the other details optional.
 
+Preset city values in [`src/constants.js`](../src/constants.js) are stable IDs, even when they look like display text. Never rename them; update their labels in [`src/strings/en.js`](../src/strings/en.js) instead. Custom city values remain exactly as entered.
+
 ## Dates and identity
 
 Build `date` from local date parts so a walk stays on its local calendar day. Do not create it with `toISOString()`, which converts the time to UTC. `createdAt` represents an instant and is stored as a UTC timestamp.
