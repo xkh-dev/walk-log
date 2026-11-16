@@ -1,3 +1,5 @@
+import { CALENDAR_GRID_DAYS } from '../constants';
+
 export function PlaceholderShape({ className = '' }) {
   return <span className={`placeholder-shape ${className}`.trim()} />;
 }
@@ -98,7 +100,7 @@ export function CalendarPlaceholder() {
         ))}
       </div>
       <div className="calendar-grid">
-        {Array.from({ length: 35 }, (_, day) => (
+        {Array.from({ length: CALENDAR_GRID_DAYS }, (_, day) => (
           <Shape className="placeholder-block placeholder-calendar-day" key={day} />
         ))}
       </div>

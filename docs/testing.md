@@ -47,6 +47,7 @@ Use the same hostname in both profiles. `localhost` and `127.0.0.1` are differen
 
 - [ ] With browser network throttling enabled, reload Home, Stats, All Walks, and Settings. Confirm each waits 300 ms before showing a content-sized placeholder and never shows a spinner.
 - [ ] Switch between Home and Stats with both short and long content. Confirm the page scrollbar doesn't appear or disappear and shift the layout.
+- [ ] In All Walks, check months that need four, five, and six calendar weeks. Confirm the calendar keeps six rows and the list starts at the same position.
 
 ## Move local walks on sign-in
 

@@ -32,6 +32,8 @@ Use the theme variables for shared interface colors, shadows, and radii. Place a
 
 Keep the screen's structure steady while session or remote data is loading. Fast loads show the real content without a placeholder; slow loads show a placeholder after 300 ms. Reuse `DelayedPlaceholder` and size its contents to match the real interface. Don't use spinners.
 
+Keep repeated grid geometry consistent between loading and loaded states. The All Walks calendar always reserves six weeks so different month lengths don't move the walk list.
+
 Share authentication state through `SessionProvider` and wait for its `ready` flag before choosing signed-in or signed-out content. Screens that read walks should also use `useWalks().ready`. Don't briefly render signed-out content while authentication is unresolved.
 
 Use a separate, user-scoped display cache only to show previously loaded data while refreshing it. Never use a display cache as a write source or upload it. Clear display caches on sign-out, and don't clear the signed-out `walks` storage key.
