@@ -42,7 +42,7 @@ Browse this index to find project documentation, implementation guidance, and re
 - [Markdown writing rules](../.github/instructions/docs.instructions.md) — style and structure for project Markdown.
 - [Commit message instructions](../.github/commit-instructions.md) — commit title and body conventions.
 - [Pull request template](../.github/pull_request_template.md) — pull request summary and checklist.
-- [Task issue template](../.github/ISSUE_TEMPLATE/task.md) — planning format for issue scope, completion, notes, and exclusions.
+- [Task issue template](../.github/ISSUE_TEMPLATE/task.md) — context, goals, non-goals, and optional design sections for planning a change.
 - [Start-task skill](../.github/skills/start-task/SKILL.md) — implement an issue through checks, squash merge, and cleanup.
 - [New-issue skill](../.github/skills/new-issue/SKILL.md) — create a task issue and add it to the Steps project.
 - [Write-ADR skill](../.github/skills/write-adr/SKILL.md) — draft the next numbered architecture decision record.
