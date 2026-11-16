@@ -15,6 +15,7 @@ let appearancePreference = getAppearancePreference()
 function applyAppearance(prefersDark = colorScheme.matches) {
   const isDark = appearancePreference === 'dark'
     || (appearancePreference === 'system' && prefersDark)
+  document.documentElement.classList.toggle('dark', isDark)
   document.body.classList.toggle('dark', isDark)
   document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
 }

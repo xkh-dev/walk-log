@@ -1,5 +1,9 @@
 import { useWalks } from '../lib/useWalks';
-import { StatsPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
+import {
+  DelayedPlaceholder,
+  StatsPlaceholder,
+  WalksStatus,
+} from '../components/WalksPlaceholder';
 import { WHERE_TYPES, WHEN_TYPES } from '../constants';
 import { formatDuration } from '../helpers';
 import { t } from '../strings';
@@ -21,9 +25,9 @@ function Stats() {
       <div className="stats">
         <h1>{t('stats.title')}</h1>
         <WalksStatus message={loadError} />
-        <div className="delayed-placeholder">
+        <DelayedPlaceholder>
           <StatsPlaceholder />
-        </div>
+        </DelayedPlaceholder>
       </div>
     );
   }

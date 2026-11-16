@@ -1,5 +1,17 @@
-function Shape({ className = '' }) {
+export function PlaceholderShape({ className = '' }) {
   return <span className={`placeholder-shape ${className}`.trim()} />;
+}
+
+function Shape({ className = '' }) {
+  return <PlaceholderShape className={className} />;
+}
+
+export function DelayedPlaceholder({ children, className = '' }) {
+  return (
+    <div className={`delayed-placeholder ${className}`.trim()}>
+      {children}
+    </div>
+  );
 }
 
 export function WalksStatus({ message }) {

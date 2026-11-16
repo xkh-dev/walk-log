@@ -28,6 +28,16 @@ The app follows the device's appearance by default. In Settings, you can choose 
 
 Use the theme variables for shared interface colors, shadows, and radii. Place and time category colors are semantic data colors rather than theme tokens; keep their labels readable against either theme.
 
+## Loading and stability
+
+Keep the screen's structure steady while session or remote data is loading. Fast loads show the real content without a placeholder; slow loads show a placeholder after 300 ms. Reuse `DelayedPlaceholder` and size its contents to match the real interface. Don't use spinners.
+
+Share authentication state through `SessionProvider` and wait for its `ready` flag before choosing signed-in or signed-out content. Screens that read walks should also use `useWalks().ready`. Don't briefly render signed-out content while authentication is unresolved.
+
+Use a separate, user-scoped display cache only to show previously loaded data while refreshing it. Never use a display cache as a write source or upload it. Clear display caches on sign-out, and don't clear the signed-out `walks` storage key.
+
+Apply the saved theme before the first paint. Keep page-level layout stable with reserved content space and `scrollbar-gutter`; use local system fonts rather than loading fonts that can swap after the page appears.
+
 ## Component conventions
 
 - Keep option values in shared constants and render repeated options with stable keys.
@@ -45,6 +55,7 @@ Use the shared formatters in [`src/helpers.js`](../src/helpers.js) for dates and
 
 ## Related
 
+- [Architecture and data flow](architecture.md)
 - [Product brief](product-brief.md)
 - [Copilot instructions](../.github/copilot-instructions.md)
 - [Documentation index](README.md)

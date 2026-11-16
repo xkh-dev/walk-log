@@ -6,6 +6,7 @@ import { csvToWalks, walksToCsv } from '../lib/csv';
 import WalkCard from '../components/WalkCard';
 import {
   CalendarPlaceholder,
+  DelayedPlaceholder,
   WalkListPlaceholder,
   WalksStatus,
 } from '../components/WalksPlaceholder';
@@ -139,10 +140,10 @@ function AllWalks() {
       <WalksStatus message={loadError} />
 
       {!ready ? (
-        <div className="delayed-placeholder">
+        <DelayedPlaceholder>
           <CalendarPlaceholder />
           <WalkListPlaceholder />
-        </div>
+        </DelayedPlaceholder>
       ) : walks.length === 0 ? (
         loadError ? null : <p className="empty">{t('allWalks.empty')}</p>
       ) : (

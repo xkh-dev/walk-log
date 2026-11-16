@@ -20,7 +20,6 @@ const en = {
     },
     passkeys: {
       title: 'Passkeys',
-      loading: 'Loading passkeys…',
       loadError: "Couldn't load passkeys. Try again.",
       signInError: "Couldn't sign in with a passkey. Try again.",
       signIn: 'Sign in with passkey',
@@ -170,7 +169,8 @@ const en = {
     stats: 'Stats',
   },
   errors: {
-    clearWalksCache: "Couldn't clear the walks cache on this device.",
+    clearDisplayCache: "Couldn't clear display data on this device.",
+    loadSession: "Couldn't check your sign-in status. Try again.",
     loadWalks: "Couldn't load walks. Try again in a few minutes.",
     readWalks: "Couldn't read walks on this device.",
     readWalksCache: "Couldn't read the walks cache on this device.",

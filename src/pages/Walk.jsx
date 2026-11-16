@@ -3,7 +3,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useWalks } from '../lib/useWalks';
 import { WHERE_TYPES, WHO_TYPES } from '../constants';
 import WalkCard from '../components/WalkCard';
-import { HomeWalksPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
+import {
+  DelayedPlaceholder,
+  HomeWalksPlaceholder,
+  WalksStatus,
+} from '../components/WalksPlaceholder';
 import { formatDuration } from '../helpers';
 import { t } from '../strings';
 
@@ -93,9 +97,9 @@ function Walk() {
           </div>
         </>
       ) : (
-        <div className="delayed-placeholder">
+        <DelayedPlaceholder>
           <HomeWalksPlaceholder />
-        </div>
+        </DelayedPlaceholder>
       )}
 
       {/* footer */}
