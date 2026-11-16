@@ -9,7 +9,7 @@ When you change Walk, Log, use this workflow to keep the work focused and prepar
 3. Open a pull request when the work is ready. Describe what changed and why, link related issues, and record any decisions made while resolving ambiguity.
 4. Address review feedback and wait for required checks before merging. Pull requests merge with squash, using the PR title as the single commit title.
 
-Use the [pull request template](.github/pull_request_template.md). Every PR description includes `Closes #N` when it finishes the issue or `Refs #N` when it's part of it. GitHub only closes issues with `Closes`, `Fixes`, or `Resolves`. PR titles follow the [commit title rules](.github/commit-instructions.md#title), never the branch name. Issues use the [task issue template](.github/ISSUE_TEMPLATE/task.md); don't put chat replies or status updates in issue bodies.
+Use the [pull request template](.github/pull_request_template.md). Every PR description includes `Closes #N` when it finishes the issue or `Refs #N` when it's part of it. GitHub only closes issues with `Closes`, `Fixes`, or `Resolves`. PR titles follow the [commit title rules](.github/commit-instructions.md#title), never the branch name. Issues use the [task issue template](.github/ISSUE_TEMPLATE/task.md), a trimmed Google design doc: Context, Goals, and Non-goals, plus Design and Alternatives considered when they help. Write goals as outcomes anyone can check, and keep chat replies and status updates in comments.
 
 ## Commit messages
 

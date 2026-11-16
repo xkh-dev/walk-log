@@ -85,7 +85,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 ## GitHub issues and project board
 
 - Use the GitHub CLI (`gh`) for issues and the `Steps` project in `xkh-dev/walk-log`.
-- Issues follow `.github/ISSUE_TEMPLATE/task.md`. Don't paste chat replies or status updates into issue bodies; use comments.
+- Issues follow `.github/ISSUE_TEMPLATE/task.md`. An issue's Goals define when the work is done; its Non-goals are out of bounds. Don't paste chat replies or status updates into issue bodies; use comments.
 - Before any GitHub write command, show the exact command. Check `gh auth status` first. If the required scope is missing, run the `gh auth refresh` command GitHub recommends and wait for browser authorization to finish; never ask for or share tokens.
 - Create issues with the user's exact title and body, writing the body to a temporary file first:
   `gh issue create --repo xkh-dev/walk-log --title "<title>" --body-file "<temp-file>" --project "Steps"`

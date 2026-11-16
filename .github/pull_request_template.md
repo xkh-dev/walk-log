@@ -15,6 +15,7 @@ List any content or implementation choices you made to resolve ambiguity, or wri
 ## Checklist
 
 - [ ] Tested by hand
+- [ ] Issue goals checked
 - [ ] `npm run build` and `npm run lint` pass
 - [ ] Docs updated or not needed
 
