@@ -78,8 +78,8 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - Keep user-facing UI text in `src/strings/en.js` and use `t()` from `src/strings/index.js` in components and screens. Pass dynamic values as placeholders instead of building translated phrases inline.
 - No new dependencies without asking.
 - State assumptions briefly; keep explanations short.
-- Work on a branch named after the issue (e.g. 43-move-local-walks). Never commit directly to main.
-- Open a pull request when I ask. Every PR description includes `Closes #N` when it finishes the issue or `Refs #N` when it's part of the issue. GitHub only closes issues with `Closes`, `Fixes`, or `Resolves`.
+- Create branches by the branch rule in `CONTRIBUTING.md`. I commit, push, open pull requests, and merge; don't run these steps unless I ask. Never commit to `main`.
+- Every PR description includes `Closes #N` when it finishes the issue or `Refs #N` when it's part of the issue. GitHub only closes issues with `Closes`, `Fixes`, or `Resolves`.
 - PR titles follow the [commit title rules](commit-instructions.md#title), never the branch name.
 
 ## GitHub issues and project board
