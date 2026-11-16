@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { WHERE_TYPES } from '../constants';
+import { CALENDAR_GRID_DAYS, WHERE_TYPES } from '../constants';
 import { useWalks } from '../lib/useWalks';
 import { csvToWalks, walksToCsv } from '../lib/csv';
 import WalkCard from '../components/WalkCard';
 import {
   CalendarPlaceholder,
+  DelayedPlaceholder,
   WalkListPlaceholder,
   WalksStatus,
 } from '../components/WalksPlaceholder';
@@ -57,6 +58,7 @@ function AllWalks() {
   const monthStart = new Date(anchorMonth.getFullYear(), anchorMonth.getMonth(), 1);
   const firstDayOfMonth = monthStart.getDay();
   const daysInMonth = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0).getDate();
+  const trailingDays = CALENDAR_GRID_DAYS - firstDayOfMonth - daysInMonth;
   const weekdayLabels = formatWeekdayLabels();
 
   const scrollToDay = (dateKey) => {
@@ -139,10 +141,10 @@ function AllWalks() {
       <WalksStatus message={loadError} />
 
       {!ready ? (
-        <div className="delayed-placeholder">
+        <DelayedPlaceholder>
           <CalendarPlaceholder />
           <WalkListPlaceholder />
-        </div>
+        </DelayedPlaceholder>
       ) : walks.length === 0 ? (
         loadError ? null : <p className="empty">{t('allWalks.empty')}</p>
       ) : (
@@ -160,7 +162,7 @@ function AllWalks() {
 
             <div className="calendar-grid">
               {Array.from({ length: firstDayOfMonth }, (_, index) => (
-                <div key={`empty-${index}`} className="calendar-day empty-day" />
+                <div key={`empty-start-${index}`} className="calendar-day empty-day" aria-hidden="true" />
               ))}
 
               {Array.from({ length: daysInMonth }, (_, index) => {
@@ -192,6 +194,10 @@ function AllWalks() {
                   </button>
                 );
               })}
+
+              {Array.from({ length: trailingDays }, (_, index) => (
+                <div key={`empty-end-${index}`} className="calendar-day empty-day" aria-hidden="true" />
+              ))}
             </div>
           </section>
 

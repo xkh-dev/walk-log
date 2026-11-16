@@ -2,6 +2,10 @@
 
 Browse the concepts introduced or used by merged pull requests; each entry points you to relevant code and further reading.
 
+## 2026-11-16 · Keep screens steady while data loads (#67)
+
+- **Shared session state**: A provider exposes the initial auth session and readiness to every screen, while a display-only cache keeps Settings content visible during refresh. Where: `src/lib/SessionProvider.jsx` and `src/lib/displayCache.js`. Read more: [React context](https://react.dev/learn/passing-data-deeply-with-context).
+
 ## 2026-11-14 · Move UI text into English strings (#66)
 
 - **Keyed UI strings**: Keeping interface copy in a locale file lets components refer to stable keys while formatting dynamic values, dates, and plurals with `Intl`. Where: `src/strings/index.js` and `src/helpers.js`. Read more: [MDN `Intl.PluralRules`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules).

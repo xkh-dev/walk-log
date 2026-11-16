@@ -29,7 +29,7 @@
   --radius-pill: 999px;
 }
 
-body.dark {
+:root.dark {
       /* ===== DARK theme  ===== */
   --bg-dark:  oklch(0.16 0 264);  /* page: darkest layer   */
   --bg:       oklch(0.22 0 264);  /* panels / cards        */
@@ -67,4 +67,3 @@ body.dark {
   background: var(--day-untyped);
   color: var(--text);
 }
-

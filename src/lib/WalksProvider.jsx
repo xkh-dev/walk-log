@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as walksApi from './walks';
 import { moveLocalWalks } from './moveLocalWalks';
 import { useSession } from './useSession';
+import { clearDisplayCaches } from './displayCache';
 import { WalksContext } from './useWalks';
 import { t } from '../strings';
 
@@ -25,15 +26,18 @@ function readCache(userId) {
 }
 
 export function WalksProvider({ children }) {
-  const session = useSession();
+  const {
+    session,
+    ready: authReady,
+    error: sessionError,
+  } = useSession();
   const userId = session?.user?.id ?? null;
-  const authReady = session !== undefined;
   const [walks, setWalks] = useState([]);
   const [walksOwner, setWalksOwner] = useState();
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState('');
   const walksRef = useRef(walks);
-  const sessionRef = useRef(session);
+  const sessionRef = useRef();
   const previousUserId = useRef(null);
   const movedLocalWalksUserId = useRef(null);
   const requestId = useRef(0);
@@ -86,9 +90,9 @@ export function WalksProvider({ children }) {
     let signOutError = '';
     if (priorUserId && !userId) {
       try {
-        localStorage.removeItem(cacheKey(priorUserId));
+        clearDisplayCaches();
       } catch {
-        signOutError = t('errors.clearWalksCache');
+        signOutError = t('errors.clearDisplayCache');
       }
     }
     previousUserId.current = userId;
@@ -214,13 +218,25 @@ export function WalksProvider({ children }) {
   const contextValue = useMemo(() => ({
     walks: ownsWalks ? walks : [],
     ready: ownsWalks && ready,
-    loadError: ownsWalks ? loadError : '',
+    loadError: ownsWalks ? loadError : (!authReady ? sessionError : ''),
     saveWalk,
     updateWalk,
     deleteWalk,
     importWalks,
     refresh,
-  }), [deleteWalk, importWalks, loadError, ownsWalks, ready, refresh, saveWalk, updateWalk, walks]);
+  }), [
+    deleteWalk,
+    importWalks,
+    loadError,
+    ownsWalks,
+    ready,
+    refresh,
+    saveWalk,
+    sessionError,
+    authReady,
+    updateWalk,
+    walks,
+  ]);
 
   return (
     <WalksContext.Provider value={contextValue}>

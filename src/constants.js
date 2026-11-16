@@ -15,6 +15,7 @@ const WHEN_TYPES = [
 ];
 
 const SCHEMA_VERSION = 1;
+const CALENDAR_GRID_DAYS = 42;
 
 const WHO_TYPES = [
 	{ value: 'by-yourself', icon: '🚶🏼' },
@@ -30,4 +31,4 @@ export const CITIES = [
   { value: 'Ереван', label: 'log.cities.yerevan' },
 ];
 
-export { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION };
+export { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CALENDAR_GRID_DAYS };

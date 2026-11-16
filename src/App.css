@@ -4,6 +4,10 @@ body {
   font-family: system-ui, sans-serif;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 /* ===== Log bottom sheet ===== */
 .log-form {
   position: fixed;
@@ -284,7 +288,7 @@ body {
 .calendar-day.has-walk:not(.day--untyped) {
   background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-light));
 }
-body.dark .calendar-day.has-walk:not(.day--untyped) {
+:root.dark .calendar-day.has-walk:not(.day--untyped) {
   background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-dark));
 }
 .calendar-day.empty-day {
@@ -314,7 +318,7 @@ body.dark .calendar-day.has-walk:not(.day--untyped) {
 .day-header:not(.day--untyped) {
   background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-light));
 }
-body.dark .day-header:not(.day--untyped) {
+:root.dark .day-header:not(.day--untyped) {
   background: color-mix(in oklch, var(--walk-color) 35%, var(--bg-dark));
 }
 .day-duration {
@@ -641,6 +645,40 @@ body.dark .day-header:not(.day--untyped) {
   gap: 24px;
 }
 .placeholder-stepper-value { width: 26%; height: 1em; }
+
+.account-placeholder {
+  min-height: 340px;
+}
+.account-placeholder-line {
+  height: 1em;
+  margin: 0 0 18px;
+}
+.account-placeholder-input {
+  width: 100%;
+  height: 44px;
+  margin-bottom: 12px;
+}
+.account-placeholder-button {
+  width: 108px;
+  height: 44px;
+}
+.account-placeholder-heading {
+  width: 34%;
+  height: 1em;
+}
+.account-passkey-row-placeholder .account-placeholder-name {
+  width: 7em;
+  height: 0.9em;
+  margin-bottom: 8px;
+}
+.account-passkey-row-placeholder .account-placeholder-date {
+  width: 5em;
+  height: 0.75em;
+}
+.account-passkey-row-placeholder .account-placeholder-button {
+  width: 76px;
+  flex: none;
+}
 
 @media (min-width: 640px) {
   .log-form {

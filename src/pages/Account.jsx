@@ -1,12 +1,76 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { useSession } from '../lib/useSession';
+import { readPasskeysCache, writePasskeysCache } from '../lib/displayCache';
+import {
+  DelayedPlaceholder,
+  PlaceholderShape,
+  WalksStatus,
+} from '../components/WalksPlaceholder';
+import { useWalks } from '../lib/useWalks';
 import { getAppearancePreference, setAppearancePreference } from '../lib/appearance';
 import { formatDate } from '../helpers';
 import { t } from '../strings';
 
 const APPEARANCE_OPTIONS = ['light', 'dark', 'system'];
+
+function PasskeysPlaceholder() {
+  return (
+    <div aria-hidden="true">
+      <ul className="account-passkey-list">
+        <li className="account-passkey-row account-passkey-row-placeholder">
+          <div>
+            <PlaceholderShape className="account-placeholder-name" />
+            <PlaceholderShape className="account-placeholder-date" />
+          </div>
+          <PlaceholderShape className="account-placeholder-button" />
+        </li>
+      </ul>
+      <PlaceholderShape className="placeholder-pill account-placeholder-button" />
+    </div>
+  );
+}
+
+function AccountPlaceholder({ supportsPasskeys }) {
+  return (
+    <div className="account-placeholder" aria-hidden="true">
+      <PlaceholderShape className="account-placeholder-line" />
+      <PlaceholderShape className="placeholder-block account-placeholder-input" />
+      <div className="pills">
+        <PlaceholderShape className="placeholder-pill account-placeholder-button" />
+        {supportsPasskeys && (
+          <PlaceholderShape className="placeholder-pill account-placeholder-button" />
+        )}
+      </div>
+      {supportsPasskeys && (
+        <section className="account-passkeys">
+          <PlaceholderShape className="account-placeholder-heading" />
+          <PasskeysPlaceholder />
+        </section>
+      )}
+      <section className="account-passkeys">
+        <PlaceholderShape className="account-placeholder-heading" />
+        <div className="pills">
+          {[0, 1, 2].map((option) => (
+            <PlaceholderShape
+              className="placeholder-pill account-placeholder-button"
+              key={option}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function cachePasskeys(userId, passkeys) {
+  try {
+    writePasskeysCache(userId, passkeys);
+  } catch (error) {
+    console.error('Could not update the passkeys display cache.', error);
+  }
+}
 
 function AppearanceSetting() {
   const [preference, setPreference] = useState(getAppearancePreference);
@@ -52,8 +116,18 @@ async function fetchPasskeys() {
 
 function Account() {
   const navigate = useNavigate();
-  const session = useSession();
-  const userId = session?.user?.id;
+  const {
+    session,
+    ready: sessionReady,
+    error: sessionError,
+    retry: retrySession,
+  } = useSession();
+  const { loadError: walksError } = useWalks();
+  const userId = session?.user?.id ?? null;
+  const userIdRef = useRef(userId);
+  useLayoutEffect(() => {
+    userIdRef.current = userId;
+  }, [userId]);
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [signOutError, setSignOutError] = useState(false);
@@ -72,16 +146,43 @@ function Account() {
     && typeof window.PublicKeyCredential !== 'undefined';
 
   useEffect(() => {
-    if (!userId) return undefined;
-
     let active = true;
+    if (!userId) {
+      Promise.resolve().then(() => {
+        if (!active) return;
+        setPasskeyList({ userId: null, status: 'loading', items: [] });
+      });
+      return () => {
+        active = false;
+      };
+    }
+
+    let cachedPasskeys = null;
+    try {
+      cachedPasskeys = readPasskeysCache(userId);
+    } catch (error) {
+      console.error('Could not read the passkeys display cache.', error);
+    }
+    Promise.resolve().then(() => {
+      if (!active) return;
+      setPasskeyList({
+        userId,
+        status: cachedPasskeys ? 'loaded' : 'loading',
+        items: cachedPasskeys || [],
+      });
+    });
+
     fetchPasskeys()
       .then((data) => {
-        if (!active) return;
+        if (!active || userIdRef.current !== userId) return;
+        cachePasskeys(userId, data);
         setPasskeyList({ userId, status: 'loaded', items: data });
       })
       .catch(() => {
-        if (active) setPasskeyList({ userId, status: 'error', items: [] });
+        if (!active || userIdRef.current !== userId) return;
+        setPasskeyList((current) => current.userId === userId
+          ? { ...current, status: 'error' }
+          : { userId, status: 'error', items: [] });
       });
 
     return () => {
@@ -119,9 +220,11 @@ function Account() {
         setPasskeyMessage(t('account.passkeys.addError'));
         return;
       }
-      setPasskeyList((current) => current.userId === userId
-        ? { ...current, items: [...current.items, data] }
-        : current);
+      if (userIdRef.current === userId) {
+        const nextPasskeys = [...passkeys, data];
+        setPasskeyList({ userId, status: 'loaded', items: nextPasskeys });
+        cachePasskeys(userId, nextPasskeys);
+      }
       setPasskeyStatus('idle');
       setPasskeyMessage(t('account.passkeys.added'));
     } catch {
@@ -130,11 +233,19 @@ function Account() {
     }
   }
   async function handlePasskeyListRetry() {
-    setPasskeyList({ userId, status: 'loading', items: [] });
+    setPasskeyList((current) => current.userId === userId
+      ? { ...current, status: current.items.length > 0 ? 'loaded' : 'loading' }
+      : { userId, status: 'loading', items: [] });
     try {
-      setPasskeyList({ userId, status: 'loaded', items: await fetchPasskeys() });
+      const data = await fetchPasskeys();
+      if (userIdRef.current !== userId) return;
+      cachePasskeys(userId, data);
+      setPasskeyList({ userId, status: 'loaded', items: data });
     } catch {
-      setPasskeyList({ userId, status: 'error', items: [] });
+      if (userIdRef.current !== userId) return;
+      setPasskeyList((current) => current.userId === userId
+        ? { ...current, status: 'error' }
+        : { userId, status: 'error', items: [] });
     }
   }
 
@@ -149,9 +260,11 @@ function Account() {
         setPasskeyMessage(t('account.passkeys.removeError'));
         return;
       }
-      setPasskeyList((current) => current.userId === userId
-        ? { ...current, items: current.items.filter((passkey) => passkey.id !== passkeyId) }
-        : current);
+      if (userIdRef.current === userId) {
+        const nextPasskeys = passkeys.filter((passkey) => passkey.id !== passkeyId);
+        setPasskeyList({ userId, status: 'loaded', items: nextPasskeys });
+        cachePasskeys(userId, nextPasskeys);
+      }
       setPasskeyMessage(t('account.passkeys.removed'));
     } catch {
       setPasskeyMessage(t('account.passkeys.removeError'));
@@ -170,12 +283,33 @@ function Account() {
     }
   }
 
+  if (!sessionReady) {
+    return (
+      <main className="settings-page">
+        <button className="back-button" type="button" onClick={() => navigate(-1)}>{t('account.back')}</button>
+        <header className="settings-header">
+          <h1>{t('account.settings')}</h1>
+        </header>
+        <DelayedPlaceholder>
+          <AccountPlaceholder supportsPasskeys={supportsPasskeys} />
+        </DelayedPlaceholder>
+        {sessionError && (
+          <>
+            <p className="walks-status" role="alert">{sessionError}</p>
+            <button className="pill" type="button" onClick={retrySession}>{t('shared.tryAgain')}</button>
+          </>
+        )}
+      </main>
+    );
+  }
+
   return (
     <main className="settings-page">
       <button className="back-button" type="button" onClick={() => navigate(-1)}>{t('account.back')}</button>
       <header className="settings-header">
         <h1>{t('account.settings')}</h1>
       </header>
+      {!session && walksError && <WalksStatus message={walksError} />}
       {session ? (
         <section>
           <p>{t('account.signedInAs', { email: session.user.email })}</p>
@@ -184,8 +318,10 @@ function Account() {
           {supportsPasskeys && (
             <section className="account-passkeys">
               <h2>{t('account.passkeys.title')}</h2>
-              {passkeysStatus === 'loading' && (
-                <p className="walks-status" role="status">{t('account.passkeys.loading')}</p>
+              {passkeysStatus === 'loading' && passkeys.length === 0 && (
+                <DelayedPlaceholder>
+                  <PasskeysPlaceholder />
+                </DelayedPlaceholder>
               )}
               {passkeysStatus === 'error' && (
                 <div>
@@ -193,7 +329,7 @@ function Account() {
                   <button className="pill" onClick={handlePasskeyListRetry}>{t('shared.tryAgain')}</button>
                 </div>
               )}
-              {passkeysStatus === 'loaded' && (
+              {(passkeysStatus === 'loaded' || passkeys.length > 0) && (
                 <>
                   {passkeys.length > 0 && (
                     <ul className="account-passkey-list">

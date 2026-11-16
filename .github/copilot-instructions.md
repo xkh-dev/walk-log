@@ -35,6 +35,7 @@ Walk, Log is a contemplative walk journal. People log walks (where, when, how lo
 - Depth: layered backgrounds by lightness; no borders (contrast + shadow define edges); interactive elements are raised (`--shadow-s`), pressed/selected states are recessed (`--shadow-inset`). Light comes from above.
 - Light is the default theme; dark is an optional alternate token set. Anything you build must work in both via tokens.
 - Reuse existing components (`PillGroup`, `WalkCard`) before making new ones.
+- New screens follow the loading and stability rules in [`docs/design-system.md`](../docs/design-system.md#loading-and-stability).
 
 ## Data
 

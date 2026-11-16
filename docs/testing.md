@@ -6,6 +6,7 @@ Check the system appearance and each walk flow in a browser using these steps. S
 
 - [ ] Set the device or browser to light appearance, open the app, and confirm the light theme is active.
 - [ ] Set it to dark appearance, open the app, and confirm the dark theme is active.
+- [ ] Save Dark in Settings, reload with network throttling, and confirm the page never flashes the light theme.
 - [ ] With the app still open, change the system appearance and confirm the app updates without a reload.
 - [ ] In both themes, check the log form's native date control and page scrollbars for matching colors.
 - [ ] In both themes, check calendar category colors, stats labels, selected pills, and the active tab for readable text and a visible selected state.
@@ -34,10 +35,19 @@ Use the same hostname in both profiles. `localhost` and `127.0.0.1` are differen
 ## Signed in
 
 - [ ] Send an email sign-in link and confirm it returns to the app.
+- [ ] Reload Settings and confirm it doesn't show the signed-out form before the session resolves.
+- [ ] With a passkey present, revisit Settings and confirm cached passkey details appear without a loading message or layout jump.
 - [ ] Log, edit, and delete a walk; confirm each save completes before navigation or closing.
 - [ ] Reload and confirm the account's walks load.
 - [ ] Sign out and confirm account walks are not copied into the signed-out `walks` key.
+- [ ] Sign out and confirm display caches are removed while the signed-out `walks` key remains unchanged.
 - [ ] Sign in again and confirm account walks are available.
+
+## Loading and layout stability
+
+- [ ] With browser network throttling enabled, reload Home, Stats, All Walks, and Settings. Confirm each waits 300 ms before showing a content-sized placeholder and never shows a spinner.
+- [ ] Switch between Home and Stats with both short and long content. Confirm the page scrollbar doesn't appear or disappear and shift the layout.
+- [ ] In All Walks, check months that need four, five, and six calendar weeks. Confirm the calendar keeps six rows and the list starts at the same position.
 
 ## Move local walks on sign-in
 

@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { WHERE_TYPES, WHEN_TYPES, WHO_TYPES, SCHEMA_VERSION, CITIES } from '../constants.js';
 import PillGroup from '../components/PillGroup.jsx';
 import { useWalks } from '../lib/useWalks';
-import { LogFormPlaceholder, WalksStatus } from '../components/WalksPlaceholder';
+import {
+  DelayedPlaceholder,
+  LogFormPlaceholder,
+  WalksStatus,
+} from '../components/WalksPlaceholder';
 import {
   getCityLabel,
   formatDuration,
@@ -21,9 +25,9 @@ function LogForm() {
 
   if (!ready) {
     return (
-      <div className="delayed-placeholder">
+      <DelayedPlaceholder>
         <LogFormPlaceholder loadError={loadError} />
-      </div>
+      </DelayedPlaceholder>
     );
   }
 

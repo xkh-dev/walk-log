@@ -1,5 +1,19 @@
-function Shape({ className = '' }) {
+import { CALENDAR_GRID_DAYS } from '../constants';
+
+export function PlaceholderShape({ className = '' }) {
   return <span className={`placeholder-shape ${className}`.trim()} />;
+}
+
+function Shape({ className = '' }) {
+  return <PlaceholderShape className={className} />;
+}
+
+export function DelayedPlaceholder({ children, className = '' }) {
+  return (
+    <div className={`delayed-placeholder ${className}`.trim()}>
+      {children}
+    </div>
+  );
 }
 
 export function WalksStatus({ message }) {
@@ -86,7 +100,7 @@ export function CalendarPlaceholder() {
         ))}
       </div>
       <div className="calendar-grid">
-        {Array.from({ length: 35 }, (_, day) => (
+        {Array.from({ length: CALENDAR_GRID_DAYS }, (_, day) => (
           <Shape className="placeholder-block placeholder-calendar-day" key={day} />
         ))}
       </div>
