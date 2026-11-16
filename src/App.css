@@ -458,6 +458,31 @@ body.dark .day-header:not(.day--untyped) {
 .settings-page { max-width: 420px; margin: 40px auto; padding: 0 20px; }
 .settings-header { margin-bottom: 20px; }
 .settings-header h1 { font-size: 24px; margin: 0; }
+.settings-email-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+.settings-email-input {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 12px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--bg-light);
+  color: var(--text);
+  box-shadow: var(--shadow-inset);
+  font: inherit;
+}
+.settings-email-input::placeholder { color: var(--text-muted); }
+.settings-email-input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
 
 .delete-walk-button {
   display: block;
