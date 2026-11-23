@@ -1,70 +1,122 @@
-# Design process: from walk card to stamp
+# Design process
 
-This page records how the visual idea behind Walk, Log developed, including the ideas I dropped and why. Each step answers a problem the previous step left open.
+This is how the look of Walk, Log came together, including the ideas I dropped along the way. I'm keeping all of them here, because each one taught me something the next one needed.
 
-## Starting point
+## Where I started
 
-- **Goal.** Start a personal design material I can reuse across apps, beginning with Walk, Log because it's small.
-- **Method kept from my earlier PCP design system:** structure, tables, spacing rules, and a how-to-use note. Its look (yellow, black, and greys) was not kept.
-- **References:** Arc, Mailbox, VSCO, Must, desktop Spotify, T-Bank, and the old asmallstudio site. Minimalism is fading. I wanted a minimal interface that brings in a little of the real world, as Liquid Glass and Arc do.
-- **Decisions named from the references:**
+- I wanted to start a personal design material I can reuse in future apps, beginning with Walk, Log because it's small.
+- From my earlier design system for PCP, I kept the method: structure, tables, spacing rules, and a note on how to use the file. I didn't keep its look.
+- References I love: Arc, Mailbox, VSCO, Must, desktop Spotify, T-Bank, and the old asmallstudio website. Most are flat designs from the late 2010s. I feel minimalism is fading now, and I wanted something still minimal that lets a little of the real world in.
+- What I took from them:
   - Must and VSCO: the interface stays quiet, so the content brings the color.
-  - T-Bank: the cardholder is made of the interface's own material, and it holds a real object.
+  - T-Bank: the cardholder is made of the interface itself, and it holds something real.
   - Arc: a chosen color frames the content, and the content rises out of it.
 
-## 1. Green ground with paper cards
+## 1. Green felt and paper cards
 
-- **Idea.** A grainy green ground, like felt, with cream paper cards on top. Felt was for the app, paper for what's yours. Selection would turn felt into paper instead of pressing in.
-- **Why it moved on.** A green ground swallows the woods, the place that matters most. Any single hue clashes with one of the places. I kept the word "felt" as a possible name.
+The idea was a grainy green ground, like felt, with cream paper cards on top. Felt was the app, paper was yours, and choosing something turned it from felt into paper.
 
-## 2. The walk card as an invented object
+It didn't work, because a green ground swallows the woods, the place that matters most. Any single color would clash with one of the places. I still like the word "felt", though.
 
-- **Idea.** Walk, Log has no real-world object to copy, so I invented one: the walk card. The Log screen became a tuner, where a small card at the top changes with each choice.
-- **Key decisions:**
-  - Every card is unique, because every walk is unique, even in the same place at the same time a year apart.
-  - A card comes from two sources: the walk, and the person at that moment.
-  - The card is frozen at save, so an old card keeps its look as the person changes.
-  - Walking more makes a card different, never better.
-  - The card has three sizes: full, miniature, and calendar day.
-- **Debate.** Is collecting gamification? I decided no. Ranking is gamification, uniqueness isn't. No card is rarer or better than another, and there's nothing to complete.
+## 2. The walk card
 
-## 3. Material blocks
+Walk, Log didn't have a real-world object to copy, so I invented one: the walk card. The Log screen became a tuner, with a small card at the top that changes as you choose things.
 
-- **Idea.** Inspired by Minecraft: each place is one material block, and the card's surface is that block repeated. The icon and the material are the same thing.
-- **What I learned:**
-  - Grass and leaves change with the seasons, so the base blocks must be true all year and in any climate.
-  - Season can't come from the date. I don't know where a person is, and winter doesn't mean snow. Weather adds a layer only when real weather data exists.
-  - Places became figures that are there all year: a spruce, a bench, a building, a fence, a wave, a peak.
-- **Drawing lessons from the spruce:** a 16×16 grid, light from the top left, an outline in a darker shade instead of black, and hue shifting (highlights toward yellow, shadows toward blue). The outline takes the light: the lit edges use the outline color, and the shaded edges use the shadow color.
-- **Why it moved on.** Rows of upright trees on a colored background read as a scene, like a level in a game. It looked like Flappy Bird.
+What stayed from this step:
 
-## 4. Round dots and a drifting print
+- Every walk is unique, even in the same place at the same time a year later, because the place and the person change. So every card is unique too.
+- A card comes from two things: the walk, and you at that moment.
+- A card is frozen when it's saved, so an old card keeps its look.
+- Walking more makes a card different, never better.
+- A card has three sizes: full, miniature, and a calendar day.
+- The Log screen stays a full-height sheet, with the preview at the top and the controls close to your thumb. The same screen works for a quick log and a careful one, with one tap to save or as much detail as you want.
+- My hypothesis: when you see the walk take shape while logging, it feels like making something, not filling in a form.
 
-- **Idea.** Round dots instead of square pixels, in a loose print that drifts while you log. Saving freezes the arrangement as a seed, so every card is unique and the same on every device.
-- **Why it moved on.** The gaps between dots looked perforated, and the print still lacked a reason to exist.
+I also argued with myself about whether collecting is gamification. I decided it isn't. Ranking is. Nothing here is rarer or better than anything else, and there's nothing to complete.
 
-## 5. Knitting, fabric, and a quilt
+## 3. Fat block icons
 
-- **Idea.** A Nordic knit pattern, then one fabric per place, then a year of walks sewn into a quilt. The reference was my green and brown woven shopper, which reminds me of a sweater I had as a child.
-- **MECE rule.** Each place gets one basic geometry, so no two overlap: vertical stripes (woods), horizontal (coast), grid (urban), diagonal (rural), zigzag (heights), dots (park), and plain weave (no place chosen).
-- **Grounding:**
-  - Tim Ingold's *Lines: A Brief History* links walking, weaving, and writing as kinds of line-making.
-  - The word "text" comes from the Latin *texere*, "to weave".
-  - Memory quilts are sewn from fabric that belongs to a period of someone's life.
-- **Why it moved on.** I still couldn't answer why a walk would be fabric. Each step made sense, but none came from walking itself.
+Before any references, I tried icons built from solid blocks with small gaps, some corners round and some sharp, all on one grid. It was construction by rules, not drawing, which suits me since I'm not an illustrator.
 
-## 6. Stamps
+I also decided that light comes from the top left. Light from straight above lights both sides the same and looks flat. Light from one side gives things volume. I kept one idea for later: on the card, the light could follow the sun, coming from the left in the morning and the right in the evening.
 
-- **Idea.** Every walk leaves a unique impression. You set the seal while logging, and saving presses it onto your page.
-- **Real-world references:**
-  - The pilgrim's credential on the Camino de Santiago.
-  - Japanese station stamps (since 1931) and goshuin temple seals.
-  - Kasane-in, where a returning pilgrim's new seal is pressed over the old one.
-- **Why it works:**
-  - Uniqueness has a real reason: a stamp never prints the same way twice.
-  - Tuning has a real reason: you set the seal before pressing it.
-  - The snapshot has a real moment: the press.
-  - A stamp is one ink with no shading, which avoids the game look.
-  - It follows the T-Bank idea: a crisp digital seal while editing, a material impression once it's real.
-- **How it differs from existing stamp apps.** Travel stamp apps stamp the place: each country has one fixed stamp, and progress is counted against a total. Walk, Log stamps the moment: the same park on two evenings leaves two different impressions, and nothing is counted.
-- **Structure without illustration:** the place sets the seal's shape, the pixel figure is the motif, a ring of ticks shows the duration, the ink color is the time of day, and a double border means you walked with someone. Nothing on the stamp is text, so it needs no translation.
+## 4. Material blocks
+
+Inspired by Minecraft, each place became one material block, and the card was that block repeated. The icon and the material were the same thing.
+
+What I learned:
+
+- Grass and leaves change with the seasons, so the blocks had to look right all year and in any climate.
+- I can't guess the season from the date. I don't know where someone lives, and winter doesn't always mean snow. Weather can add a layer only when there's real weather data.
+- So places became things that are there all year: a spruce, a bench, a building, a fence, a wave, a peak.
+- Drawing the spruce taught me the basics: a pixel grid, light from the top left, an outline in a darker shade instead of black, yellowish highlights and bluish shadows, and an outline that takes the light.
+
+It didn't work, because rows of trees on a colored background looked like a game level. Honestly, it looked like Flappy Bird.
+
+## 5. Round dots
+
+Round dots instead of square pixels, in a loose print that drifts while you log. Saving freezes it, so each card is unique.
+
+It didn't work, because the gaps between the dots looked perforated, and I still didn't know why the print was there at all.
+
+## 6. Knitting and a quilt
+
+A Nordic knit pattern, then one fabric per place, then a year of walks sewn into a quilt. My reference was my green and brown woven shopper, which reminds me of a sweater I had as a child.
+
+The rule was that each place gets one basic geometry, so no two overlap: vertical stripes for woods, horizontal for coast, a grid for urban, diagonals for rural, zigzags for heights, dots for park, and a plain weave when no place is chosen.
+
+I even found some grounding for it. Tim Ingold's *Lines: A Brief History* connects walking, weaving, and writing. The word "text" comes from the Latin for "to weave". People sew memory quilts from fabric that belongs to a time in their life.
+
+It didn't work, because I still couldn't say why a walk would be fabric. Each step made sense on its own, but none of it came from walking.
+
+## 7. Stamps
+
+Every walk leaves its own stamp. You set the seal while you log, and saving presses it onto your page.
+
+### Stamps people already love
+
+- **Japanese station stamps.** Since 1931, train stations in Japan have kept a free stamp with a local design, and people of all ages collect them in small notebooks. The old ink pads often leave faint or uneven prints, and that's part of the charm.
+- **Journaling stamps.** People use rubber stamps in their diaries and planners to mark a day, the weather, or a mood. Japanese stationery brands make whole lines of them.
+- **Library stamps.** A date stamped on the card inside a book every time someone borrowed it. Over time, the card filled up with dates from different readers.
+- **Event stamps.** An ink mark on your wrist at a concert or a party that says you were there that night.
+
+### Why stamps fit
+
+- A stamp never prints the same way twice, so every walk being unique feels natural.
+- Setting a seal before pressing it is what logging already is.
+- Saving has a real moment: the press.
+- While you edit, the seal is flat and digital. Once you save, it turns into something physical: a stamp in real ink. That's the shift away from pure minimalism I was looking for.
+
+### How it's different from travel stamp apps
+
+Travel stamp apps give each place one fixed stamp and count your progress, like "31 of 249 countries". Walk, Log stamps the moment instead. The same park on two evenings leaves two different stamps, and nothing is counted.
+
+### How a stamp is made
+
+- **Place:** each place has its own seal shape. The shapes aren't decided yet.
+- **Time of day:** it changes the ink color. I chose the ink over the paper, because paper changes between Light and Dark mode and the ink stays readable on both. Each ink needs a light and a dark version.
+- **Walking with someone:** either a double border, which is simpler, or two stamps pressed slightly apart, each one unique. Two stamps could later connect to cowalkers.
+- **No text, not even a date.** Different countries write dates differently, so the date sits next to the stamp as normal text, and the app formats it for each person. The stamp itself never needs translating.
+
+### The press
+
+- Every stamp gets a small random value when it's saved. It sets the tilt, a slight offset, and how evenly the ink lands, so the same seal never prints the same way twice.
+- The app saves only what it can't work out later: a snapshot of you at that moment, and that random value. It never saves the drawing itself, which keeps storage small and draws the same stamp on every device.
+- When you save, the sheet slides down, the seal flips over, presses onto the page, and lifts away, leaving the stamp. With Reduce Motion on, the stamp just appears.
+
+### MECE rule
+
+Each input shows up in exactly one way, and no two inputs share one. No two places share a shape. You can read a walk from its stamp, and you can't mistake one place for another.
+
+### Still open
+
+- The six seal shapes.
+- What sits inside the seal.
+- Whether duration shows on the stamp at all. A long walk shouldn't look more complete than a short one.
+- Where the stamp lands: a page, a card, or something else.
+
+## Related
+
+- [Case study](case-study.md)
+- [Design system](design-system.md)
+- [Product brief](product-brief.md)
