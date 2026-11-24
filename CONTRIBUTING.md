@@ -29,7 +29,11 @@ Follow the [commit message instructions](.github/commit-instructions.md). Keep t
 - `/start-task <issue-number>` — require a clean `main`, create a branch by the rule above, implement the issue, update docs and the learning log, run checks, then hand over the review, commit, push, PR, merge, and cleanup steps with prepared commands and PR text. It doesn't commit, push, open a PR, wait for checks, merge, or clean up for you.
 - `/new-issue <description>` — create a task issue from your description with the task template and add it to the Steps project.
 - `/write-adr <decision>` — draft the next numbered ADR using `docs/decisions/template.md`.
-- `/write-step-summary <step number>` — draft or refresh a Step summary from merged pull requests and open project items.
+- `/write-step-summary <step number> [notes]` — draft or refresh a Step summary from project history and pasted notes. Notes can include `goal:`, `outcome:`, or `retro:` text and work to sort into the Done subsections. For example:
+
+  ```text
+  /write-step-summary 4 goal: Make logging feel calmer. outcome: partly met because the save flow still needs work. Figma: explored stamp references for the Log screen. retro: paper prototypes helped; test the press animation with reduced motion next.
+  ```
 
 ## Before merging
 

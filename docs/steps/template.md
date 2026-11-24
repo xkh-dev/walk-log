@@ -1,4 +1,6 @@
-# Step summary template
+# Step <N>: <Step name>
+
+**Dates:**
 
 ## Goal
 
@@ -8,11 +10,11 @@ Outcome:
 
 ### For walkers
 
+### Design and research
+
 ### Behind the scenes
 
 ## Decisions
-
-## Other work
 
 ## Not done
 
@@ -27,4 +29,4 @@ Outcome:
 ## Related
 
 - [Documentation index](../README.md)
-- [Step summary writing rules](../../.github/instructions/docs.instructions.md)
+- [Markdown writing rules](../../.github/instructions/docs.instructions.md)

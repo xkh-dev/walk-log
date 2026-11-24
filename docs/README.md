@@ -49,7 +49,7 @@ Browse this index to find project documentation, implementation guidance, and re
 - [Start-task skill](../.github/skills/start-task/SKILL.md) — implement an issue, run checks, and hand over the commit and pull request steps.
 - [New-issue skill](../.github/skills/new-issue/SKILL.md) — create a task issue and add it to the Steps project.
 - [Write-ADR skill](../.github/skills/write-adr/SKILL.md) — draft the next numbered architecture decision record.
-- [Write-Step-Summary skill](../.github/skills/write-step-summary/SKILL.md) — draft or refresh a Step summary from GitHub history.
+- [Write-Step-Summary skill](../.github/skills/write-step-summary/SKILL.md) — draft or refresh a Step summary from GitHub history and pasted notes.
 
 ## Related
 
