@@ -121,6 +121,7 @@ Update docs in the same PR as the change, using this map:
 - Browser verification steps → `docs/testing.md`
 - A choice between real options → a new ADR in `docs/decisions/`, using `docs/decisions/template.md`
 - A concept introduced or used → `docs/learning-log.md`
+- Step summaries and the reusable summary command → `docs/steps/template.md`, `docs/steps/`, and `.github/skills/write-step-summary/SKILL.md`
 - Branching, commits, issues, pull requests, or review workflow → `CONTRIBUTING.md`, `.github/copilot-instructions.md`, `.github/instructions/docs.instructions.md`, `.github/commit-instructions.md`, `.github/pull_request_template.md`, `.github/ISSUE_TEMPLATE/task.md`, and the relevant `.github/skills/` file
 - Any new project documentation → add it to `docs/README.md`
 - Update `docs/README.md` whenever you add or move a document it indexes. Its index covers `README.md`, `CONTRIBUTING.md`, every file in `docs/`, and the Markdown guidance and templates under `.github/`.

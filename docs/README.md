@@ -26,6 +26,8 @@ Browse this index to find project documentation, implementation guidance, and re
 - [Design system](design-system.md) — CSS tokens, depth, themes, and component conventions.
 - [Stats plan](stats-plan.md) — calculations and limits in the current Stats screen.
 - [ADR template](decisions/template.md) — required sections for a new decision record.
+- [Step summary template](steps/template.md) — required sections for one Step summary.
+- [Step summaries](steps/) — summaries of shipped work and remaining open items for each Step.
 
 ## How-to
 
@@ -47,6 +49,7 @@ Browse this index to find project documentation, implementation guidance, and re
 - [Start-task skill](../.github/skills/start-task/SKILL.md) — implement an issue, run checks, and hand over the commit and pull request steps.
 - [New-issue skill](../.github/skills/new-issue/SKILL.md) — create a task issue and add it to the Steps project.
 - [Write-ADR skill](../.github/skills/write-adr/SKILL.md) — draft the next numbered architecture decision record.
+- [Write-Step-Summary skill](../.github/skills/write-step-summary/SKILL.md) — draft or refresh a Step summary from GitHub history.
 
 ## Related
 
