@@ -2,6 +2,10 @@
 
 Browse the concepts introduced or used by merged pull requests; each entry points you to relevant code and further reading.
 
+## 2026-11-24 · Draft reusable Step summaries from GitHub history (#88)
+
+- **Project iteration metadata**: A GitHub CLI project lookup can provide a Step name and date range, then reusable commands can group merged pull requests and open issues around that range. Where: `.github/skills/write-step-summary/SKILL.md`. Read more: [GitHub CLI project commands](https://cli.github.com/manual/gh_project).
+
 ## 2026-11-16 · Keep screens steady while data loads (#67)
 
 - **Shared session state**: A provider exposes the initial auth session and readiness to every screen, while a display-only cache keeps Settings content visible during refresh. Where: `src/lib/SessionProvider.jsx` and `src/lib/displayCache.js`. Read more: [React context](https://react.dev/learn/passing-data-deeply-with-context).
