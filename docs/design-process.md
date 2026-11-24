@@ -11,6 +11,7 @@ This is how the look of Walk, Log came together, including the ideas I dropped a
 ## 1. A form
 
 The idea was just filling a form to quickly save the walk. Modal window with grainy colored ground, like felt, with fields of:
+
 - WHERE (place type and input).
 - WHEN (date and time of a day: morning, noon, evening, night).
 - HOW LONG (with - and + stepper and 15 min interval).
@@ -103,7 +104,7 @@ Travel stamp apps give each place one fixed stamp and count your progress, like 
 - Every stamp gets a small random value when it's saved. It sets the tilt, a slight offset, and how evenly the ink lands, so the same seal never prints the same way twice.
 - The app saves only what it can't work out later: a snapshot of you at that moment, and that random value. It never saves the drawing itself, which keeps storage small and draws the same stamp on every device.
 - When you save, the sheet slides down, the seal flips over, presses onto the page, and lifts away, leaving the stamp. With Reduce Motion on, the stamp just appears.
-- When you edit, it reuses the same way of pressing just with an edited info. In future all walk versions might be logged so it's easier to recover a deleted (an archived) walk or a previous version. I’m not sure about the reasoning just yet. 
+- When you edit, it reuses the same way of pressing just with an edited info. In future all walk versions might be logged so it's easier to recover a deleted (an archived) walk or a previous version. I’m not sure about the reasoning just yet.
 
 ### MECE rule
 
