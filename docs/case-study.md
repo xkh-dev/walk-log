@@ -30,6 +30,12 @@ Email links remain available alongside passkey sign-in. Passkeys can be added or
 
 See [ADR 003](decisions/003-magic-link-and-passkeys.md).
 
+## Give every walk its own impression
+
+Each walk leaves a stamp generated from the walk and from the person at that moment, so no two are the same. Walking more makes a stamp different, never better, and nothing is counted toward a total. The idea went through a form, a walk card, material blocks, fabric, and a quilt before arriving at stamps, which people already love: Japanese station stamps, journaling stamps, library stamps, and event stamps.
+
+See [Design process](design-process.md).
+
 ## What remains planned
 
 Production-domain setup is tracked in [issue #53](https://github.com/xkh-dev/walk-log/issues/53). Local-first sync for a native iOS app is a separate possibility in [issue #44](https://github.com/xkh-dev/walk-log/issues/44); it isn't part of the current web behavior. The [roadmap](roadmap.md) separates shipped behavior from planned work.

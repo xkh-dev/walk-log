@@ -9,6 +9,7 @@ Browse this index to find project documentation, implementation guidance, and re
 - [Product brief](product-brief.md) — product purpose, intended audience, and boundaries.
 - [Roadmap](roadmap.md) — shipped behavior and explicitly planned work.
 - [Case study](case-study.md) — the product's implementation choices and tradeoffs.
+- [Design process](design-process.md) — how the look of Walk, Log came together, including the ideas I dropped.
 
 ## Explanation
 

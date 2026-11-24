@@ -6,17 +6,18 @@ This is how the look of Walk, Log came together, including the ideas I dropped a
 
 - I wanted to start a personal design material I can reuse in future apps, beginning with Walk, Log because it's small.
 - From my earlier design system for PCP, I kept the method: structure, tables, spacing rules, and a note on how to use the file. I didn't keep its look.
-- References I love: Arc, Mailbox, VSCO, Must, desktop Spotify, T-Bank, and the old asmallstudio website. Most are flat designs from the late 2010s. I feel minimalism is fading now, and I wanted something still minimal that lets a little of the real world in.
-- What I took from them:
-  - Must and VSCO: the interface stays quiet, so the content brings the color.
-  - T-Bank: the cardholder is made of the interface itself, and it holds something real.
-  - Arc: a chosen color frames the content, and the content rises out of it.
+- References I love: Arc, Mailbox, VSCO, Must, desktop Spotify, T-Bank, and the old asmallstudio website. Most are flat designs from the late 2010s and early 2020s. I feel minimalism is fading now, and I wanted something still minimal that lets a little of the real world in.
 
-## 1. Green felt and paper cards
+## 1. A form
 
-The idea was a grainy green ground, like felt, with cream paper cards on top. Felt was the app, paper was yours, and choosing something turned it from felt into paper.
+The idea was just filling a form to quickly save the walk. Modal window with grainy colored ground, like felt, with fields of:
 
-It didn't work, because a green ground swallows the woods, the place that matters most. Any single color would clash with one of the places. I still like the word "felt", though.
+- WHERE (place type and input).
+- WHEN (date and time of a day: morning, noon, evening, night).
+- HOW LONG (with - and + stepper and 15 min interval).
+- WHO (by yourself or with someone).
+
+Filling a form was too bureaucratic for a fun app I imagined. I wanted filling in the form to be more connected with other app flows and actually mean something. And I wanted it to feel like collecting something.
 
 ## 2. The walk card
 
@@ -26,17 +27,17 @@ What stayed from this step:
 
 - Every walk is unique, even in the same place at the same time a year later, because the place and the person change. So every card is unique too.
 - A card comes from two things: the walk, and you at that moment.
-- A card is frozen when it's saved, so an old card keeps its look.
+- A card becomes a snapshot when it’s saved, so an old card keeps its look.
 - Walking more makes a card different, never better.
 - A card has three sizes: full, miniature, and a calendar day.
 - The Log screen stays a full-height sheet, with the preview at the top and the controls close to your thumb. The same screen works for a quick log and a careful one, with one tap to save or as much detail as you want.
-- My hypothesis: when you see the walk take shape while logging, it feels like making something, not filling in a form.
+- My hypothesis: when you see the walk take shape while logging, it feels like making something, not filling in a form. So it's more like making objects that can be collected in future.
 
-I also argued with myself about whether collecting is gamification. I decided it isn't. Ranking is. Nothing here is rarer or better than anything else, and there's nothing to complete.
+Is collecting gamification? I decided it isn't as all cards are unique. If no card is more unique than another, it's not a competition, and it's still fun.
 
 ## 3. Fat block icons
 
-Before any references, I tried icons built from solid blocks with small gaps, some corners round and some sharp, all on one grid. It was construction by rules, not drawing, which suits me since I'm not an illustrator.
+Before any references, I tried icons built from solid blocks with small gaps, some corners round and some sharp, all on one grid. It was construction by rules, which suits me since I'm not an illustrator.
 
 I also decided that light comes from the top left. Light from straight above lights both sides the same and looks flat. Light from one side gives things volume. I kept one idea for later: on the card, the light could follow the sun, coming from the left in the morning and the right in the evening.
 
@@ -96,24 +97,18 @@ Travel stamp apps give each place one fixed stamp and count your progress, like 
 - **Place:** each place has its own seal shape. The shapes aren't decided yet.
 - **Time of day:** it changes the ink color. I chose the ink over the paper, because paper changes between Light and Dark mode and the ink stays readable on both. Each ink needs a light and a dark version.
 - **Walking with someone:** either a double border, which is simpler, or two stamps pressed slightly apart, each one unique. Two stamps could later connect to cowalkers.
-- **No text, not even a date.** Different countries write dates differently, so the date sits next to the stamp as normal text, and the app formats it for each person. The stamp itself never needs translating.
+- **No text.** The stamp itself never needs translating. Also, different countries write dates differently, so the date sits next to the stamp as normal text, and the app formats it for each person.
 
 ### The press
 
 - Every stamp gets a small random value when it's saved. It sets the tilt, a slight offset, and how evenly the ink lands, so the same seal never prints the same way twice.
 - The app saves only what it can't work out later: a snapshot of you at that moment, and that random value. It never saves the drawing itself, which keeps storage small and draws the same stamp on every device.
 - When you save, the sheet slides down, the seal flips over, presses onto the page, and lifts away, leaving the stamp. With Reduce Motion on, the stamp just appears.
+- When you edit, it reuses the same way of pressing just with an edited info. In future all walk versions might be logged so it's easier to recover a deleted (an archived) walk or a previous version. I’m not sure about the reasoning just yet.
 
 ### MECE rule
 
-Each input shows up in exactly one way, and no two inputs share one. No two places share a shape. You can read a walk from its stamp, and you can't mistake one place for another.
-
-### Still open
-
-- The six seal shapes.
-- What sits inside the seal.
-- Whether duration shows on the stamp at all. A long walk shouldn't look more complete than a short one.
-- Where the stamp lands: a page, a card, or something else.
+Inputs show up in exactly one way, and no two inputs share one. No two places share a shape. You can read a walk from its stamp, and you can't mistake one place for another.
 
 ## Related
 
