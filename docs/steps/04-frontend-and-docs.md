@@ -57,7 +57,7 @@ The saved theme and sign-in state appear right away, and the All Walks calendar 
 - The email field uses existing theme tokens instead of new ones. ([#68](https://github.com/xkh-dev/walk-log/pull/68))
 - Screen changes stay immediate, with no animation. The calendar always has 42 cells, so loading and loaded states match. ([#70](https://github.com/xkh-dev/walk-log/pull/70))
 - Branch names use a two-to-four-word slug from the issue title. ([#73](https://github.com/xkh-dev/walk-log/pull/73))
-- The design process is written in the first person, keeps every dropped idea with its reason, and leaves open questions open. ([#84](https://github.com/xkh-dev/walk-log/pull/84))
+- The design process is written down, keeps every dropped idea with its reason, and leaves open questions open. ([#84](https://github.com/xkh-dev/walk-log/pull/84))
 - Log stays a full-height modal sheet. Sheet behavior moves to [#87](https://github.com/xkh-dev/walk-log/issues/87), and the ADR is [#80](https://github.com/xkh-dev/walk-log/issues/80). ([#79](https://github.com/xkh-dev/walk-log/issues/79))
 
 ## Not done
@@ -78,22 +78,19 @@ The saved theme and sign-in state appear right away, and the All Walks calendar 
 - Doing design, docs, and issue drafts while Copilot credits were low. The ideas are on the board, ready for code in December.
 - Trying ideas quickly and dropping them without regret. Writing down why each one moved on turned the dead ends into part of the story.
 - Looking for a real-world reference. Stamps gave real reasons for uniqueness, tuning, and the moment of saving, which no invented material did.
-- Two tests kept decisions honest: "would someone walk more just to get this?" and the MECE rule that each input shows up in exactly one way.
+- I tried MECE rule: each input shows up in exactly one way.
 - Writing decisions down as issue comments, like the Log sheet in #79.
-- Doing git myself, including in the GitHub web interface. I learned to read lint errors by line number and to check the PR title before creating it.
+- Doing git myself, including in the VS code UI and the GitHub web. I learned to commit, push, and so on by myself. I learned to read lint errors by line number.
 
 ### Didn't work
 
 - I planned too much, and most of the open items never started.
-- I started the Log screen before I knew what the stamps looked like. It blocked me, because the controls have to show the same visuals as the card.
 - I drew materials (pixel trees, dots, knitting, fabric) before I could say why a walk would look like that. None of it came from walking, so none of it held.
 - The direction changed faster than the issues. #75, #77, and #78 went out of date, and #33 sat In Progress for 11 days without a branch.
 - Three PRs (#82, #83, #85) went in with empty descriptions.
-- Lint failed on the design process doc, and merged branches piled up because automatic deletion was off.
 
 ### Change next step
 
-- Commit to less: three design items and one small code task, with the goal written on the first day.
 - Before drawing anything, ask how it connects to walking, and look for a real-world reference first.
 - Research before screens: finish [#86](https://github.com/xkh-dev/walk-log/issues/86), rewrite [#75](https://github.com/xkh-dev/walk-log/issues/75) for stamps, then design [#23](https://github.com/xkh-dev/walk-log/issues/23).
 - When the direction changes, update or close the affected issues and statuses the same day.
